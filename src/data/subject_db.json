@@ -1,0 +1,13 @@
+{
+
+    
+    "Sem_1" : ["Introduction to Information Technology","C Programming", "Digital Logic","Mathematics I","Physics"],
+    "Sem_2" : ["Discrete Structures","Object Oriented Programming","Microprocessor","Mathematics II","Statistics I"],
+    "Sem_3" : ["Data Structures and Algorithms","Numerical Method","Computer Architecture","Computer Graphics","Statistics II"],
+    "Sem_4" : ["Theory of Computation","Computer Networks","Operating Systems","Database Management System","Artificial Intelligence"],
+    "Sem_5" : ["Design and Analysis of Algorithms","System Analysis and Design","Cryptography","Simulation and Modelling","Web Technology"],
+    "Sem_6" : ["Software Engineering","Compiler Design and Construction","E-Governance","NET Centric Computing","Technical Writing"],
+    "Sem_7" : ["Advanced Java Programming","Data Warehousing and Data Mining","Principles of Management","Project Work"],
+    "Sem_8" : ["Advanced Database", "Internship"]
+
+}

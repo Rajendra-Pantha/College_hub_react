@@ -10,44 +10,44 @@ const Details = () => {
   if (!selectedItem) {
     return (
       <div>
-        <h2>Details not found</h2>
+        <h2 >Details not found</h2>
       </div>
     );
   }
 
   return (
-    <div className='flex justify-center w-full'>
+    <div className='flex ml-12'>
     <div className='pt-8 pl-4'>
     
-        <h1 className='font-bold text-2xl mb-6'>Details about your assignment</h1>
-        <div>
+        <div className='font-bold text-3xl mb-8 text-gray-800 underline'>Details about your assignment</div>
+        <div className='text-gray-800 text-lg'>
         <div><strong>Subject: </strong>
              {selectedItem.Subject}</div>
-          <div>
+          <div className='text-gray-800'>
             <strong>Assignment Type:</strong> {selectedItem.Assignmen_Type}
           </div>
-          <div>
+          <div className='text-gray-800'>
             <strong>Topic name:</strong> {selectedItem.Topic_name}
           </div>
-          <div>
+          <div className='text-gray-800'>
             <strong>Assignment by:</strong> {selectedItem.Assignment_by}
           </div>
-          <div>
+          <div className='text-gray-800'>
             <strong>DeadLine:</strong> {selectedItem.Deadline}
           </div>
         </div>
 
-        <div className='mt-8 w-full pr-10'>
-          <div>
-         <strong>Description:</strong></div>
-         <div >
+        <div className='mt-8 w-full pr-10 text-lg'>
+          <div className='text-gray-800'>
+         <strong className='text-2xl '>Description:</strong></div>
+         <div className='text-gray-800 w-2/3 text-justify pt-4'>
             {selectedItem.Describe}
          </div>
 
            
          
         </div>
-        <div className='mt-8'><strong> Attached File</strong></div>
+        <div className='mt-8 text-gray-800 text-2xl'><strong> Attached File:</strong></div>
       </div>
       </div>
   );

@@ -17,13 +17,15 @@ import Dashboard from './components/dashboard/Dashboard.jsx';
 import Subjects from './components/subjects/Subjects.jsx';
 import Message from './components/message/Message.jsx';
 import Assignments from './components/assignments/Assignments.jsx';
-import Settings from './components/settings/Settings.jsx';
+
 import Class from './components/subjects/Class.jsx';
 import Teacherdashboard from './components/dashboard/Teacherdashboard.jsx';
 import Teacherassignments from './components/assignments/Teacherassignments.jsx';
-import Teachermessage from './components/message/Teachermessage.jsx';
-import Setting from './components/settings/Setting.jsx';
+
+
 import Details from './components/Details.jsx';
+import Chatbox from './components/Chatbox.jsx';
+import Hello from './Hello.jsx';
 const router = createBrowserRouter([
 
   {
@@ -51,11 +53,11 @@ const router = createBrowserRouter([
     },
     {
       path: "otpverificationstds",
-      element: <Otp dashboard='/students'  />
+      element: <Otp dashboard='/students/dashboard'  />
     },
     {
       path: "otpverificationteacher",
-      element: <Otp  dashboard='/teacher'/>
+      element: <Otp  dashboard='/teacher/dashboard'/>
     },
     
    
@@ -67,37 +69,41 @@ const router = createBrowserRouter([
     path: "students",
     element:<Layout2 />,
     children: [{
-      path: "",
+      path: "dashboard",
       element:<Dashboard/>,
     },
+    
+      
     {
       path: "subjectsstds",
       element:<Subjects/>,
     },
     {
       path: "messagestds",
-      element:<Message/>,
+      element:<Message />,
     },
+    
     {
       path: "assignmentsstds",
       element:<Assignments/>,
     },
     {
-      path : "details/:id",
+      path : "assignmentsstds/details/:id",
       element : <Details/>
     },
-    {
-      path: "settingstds",
-      element:<Settings/>,
-    },
+   
    
 ]
+  },
+  {
+    path: "students/messagestds/chatbox/:i",
+    element:<Chatbox/>,
   },
   {
     path: "teacher",
     element:<Layout3 />,
     children: [{
-      path: "",
+      path: "dashboard",
       element:<Teacherdashboard/>,
     },
     {
@@ -105,20 +111,21 @@ const router = createBrowserRouter([
       element:<Class/>,
     },
     {
-      path: "messages",
-      element:<Teachermessage/>,
+      path: "messagestds",
+      element:<Message />,
     },
     {
       path: "assignments",
       element:<Teacherassignments/>,
     },
-    {
-      path: "settingstds",
-      element:<Setting/>,
-    },
+   
    
 ]
   },
+  {
+    path:"hello",
+    element:<Hello/>
+  }
 
 ]);
 ReactDOM.createRoot(document.getElementById('root')).render(
