@@ -1,9 +1,14 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import db from '../data/subject_db.json';
 
 const Chatbox = () => {
+  const navigate = useNavigate();
+  const handleBack=()=>{
+    navigate(-1);
+  }
   const { i } = useParams();
   const selectedSubject = db["Sem_1"][parseInt(i, 10)];
 
@@ -31,19 +36,21 @@ const Chatbox = () => {
         {/* chatbox */}
         <div className='flex flex-col  w-[calc(100%)] '>
           {/* chatbox header */}
-          <div className='h-14 pl-2 w-[calc(100%)] bg-green-800 flex justify-between'>
+          <div className='h-14 pl-2 w-[calc(100%)] bg-purple-500 flex justify-between'>
+           
            
               <div className='text-white h-full text-lg  flex items-center font-semibold ml-4'>
+              <Icon onClick={()=>handleBack()} className='text-white   text-2xl h-full flex items-center mr-4' icon="ep:back" />
               {selectedSubject}
               </div>
             
             <div>
               {/* icon="basil:other-1-solid"  */}
-              <Icon className='text-white text-3xl font-bold p-2 m-2 mr-6 h-9 w-9  hover:bg-[#606f6155]   hover:rounded-full rounded-full bg-lime-600' icon="material-symbols:info-i" />
+              <Icon className='text-white text-3xl font-bold p-2 m-2 mr-6 h-9 w-9  hover:bg-[#606f617a]   hover:rounded-full rounded-full bg-[#606f6155]' icon="material-symbols:info-i" />
             </div>
           </div>
           {/* chatbox body  */}
-          <div className='bg-green-100  h-[calc(100%-5rem)]  w-[calc(100%)]  p-4 overflow-y-scroll  '>
+          <div className='bg-white  h-[calc(100%-5rem)]  w-[calc(100%)]  p-4 overflow-y-scroll  '>
 
            
           <div className='flex pb-6 '>
@@ -52,7 +59,7 @@ const Chatbox = () => {
                 <span className=' text-sm text-gray-500 font-semibold'>just now</span>
               </div>
               <div className=' max-w-md flex flex-col'>
-                <p className='bg-white rounded-tl-none rounded-bl-lg rounded-tr-lg rounded-br-l ml-4 px-3 py-1 text-2xl'>hello</p>
+                <p className='bg-[#f9cdd6bb] rounded-tl-none rounded-bl-lg rounded-tr-lg rounded-br-l ml-4 px-3 py-1 text-2xl'>hello</p>
                 <img />
               </div>
             </div>
@@ -64,16 +71,16 @@ const Chatbox = () => {
                 <span className=' text-sm text-gray-500 font-semibold'>just now</span>
               </div>
               <div className=' max-w-md flex flex-col'>
-                <p className='bg-blue-100 rounded-tl-none rounded-bl-lg rounded-tr-lg rounded-br-l mr-4 px-3 py-1 text-2xl'>hello</p>
+                <p className='bg-indigo-100 rounded-tl-none rounded-bl-lg rounded-tr-lg rounded-br-l mr-4 px-3 py-1 text-2xl'>hello</p>
                 <img />
               </div>
             </div>
 
           </div>
           {/* message input */}
-          <div className='w-[100%] flex'>
-            <input className='h-12 w-[90%] focus:outline-none placeholder:p-2 p-2' type="text" placeholder='Write something here...' />
-            <button className='w-[10%] text-white p-2 font-bold text-lg  bg-green-800 h-12 hover:bg-green-600 '>Send</button>
+          <div className='w-[100%] flex shadow-gray-600 shadow-2xl'>
+            <input className='h-12 w-[90%] focus:outline-none placeholder:p-2 p-2 ' type="text" placeholder='Write something here...' />
+            <button className='w-[10%] text-white p-2 font-bold text-lg  bg-[#902bf5] h-12 hover:bg-[#6e0fcd] '>Send</button>
 
           </div>
         </div>

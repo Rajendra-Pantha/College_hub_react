@@ -13,15 +13,15 @@ const Login = ({otp,signup}) => {
             <div>
                 <div className='font-semibold text-3xl  mb-5 '>Log In</div>
                
-                <form className='text-gray-400  '>
+                <form className='text-blue-700  '>
                 <div>
                <label className='block mb-2' >Username</label>
-               <span className='text-blue-700 border-b-2  border-gray-400 md:pb-2.5 text-sm md:text-sm pb-2.5 '><Icon className='inline' icon="ri:user-line" /> </span> <input value={username} onChange={(e)=>{setUsername(e.target.value)}} className='ml-0 placeholder:px-0 mb-4 placeholder:text-blue-700 border-b-2 border-gray-400 px-3 py-2 bg-transparent   focus:outline-none focus:border-gray-400 w-96' type='text' placeholder="Enter your username"/>
+               <span className='text-gray-600 border-b-2  border-gray-500 md:pb-2.5 text-md pb-2.5 '><Icon className='inline' icon="ri:user-line" /> </span> <input value={username} onChange={(e)=>{setUsername(e.target.value)}} className='text-black ml-0 placeholder:px-0 mb-4 placeholder:text-gray-400 border-b-2 border-gray-500 px-3 py-2 bg-transparent   focus:outline-none focus:border-gray-500 w-96' type='text' placeholder="Enter your username"/>
                </div>
 
                <div>
                 <label className='block mb-2'>Password</label>
-              <span className='text-blue-700 border-b-2  border-gray-400 md:pb-2.5 text-sm md:text-sm pb-2.5 '><Icon className='inline' icon="material-symbols:lock-outline" />  </span> <input value={password} onChange={(e)=>{setPassword(e.target.value)}} className=' mb-4 placeholder:text-blue-700 border-b-2 border-gray-400 px-3 py-2 bg-transparent   focus:outline-none focus:border-gray-400 w-96'  type='password' 
+              <span className='text-gray-600 border-b-2  border-gray-500 md:pb-2.5 text-md pb-2.5 '><Icon className='inline' icon="material-symbols:lock-outline" />  </span> <input value={password} onChange={(e)=>{setPassword(e.target.value)}} className='text-black mb-4 placeholder:text-gray-400 border-b-2 border-gray-500 px-3 py-2 bg-transparent   focus:outline-none focus:border-gray-500 w-96'  type='password' 
                 placeholder="Enter your password"/>
                 </div>
               <Link to={otp}> <button className='w-96 bg-blue-800 border-none rounded-3xl h-12 text-white mt-8 hover:bg-blue-500'>Login</button></Link>

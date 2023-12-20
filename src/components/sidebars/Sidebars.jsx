@@ -12,16 +12,16 @@ const Sidebars = () => {
       
     }
     if (slide===true){
-     
-        nonhide= 'h-[calc(100vh-4rem)] bg-[#D2DDF3] w-56  hidden   md:block ';
-     hidebar='text-3xl absolute  px-4 -right-12 md:hidden ';
+      // 004369
+        nonhide= 'h-[calc(100vh-4rem)] text-gray-200 bg-[#004369] w-56  hidden   md:block ';
+     hidebar='text-3xl absolute text-gray-500 px-4 -right-12 md:hidden ';
        }
        else{
    
 
-     nonhide= 'h-[calc(100vh-4rem)] bg-[#D2DDF3] w-56 ';
+     nonhide= 'h-[calc(100vh-4rem)] text-gray-200 bg-[#004369] w-56 ';
 
-     hidebar='text-3xl absolute  h-[calc(100vh-4rem)]  mr-8  px-4 -right-12 md:hidden';
+     hidebar='text-3xl absolute text-gray-300  h-[calc(100vh-4rem)]  mr-8  px-4 -right-12 md:hidden';
        }
 
        //.................
@@ -67,8 +67,8 @@ const Sidebars = () => {
   return (
     <div className='relative flex '>
     <div className= {nonhide}>
-        <div className='flex  justify-center  items-center w-56 h-[calc(100vh-4rem)] '>
-            <ul className=' font-bold w-56 flex flex-col '>
+        <div className='flex  justify-center pt-[2.25rem]  w-56 h-[calc(100vh-4rem)] '>
+            <ul className=' font-bold  w-56 flex flex-col '>
             {DASHBOARD_SIDEBAR_LINKS.map((link) => (
 					<SidebarLink key={link.key} link={link} />
           
@@ -87,11 +87,11 @@ const Sidebars = () => {
        
        <Popover.Button className='focus:outline-none'>
        
-       <div className='flex items-center gap-4 py-4 w-56 px-4  hover:bg-blue-100 hover:text-green-800'><Icon className='text-4xl' icon="uiw:setting-o" /><span >Settings</span></div>
+       <div className='flex items-center gap-4 py-4 w-56 px-4  hover:bg-[#193443fb] hover:text-gray-400'><Icon className='text-4xl' icon="uiw:setting-o" /><span >Settings</span></div>
        </Popover.Button>
        <Popover.Panel className="absolute left-44  z-10 w-52 shadow-sm rounded-lg shadow-black bg-blue-50 -mt-20">
 
-<div className='  px-4 py-3  text-sm'>
+<div className='  px-4 py-3 text-black text-sm'>
 <div >
       
         <div className='block border-b-2  mb-4 p-2 border-gray-300 text-center text-sm font-semibold '>
@@ -134,7 +134,7 @@ function SidebarLink({ link }) {
 	
 
 	return (
-		<NavLink className={({isActive})=>`py-4 w-56 px-4 ${isActive?"text-green-800 ":"text-black"} flex   items-center gap-4 hover:bg-blue-100 hover:text-green-800 `}
+		<NavLink className={({isActive})=>` py-4 w-56 px-4 ${isActive?"text-gray-400 ":"text-gray-200"} flex   items-center gap-4 hover:bg-[#193443fb] hover:text-gray-400 `}
 			to={link.path}> <div className='text-4xl'>{link.icon}</div>
 <div>{link.label}</div>
 

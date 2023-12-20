@@ -26,6 +26,7 @@ import Teacherassignments from './components/assignments/Teacherassignments.jsx'
 import Details from './components/Details.jsx';
 import Chatbox from './components/Chatbox.jsx';
 import Hello from './Hello.jsx';
+import AssignmentProvider from './AssignmentContext/AssignmentProvider.jsx';
 const router = createBrowserRouter([
 
   {
@@ -116,7 +117,7 @@ const router = createBrowserRouter([
     },
     {
       path: "assignments",
-      element:<Teacherassignments/>,
+      element:<AssignmentProvider><Teacherassignments/></AssignmentProvider>,
     },
    
    

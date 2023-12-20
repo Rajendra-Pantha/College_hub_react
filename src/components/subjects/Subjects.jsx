@@ -10,7 +10,7 @@ const Subjects = () => {
   //  })
   return (
     
-      <div className='flex flex-wrap gap-6 justify-center mt-8 w-[80%]'>
+      <div className='flex flex-wrap gap-6 justify-center mt-40 w-[80%]'>
     {
      
     db["Sem_1"].map((subj,i)=>
@@ -18,7 +18,7 @@ const Subjects = () => {
       return(
         <div key={i}>
           
-          <div className='border-2  px-4 py-2 text-gray-600 h-52 w-52 justify-center flex items-center font-bold text-xl rounded-lg shadow-gray-200 shadow-lg hover:border-2 hover:border-black hover:scale-105 hover:text-black cursor-pointer'>{subj}</div>
+          <div className=' border-2  px-4 py-2 text-gray-600 h-52 w-52 justify-center flex items-center font-bold text-xl rounded-lg shadow-gray-200 shadow-lg hover:border-2 hover:border-black hover:scale-105 hover:text-black cursor-pointer'>{subj}</div>
           </div>
       )
     }

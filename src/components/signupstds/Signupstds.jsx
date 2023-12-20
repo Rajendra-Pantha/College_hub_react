@@ -27,11 +27,11 @@ const Signupstds = ({otp,users,logins}) => {
         <div>
             <div className='font-semibold text-3xl  mb-5 '>Sign up</div>
            
-            <form className='text-gray-400 '>
+            <form className='text-blue-700 '>
               <div>
             <label className='block mb-2 '>{users} ID</label>
-            <span className='text-blue-700 border-b-2  border-gray-400 md:pb-2.5 text-sm md:text-sm pb-2.5 '>  <Icon  className='inline'  icon="bx:id-card" /> </span> <input 
-             className=' placeholder:text-blue-700 mb-4 border-b-2 border-gray-400 px-3 py-2 bg-transparent   focus:outline-none focus:border-gray-400 w-96' 
+            <span className='text-gray-600 border-b-2  border-gray-500 md:pb-2.5 text-md  pb-2.5 '>  <Icon  className='inline'  icon="bx:id-card" /> </span> <input 
+             className='text-black placeholder:text-gray-400 mb-4 border-b-2 border-gray-500 px-3 py-2 bg-transparent   focus:outline-none focus:border-gray-500 w-96' 
              value={id}
              type='text'
              placeholder="Enter your student ID"
@@ -39,24 +39,24 @@ const Signupstds = ({otp,users,logins}) => {
           </div>
             <div>
             <label className='block mb-2' >Username</label>
-            <span className='text-blue-700 border-b-2  border-gray-400 md:pb-2.5 text-sm md:text-sm pb-2.5 '><Icon className='inline' icon="ri:user-line" /> </span>    <input 
-            className=' mb-4 placeholder:text-blue-700 border-b-2 border-gray-400 px-3 py-2 bg-transparent   focus:outline-none focus:border-gray-400 w-96' 
+            <span className='text-gray-600 border-b-2  border-gray-500 md:pb-2.5 text-md  pb-2.5 '><Icon className='inline' icon="ri:user-line" /> </span>    <input 
+            className='text-black mb-4 placeholder:text-gray-400 border-b-2 border-gray-500 px-3 py-2 bg-transparent   focus:outline-none focus:border-gray-500 w-96' 
             value={username}
             type='text' 
             placeholder="Enter your username"
             onChange={(e)=>{setUsername(e.target.value)}}/>
             </div>
             <label className='block mb-2'>Password</label>
-            <span className='text-blue-700 border-b-2  border-gray-400 md:pb-2.5 text-sm md:text-sm pb-2.5 '> <Icon className='inline' icon="material-symbols:lock-outline" /> </span>   <input 
-            className=' mb-4 placeholder:text-blue-700 border-b-2 border-gray-400 px-3 py-2 bg-transparent   focus:outline-none focus:border-gray-400 w-96'  
+            <span className='text-gray-600 border-b-2  border-gray-500 md:pb-2.5 text-md pb-2.5 '> <Icon className='inline' icon="material-symbols:lock-outline" /> </span>   <input 
+            className='text-black mb-4 placeholder:text-gray-400 border-b-2 border-gray-500 px-3 py-2 bg-transparent   focus:outline-none focus:border-gray-500 w-96'  
             value={pass}
             type='password' 
             placeholder="Enter your password"
             onChange={(e)=>{setpass(e.target.value)}}/>
             <div>
             <label className='block mb-2'>Conform Password</label>
-            <span className='text-blue-700 border-b-2  border-gray-400 md:pb-2.5 text-sm md:text-sm pb-2.5 '> <Icon className='inline' icon="material-symbols:lock-outline" /> </span>  <input 
-            className=' placeholder:text-blue-700 mb-4 border-b-2 border-gray-400 px-3 py-2 bg-transparent   focus:outline-none focus:border-gray-400 w-96'  
+            <span className='text-gray-600 border-b-2  border-gray-500 md:pb-2.5 text-md pb-2.5 '> <Icon className='inline' icon="material-symbols:lock-outline" /> </span>  <input 
+            className='text-black placeholder:text-gray-400 mb-4 border-b-2 border-gray-500 px-3 py-2 bg-transparent   focus:outline-none focus:border-gray-500 w-96'  
             value={conpass}
             type='password'
             placeholder="Enter your Conform password"
