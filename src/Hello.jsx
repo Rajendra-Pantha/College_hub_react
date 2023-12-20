@@ -1,26 +1,86 @@
-import React, { useState } from 'react';
+// import React, { useState } from "react";
+
+// function Hello() {
+//   const [selectedFile, setSelectedFile] = useState(null);
+
+//   // const handleFileChange = (event) => {
+//   //  setSelectedFile(event.target.files[0]);
+//   //  console.log(selectedFile);
+
+//   //  };
+//   async function uploads() {
+//     const obj = new FormData();
+//     obj.append("f1", selectedFile);
+//     console.log(obj);
+//     const list = await fetch(
+//       "http://localhost:8080/assignment/submitAssignment",
+//       {
+//         method: "Post",
+//         body: obj,
+//         headers: {
+//           "Content-Type": "multipart/form-data",
+//         },
+//       }
+//     );
+
+//     const item = await list.json();
+//   }
+
+//   return (
+//     <>
+//       <input
+//         type="file"
+//         onChange={(event) => {
+//           setSelectedFile(event.target.files);
+//         }}
+//       />
+//       <button onClick={uploads}>Click</button>
+//     </>
+//   );
+// }
+// export default Hello;
+
+import React, { useState, useEffect } from "react";
 
 function Hello() {
- const [selectedFile, setSelectedFile] = useState(null);
+  const [file, setFile] = useState();
 
-// const handleFileChange = (event) => {
-//  setSelectedFile(event.target.files[0]);
-//  console.log(selectedFile);
+  useEffect(() => {
+    // console.log("this is from react", selectedFile);
+  }, [file]);
 
-//  };
- async function uploads(){
-const obj = new FormData();
-const list = await fetch("http://localhost:8080/assignment/submitAssignment",{method:"Post",body:obj})
+  async function upload() {
+    console.log("function called");
+    const obj = new FormData();
+    obj.append("file", file);
+    console.log(file.type);
+    if (file.type == "application/pdf") {
+      const list = await fetch(
+        "http://localhost:8080/assignment/submitAssignment/657eeee41fda3264207916e9",
+        {
+          method: "Post",
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNjU3ZWVkZWUxZmRhMzI2NDIwNzkxNmU1IiwidXNlclR5cGUiOiJTdHVkZW50IiwiaWF0IjoxNzAyODE3MjYyfQ.Qvm24xdGQZfRw4YqQ4MkpoBmF2x5B1BmgDqRxeDAC4s",
+          },
+          body: obj,
+        }
+      )
+        .then((res) => {})
+        .catch((er) => console.log(er));
+    } else {
+      console.log("you cannot upload this");
+    }
+  }
 
-const item = await list.json();
-console.log(item)
- }
-
-return (
-    <>
- <input type="file" onChange={(event)=>{setSelectedFile(event.target.files[0])}} />
- <button onClick={uploads}>Click</button>
- </>
- );
+  return (
+    <div>
+      <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+      <button type="button" onClick={upload}>
+        Upload
+      </button>
+    </div>
+  );
 }
+
 export default Hello;
