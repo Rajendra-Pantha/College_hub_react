@@ -40,14 +40,14 @@ const Details = () => {
         <div className='mt-8 w-full pr-10 text-lg'>
           <div className='text-gray-800'>
          <strong className='text-2xl '>Description:</strong></div>
-         <div className='text-gray-800 w-2/3 text-justify pt-4'>
+         <div className='text-gray-800  text-justify pt-4'>
             {selectedItem.Describe}
          </div>
 
            
          
         </div>
-        <div className='mt-8 text-gray-800 text-2xl'><strong> Attached File:</strong></div>
+       
       </div>
       </div>
   );

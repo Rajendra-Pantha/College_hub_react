@@ -12,16 +12,17 @@ const Sidebarsteacher = () => {
       
     }
     if (slide===true){
-     
-      nonhide= 'h-[calc(100vh-4rem)] text-gray-200 bg-[#004369] w-56  hidden   md:block ';
-      hidebar='text-3xl absolute text-gray-500 px-4 -right-12 md:hidden ';
+      // 004369
+        nonhide= 'h-[calc(100vh-4rem)] text-gray-200  w-56  hidden   md:block border-r border-r-2';
+     hidebar='text-3xl absolute text-[#004369] px-4 -right-12 md:hidden ';
        }
        else{
    
 
-        nonhide= 'h-[calc(100vh-4rem)] text-gray-200 bg-[#004369] w-56 ';
+     nonhide= 'h-[calc(100vh-4rem)] text-gray-200  w-56 border-r border-r-2 border-gray-400 shadow-gray-700 shadow-sm';
 
-        hidebar='text-3xl absolute text-gray-300  h-[calc(100vh-4rem)]  mr-8  px-4 -right-12 md:hidden';  }
+     hidebar='text-3xl absolute text-[#004369]  h-[calc(100vh-4rem)]  mr-8  px-4 -right-12 md:hidden';
+       }
 
        //.................
     
@@ -62,7 +63,7 @@ const Sidebarsteacher = () => {
   return (
     <div className='relative flex '>
     <div className= {nonhide}>
-        <div className='flex  justify-center pt-[2.25rem]  w-56 h-[calc(100vh-4rem)] '>
+        <div className='flex  justify-center pt-[2.25rem] mt-8  w-56 h-[calc(100vh-5rem)] '>
             <ul className=' font-bold  w-56 flex flex-col '>
             {DASHBOARD_SIDEBAR_LINKS.map((link) => (
 					<SidebarLink key={link.key} link={link} />
@@ -78,8 +79,7 @@ const Sidebarsteacher = () => {
      <>
        
        <Popover.Button className='focus:outline-none'>
-       
-       <div className='flex items-center gap-4 py-4 w-56 px-4  hover:bg-[#193443fb] hover:text-gray-400'><Icon className='text-4xl' icon="uiw:setting-o" /><span >Settings</span></div>
+       <div className='flex items-center gap-4 py-4 w-56 px-4 text-[#004369] hover:bg-[#193443fb] hover:text-white'><Icon className='text-4xl' icon="uiw:setting-o" /><span >Settings</span></div>
        </Popover.Button>
        <Popover.Panel className="absolute left-44  z-10 w-52 shadow-sm rounded-lg shadow-black bg-blue-50 -mt-20">
 
@@ -125,11 +125,11 @@ function SidebarLink({ link }) {
 	
 
 	return (
-    <NavLink className={({isActive})=>` py-4 w-56 px-4 ${isActive?"text-gray-400 ":"text-gray-200"} flex   items-center gap-4 hover:bg-[#193443fb] hover:text-gray-400 `}
+    <NavLink className={({isActive})=>` py-4 w-56 px-4 ${isActive?"text-[#454d51] ":"text-[#004369]"} flex   items-center gap-4 hover:bg-[#193443fb] hover:text-white `}
     to={link.path}> <div className='text-4xl'>{link.icon}</div>
 <div>{link.label}</div>
 
-		</NavLink>
+  </NavLink>
 	)
 }
 

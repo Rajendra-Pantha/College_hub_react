@@ -1,8 +1,10 @@
 import React from 'react'
-import { useContext } from 'react'
+import { useContext , useRef} from 'react'
 import AssignmentContext from '../../AssignmentContext/AssignmentContext'
 import { Popover } from '@headlessui/react'
 import { useState } from 'react'
+import { Icon } from '@iconify/react';
+
 const Teacherassignments = () => {
  const {data,addAssignment} = useContext(AssignmentContext)
  
@@ -14,8 +16,11 @@ const Teacherassignments = () => {
     deadline: '',
     subject: '',
   });
-  
- 
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const handleBg=()=>{
+    setIsPopoverOpen(!isPopoverOpen)
+  }
+  const popoverButtonRef = useRef(null);
 
 
 
@@ -32,52 +37,65 @@ const Teacherassignments = () => {
         deadline: '',
         subject: '',
       });
+   
+      popoverButtonRef.current.click();
 
- }
+ }  
+ 
+ const isEmpty = Object.values(newAssignment).some(value => value === '');
+const isAddButtonDisabled = !isEmpty || Object.values(newAssignment).every(value => value.trim() === '');
+
  
   return (
     
-    <div className=' pt-8 pl-2 w-screen relative'>
-     
-
+    <div className=' mt-2 pl-2 w-screen relative'>
+      {isPopoverOpen && (
+        <div
+          className='fixed top-0 left-0 w-full h-full bg-black bg-opacity-95 -z-1'
+          onClick={() => setIsPopoverOpen(false)} 
+        />
+      )}
       <Popover className="relative">
      
      <>
        
-       <Popover.Button >
+       <Popover.Button onClick={handleBg} ref={popoverButtonRef}>
        
-       <button className='absolute right-8 border-2 rounded-xl p-2 font-semibold shadow-lg shadow-slate-300 hover:border-black hover:border-2 hover:-translate-y-0.5 '>Create Assignment</button>
+       <div  className='flex gap-2 justify-center absolute  border-2 rounded-xl py-4 px-6 font-semibold shadow-lg shadow-slate-300  hover:-translate-y-0.5 bg-[#000080] text-white ml-9 right-8 mb-2 '><Icon icon="gala:add" width="22" /> <div>Create Assignment</div></div>
        </Popover.Button>
-       <Popover.Panel className="absolute right-4 mt-10 z-10  w-[97%] shadow-sm rounded-md shadow-black bg-blue-50 h-[calc(100vh-14rem)]">
+       <Popover.Panel className="absolute right-8 -mt-8 z-10  w-[95%] shadow-sm rounded-md shadow-black bg-[#dcdcdc] h-[calc(100vh-10rem)]">
 
 <div className='  px-2 py-3  text-sm'>
        <form onSubmit={handleSubmit}>
-        <div className='mb-8'>
-      <label className='font-semibold'>
+        <div className='mb-8 mt-6 ml-4'>
+      <label className=' text-gray-700  font-semibold mb-2'>
         Title:</label>
-        <input className='h-8 rounded-lg ml-2 w-[75%]' type="text"  value={newAssignment.title}onChange={(e) => setNewAssignment({ ...newAssignment, title: e.target.value })}/>
+        <input className='ml-24 text-lg shadow appearance-none border rounded w-[70%] py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type="text"  value={newAssignment.title}onChange={(e) => setNewAssignment({ ...newAssignment, title: e.target.value })}/>
         </div>
 
-        <div className='mb-8'>
-      <label className='font-semibold'>
+        <div className='mb-8 mt-6 ml-4'>
+      <label className=' text-gray-700  font-semibold mb-2'>
         Assignment-type:</label>
-        <input className='h-8 rounded-lg ml-2 w-[75%]' type="text"  value={newAssignment.AssignmentType}onChange={(e) => setNewAssignment({ ...newAssignment, AssignmentType: e.target.value })}/>
+        <input className='ml-4 text-lg shadow appearance-none border rounded w-[70%] py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type="text"  value={newAssignment.AssignmentType}onChange={(e) => setNewAssignment({ ...newAssignment, AssignmentType: e.target.value })}/>
         </div>
         
-        <div className='mb-8'>
-      <label className='font-semibold'>
+        <div className='mb-8 mt-6 ml-4'>
+      <label className=' text-gray-700  font-semibold mb-2'>
         Description: </label>
-        <textarea className='h-48 rounded-lg ml-2 w-[70%]' value={newAssignment.description}  onChange={(e) => setNewAssignment({ ...newAssignment, description: e.target.value })} />
+        <textarea className='ml-12 text-lg shadow appearance-none border rounded w-[70%] py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' value={newAssignment.description}  onChange={(e) => setNewAssignment({ ...newAssignment, description: e.target.value })} />
         </div>
-        <div className='mb-8'>
-      <label className='font-semibold'>
+        <div className='mb-8 mt-6 ml-4'>
+      <label className=' text-gray-700  font-semibold mb-2'>
         Deadline: </label>
-        <input className='h-8 rounded-lg ml-2 w-[70%]' type="date"  value={newAssignment.deadline} onChange={(e) => setNewAssignment({ ...newAssignment, deadline: e.target.value })} />
+        <input className='ml-16 text-lg shadow appearance-none border rounded w-[70%] py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type="date"  value={newAssignment.deadline} onChange={(e) => setNewAssignment({ ...newAssignment, deadline: e.target.value })} />
         </div>
      
     
       
-      <button className="border-2 p-2 ml-[30%] font-semibold bg-indigo-950 text-white rounded-2xl hover:-translate-y-0.5" type="submit">Add Assignment</button>
+      
+      
+  
+      <button id='btn' className="border-2 px-8 py-4 ml-[40%] font-semibold border-none bg-[#000080] text-white rounded-2xl hover:-translate-y-0.5" type="submit" disabled={isAddButtonDisabled}>Add Assignment</button>
     </form>
     </div>
    
@@ -88,21 +106,37 @@ const Teacherassignments = () => {
 
 
 
-     <div className='flex flex-wrap gap-8 mt-16 ml-8 '>
+     <div className='flex flex-wrap gap-8 mt-20 ml-8  '>
       {
-        data.map((item,i)=>(
-          <div className='border-2 w-[35%] p-2' key={i}>
+        data.map((item,i)=><div className='bg-[#FAFAFA] cursor-pointer hover:scale-105 w-[22%] rounded-lg  p-4 shadow-gray-400 shadow-md' key={i}>
+      <Popover >
+        <>
+            <Popover.Button className='text-[18px] text-[#435585] font-bold '>c++</Popover.Button> 
+            <Popover.Panel className=" mt-2 z-10  w-[55rem] shadow-sm rounded-md shadow-black right-4 bg-[#dcdcdc] h-[calc(100vh-16rem)]"><div></div>
+</Popover.Panel>
+            </>
+            </Popover>
+        <div className='  p-4 rounded-lg'>
+          <div className='flex gap-2'>
+            <div>
+            <Icon className=' h-32 w-44 text-[#d2691e]' icon="bx:file" />
+            </div>
+     
+          </div>
+  </div>
+
+  <div className='mt-2 flex gap-4'>
+    
+          <div className=' h-10 w-14 rounded-full bg-[#008080] flex justify-center items-center'><Icon className="  text-xl " icon="mingcute:user-2-fill" color='white' /></div>
+       
+              <div className='flex gap-2 bg-[#008080] rounded-lg w-full ml-0.5 justify-center items-center'>
            
-         <div > <span className='font-semibold text-lg pb-2'>Title:</span > {item.title}</div>
-         <div> <span className='font-semibold text-lg pb-2'>Assignment-type:</span>{item.AssignmentType}</div>
-         <div><span className='font-semibold text-lg pb-2'>Deadline:</span> {item.deadline}</div>
-          <div> <span className='font-semibold text-lg pb-2'>Description:</span>{item.description}</div>
-                    </div>
+            <div className='text-white font-bold'>Bhuwan Panthi</div>
+          </div>
+
+        </div>
         
-         
-        )
-        
-        )
+      </div>)
         }
         </div>
     </div>

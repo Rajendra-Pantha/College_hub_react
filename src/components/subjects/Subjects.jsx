@@ -18,7 +18,7 @@ const Subjects = () => {
       return(
         <div key={i}>
           
-          <div className=' border-2  px-4 py-2 text-gray-600 h-52 w-52 justify-center flex items-center font-bold text-xl rounded-lg shadow-gray-200 shadow-lg hover:border-2 hover:border-black hover:scale-105 hover:text-black cursor-pointer'>{subj}</div>
+          <div className=' border-2  px-4 py-2 text-gray-600 h-52 w-52 justify-center flex items-center font-bold text-xl rounded-lg shadow-gray-200 shadow-lg hover:border-2 hover:border-[#d2691e] hover:scale-105 hover:text-black cursor-pointer'>{subj}</div>
           </div>
       )
     }

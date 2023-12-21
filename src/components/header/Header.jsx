@@ -5,18 +5,18 @@ import { Icon } from '@iconify/react';
 const Header = () => {
   return (
     // 01949A
-    <div className='flex justify-between items-center px-4 pr-6 h-16 bg-[#004369] '>
-        <div><span className='logo text-gray-200'>CAMPUS HUB</span>
+    <div className='flex justify-between items-center px-4 pr-6 h-20 bg-[#004369] broder-none'>
+        <div  ><span className='logo text-white font-body text-3xl '>CAMPUS HUB</span>
         </div>
         <div>
-        <div className='flex gap-6 font-bold text-2xl'>
+        <div className='flex gap-6 font-bold text-2xl '>
         <Popover className="relative">
      
         <>
           
           <Popover.Button >
           
-            <Icon className=' text-gray-200 text-4xl' icon="basil:notification-solid"  />
+            <Icon className=' text-white text-4xl' icon="basil:notification-solid"  />
           </Popover.Button>
           <Popover.Panel className="absolute right-0 mt-2.5 z-10 w-52 shadow-sm rounded-md shadow-black bg-blue-50">
 
@@ -32,7 +32,7 @@ const Header = () => {
           
           <Popover.Button >
           
-           <div className='text-white border-2 rounded-full p-1 text-xl'>RP</div>
+           <div className='text-white border-2 border-white rounded-full p-1 text-xl'>RP</div>
           </Popover.Button >
           <Popover.Panel className="absolute right-0 mt-2.5 z-10 w-40 shadow-sm rounded-md shadow-black bg-blue-50">
 

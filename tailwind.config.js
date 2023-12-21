@@ -7,8 +7,10 @@ export default {
   theme: {
     extend: {
       fontFamily:{
-       body:['Roboto Mono'] 
-      }
+       body:['Open Sans'] 
+      },
+     
+    
     },
   },
   plugins: [],

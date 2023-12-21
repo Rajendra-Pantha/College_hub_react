@@ -28,7 +28,7 @@ const Chatbox = () => {
 
 
       <div className=' w-screen h-[calc(100vh)] bg-slate-100 flex justify-center items-center md:pt-0 md:pl-0'>
-      <div className='w-[100%] h-[100%]  flex rounded-lg overflow-hidden' >
+      <div className='w-[98%] h-[98%]  flex rounded-t-lg overflow-hidden' >
       
            
           
@@ -50,12 +50,12 @@ const Chatbox = () => {
             </div>
           </div>
           {/* chatbox body  */}
-          <div className='bg-white  h-[calc(100%-5rem)]  w-[calc(100%)]  p-4 overflow-y-scroll  '>
+          <div className='bg-white  h-[calc(100%-5rem)]  w-[calc(100%)]  p-4   '>
 
            
           <div className='flex pb-6 '>
               <div>
-                <img className='h-14 w-14 rounded-full' src='https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?s=1024x1024&w=is&k=20&c=iX0adGZVKv9wS5yrs0-hpFsJBnRAacZa1DcDZ0I9Bqk=' />
+                <img className='h-14 w-14 rounded-full object-cover' src='https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?s=1024x1024&w=is&k=20&c=iX0adGZVKv9wS5yrs0-hpFsJBnRAacZa1DcDZ0I9Bqk=' />
                 <span className=' text-sm text-gray-500 font-semibold'>just now</span>
               </div>
               <div className=' max-w-md flex flex-col'>
@@ -67,7 +67,7 @@ const Chatbox = () => {
 
             <div className='flex pb-6 flex-row-reverse'>
               <div>
-                <img className='h-14 w-14 rounded-full' src='https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?s=1024x1024&w=is&k=20&c=iX0adGZVKv9wS5yrs0-hpFsJBnRAacZa1DcDZ0I9Bqk=' />
+                <img className='h-14 w-14 rounded-full object-cover' src='https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?s=1024x1024&w=is&k=20&c=iX0adGZVKv9wS5yrs0-hpFsJBnRAacZa1DcDZ0I9Bqk=' />
                 <span className=' text-sm text-gray-500 font-semibold'>just now</span>
               </div>
               <div className=' max-w-md flex flex-col'>
@@ -80,7 +80,7 @@ const Chatbox = () => {
           {/* message input */}
           <div className='w-[100%] flex shadow-gray-600 shadow-2xl'>
             <input className='h-12 w-[90%] focus:outline-none placeholder:p-2 p-2 ' type="text" placeholder='Write something here...' />
-            <button className='w-[10%] text-white p-2 font-bold text-lg  bg-[#902bf5] h-12 hover:bg-[#6e0fcd] '>Send</button>
+            <button className='w-[10%] text-white p-2  font-bold text-lg  bg-[#902bf5] h-12 hover:bg-[#6e0fcd] '>Send</button>
 
           </div>
         </div>

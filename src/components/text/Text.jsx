@@ -9,8 +9,8 @@ const Text = () => {
       <div className='md:absolute md:right-0 md:-ml-0.5 md:w-0.5 md:h-5/6  md:bg-[#6DA570] '> </div>
      
       <div>
-        <div className=' md:ml-0 md:px-3  lg:px-8 md:font-bold md:text-5xl md:block md:text-black font-bold text-3xl inline mr-3 camptext '>CAMPUS</div>
-        <div className='md:px-3 lg:px-8 md:block md:font-bold md:text-5xl md:text-black font-bold text-3xl inline hubtext'>HUB</div>
+        <div className=' md:ml-0 md:px-3  lg:px-8 md:font-bold md:text-[4rem] md:block md:text-black font-bold text-[2.5rem] inline mr-3  font-body leading-none'>CAMPUS</div>
+        <div className='md:ml-0 md:px-3  lg:px-8 md:font-bold md:text-[4rem] md:block md:text-black font-bold text-[2.5rem] inline mr-3  font-body leading-none'>HUB</div>
         {/* <hr className='md:hidden divide-solid '/> */}
       </div>
     </div>
