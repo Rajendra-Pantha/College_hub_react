@@ -27,6 +27,7 @@ import Details from './components/Details.jsx';
 import Chatbox from './components/Chatbox.jsx';
 
 import AssignmentProvider from './AssignmentContext/AssignmentProvider.jsx';
+import Hello from './Hello.jsx';
 const router = createBrowserRouter([
 
   {
@@ -128,7 +129,10 @@ const router = createBrowserRouter([
     path: "teacher/messagestds/chatbox/:i",
     element:<Chatbox/>,
   },
-  
+  {
+    path:"Hello",
+    element:<Hello/>
+  }
 
 ]);
 ReactDOM.createRoot(document.getElementById('root')).render(
