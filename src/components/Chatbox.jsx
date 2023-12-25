@@ -96,6 +96,28 @@ const Chatbox = () => {
                 </button>
               </div>
             </div>
+<<<<<<< HEAD
+=======
+
+
+            <div className='flex pb-6 flex-row-reverse'>
+              <div>
+                <img className='h-14 w-14 rounded-full object-cover' src='https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?s=1024x1024&w=is&k=20&c=iX0adGZVKv9wS5yrs0-hpFsJBnRAacZa1DcDZ0I9Bqk=' />
+                <span className=' text-sm text-gray-500 font-semibold'>just now</span>
+              </div>
+              <div className=' max-w-md flex flex-col'>
+                <p className='bg-indigo-100 rounded-tl-none rounded-bl-lg rounded-tr-lg rounded-br-l mr-4 px-3 py-1 text-2xl'>hello</p>
+                <img />
+              </div>
+            </div>
+
+          </div>
+          {/* message input */}
+          <div className='w-[100%] flex shadow-gray-600 border-2 shadow-2xl'>
+            <input className='h-12 w-[90%] focus:outline-none placeholder:p-2 p-2 placeholder:text-gray-600 ' type="text" placeholder='Write something here...' />
+            <button className='w-[10%] text-white p-2  font-bold text-lg  bg-[#902bf5] h-12 hover:bg-[#6e0fcd] '>Send</button>
+
+>>>>>>> ef2ba76eb487e9e8cde9a8eb9b1a3f805fd6993f
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
-import { NavLink } from 'react-router-dom';
+import { NavLink,useNavigate } from 'react-router-dom';
 import { Popover } from '@headlessui/react'
 const Sidebarsteacher = () => {
     let nonhide;
@@ -57,7 +57,9 @@ const Sidebarsteacher = () => {
    
        
       ]
-      
+      const navigate = useNavigate();
+      const handleLogOut=()=>{
+        navigate("/loginteacher");}
        //.................
     
   return (
@@ -98,7 +100,7 @@ const Sidebarsteacher = () => {
         <div className='block border-b-2  mb-4 p-2  border-gray-300 text-center text-sm font-semibold '>
         Terms and Conditions   </div>
 
-        <div className='block   border-gray-300 text-center p-2 text-sm font-semibold '>
+        <div onClick={handleLogOut} className='block   border-gray-300 text-center p-2 text-sm font-semibold '>
           Log Out
         </div>
       </div>
