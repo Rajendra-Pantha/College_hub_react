@@ -24,6 +24,7 @@ import Details from "./components/Details.jsx";
 import Chatbox from "./components/Chatbox.jsx";
 
 import AssignmentProvider from "./AssignmentContext/AssignmentProvider.jsx";
+
 const router = createBrowserRouter([
   {
     path: "/",
