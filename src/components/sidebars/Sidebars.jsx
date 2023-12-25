@@ -1,9 +1,10 @@
 import React from 'react'
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
-import { NavLink } from 'react-router-dom';
+import { NavLink,useNavigate } from 'react-router-dom';
 import { Popover } from '@headlessui/react'
 const Sidebars = () => {
+
     let nonhide;
     let hidebar;
     const[slide,setSlide]=useState(true);
@@ -63,6 +64,9 @@ const Sidebars = () => {
       ]
       
        //.................
+       const navigate = useNavigate();
+       const handleLogOut=()=>{
+         navigate("/loginstudent");}
     
   return (
     <div className='relative flex '>
@@ -105,7 +109,7 @@ const Sidebars = () => {
         <div className='block border-b-2  mb-4 p-2  border-gray-300 text-center text-sm font-semibold '>
         Terms and Conditions   </div>
 
-        <div className='block   border-gray-300 text-center p-2 text-sm font-semibold '>
+        <div onClick={handleLogOut} className='block   border-gray-300 text-center p-2 text-sm font-semibold '>
           Log Out
         </div>
       </div>

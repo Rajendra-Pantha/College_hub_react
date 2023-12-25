@@ -78,8 +78,8 @@ const Chatbox = () => {
 
           </div>
           {/* message input */}
-          <div className='w-[100%] flex shadow-gray-600 shadow-2xl'>
-            <input className='h-12 w-[90%] focus:outline-none placeholder:p-2 p-2 ' type="text" placeholder='Write something here...' />
+          <div className='w-[100%] flex shadow-gray-600 border-2 shadow-2xl'>
+            <input className='h-12 w-[90%] focus:outline-none placeholder:p-2 p-2 placeholder:text-gray-600 ' type="text" placeholder='Write something here...' />
             <button className='w-[10%] text-white p-2  font-bold text-lg  bg-[#902bf5] h-12 hover:bg-[#6e0fcd] '>Send</button>
 
           </div>
