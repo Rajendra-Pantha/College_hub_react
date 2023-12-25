@@ -25,11 +25,6 @@ import Chatbox from "./components/Chatbox.jsx";
 
 import AssignmentProvider from "./AssignmentContext/AssignmentProvider.jsx";
 
-<<<<<<< HEAD
-=======
-import AssignmentProvider from './AssignmentContext/AssignmentProvider.jsx';
-import Hello from './Hello.jsx';
->>>>>>> ef2ba76eb487e9e8cde9a8eb9b1a3f805fd6993f
 const router = createBrowserRouter([
   {
     path: "/",
@@ -147,14 +142,6 @@ const router = createBrowserRouter([
     path: "teacher/messagestds/chatbox/:i",
     element: <Chatbox />,
   },
-<<<<<<< HEAD
-=======
-  {
-    path:"Hello",
-    element:<Hello/>
-  }
-
->>>>>>> ef2ba76eb487e9e8cde9a8eb9b1a3f805fd6993f
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
