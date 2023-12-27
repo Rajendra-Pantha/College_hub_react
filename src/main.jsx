@@ -28,6 +28,7 @@ import Chatbox from './components/Chatbox.jsx';
 
 import AssignmentProvider from './AssignmentContext/AssignmentProvider.jsx';
 import Hello from './Hello.jsx';
+import Studentlist from './components/Studentlist.jsx';
 const router = createBrowserRouter([
 
   {
@@ -106,15 +107,22 @@ const router = createBrowserRouter([
     element:<Layout3 />,
     children: [{
       path: "dashboard",
-      element:<Teacherdashboard/>,
+      element:<AssignmentProvider><Teacherdashboard/></AssignmentProvider>,
     },
     {
       path: "classes",
       element:<Class/>,
     },
+   { path:"classes/studentdetails",
+     element:<Studentlist/>
+    },
     {
       path: "messagestds",
       element:<Message />,
+    },
+    {
+      path: "/teacher/messagestds/chatbox/:i",
+      element:<Chatbox/>,
     },
     {
       path: "assignments",
@@ -125,10 +133,7 @@ const router = createBrowserRouter([
    
 ]
   },
-  {
-    path: "teacher/messagestds/chatbox/:i",
-    element:<Chatbox/>,
-  },
+ 
   {
     path:"Hello",
     element:<Hello/>

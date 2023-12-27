@@ -27,7 +27,7 @@ const Chatbox = () => {
   
 
 
-      <div className=' w-screen h-[calc(100vh)] bg-slate-100 flex justify-center items-center md:pt-0 md:pl-0'>
+      <div className='w-screen  md:w-[calc(100vw-16rem)]  h-[calc(100vh)] bg-slate-100 flex justify-center items-center md:pt-0 md:pl-0'>
       <div className='w-[98%] h-[98%]  flex rounded-t-lg overflow-hidden' >
       
            

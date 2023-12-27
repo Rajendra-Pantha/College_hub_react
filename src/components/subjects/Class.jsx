@@ -2,7 +2,11 @@ import React from 'react'
 import { Icon } from '@iconify/react'
 import { Popover } from '@headlessui/react'
 import { useState } from 'react'
+import {Link} from 'react-router-dom'
 const Class = () => { 
+  const[subject,setSubject]=useState(
+   [ { id: 1, name: 'Math' },
+    { id: 2, name: 'C-programming' },] )
   const [detail,setDetail]=useState({ 
     groupName: '',
     subjectName: ''
@@ -17,6 +21,7 @@ const Class = () => {
  }
   return (
    <div className=' pt-8 pl-2'>
+    <div>
       <Popover>
         <>
         <Popover.Button>
@@ -36,6 +41,22 @@ const Class = () => {
     </Popover.Panel>
     </>
     </Popover>
+    </div>
+ 
+ 
+  <div className='flex flex-wrap gap-8'>   
+{
+ 
+  subject.map((item)=>
+  <Link to="studentdetails">
+  <div key={item.id} class="mt-8 card w-52 h-48 p-2 bg-opacity-58 bg-gray-100 border border-gray-300 shadow-md filter  rounded-lg text-center cursor-pointer transition-all duration-200 flex items-center justify-center select-none font-bold text-gray-700 hover:border-blue-500 hover:text-blue-500 transform hover:scale-100 text-xl">
+        <span className="text-lg font-semibold mb-2">{item.name}</span>
+
+  </div>
+  </Link>
+  )
+}
+   </div>
     </div>
   )
 }

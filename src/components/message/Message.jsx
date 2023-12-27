@@ -13,7 +13,7 @@ const Message = () => {
  
     {db['Sem_1'].map((subj,i)=>{
       return(
-   <Link  to={`chatbox/${i}`}> 
+   <Link  to={`/teacher/messagestds/chatbox/${i}`}> 
     <div className=' border-b-2 rounded-lg   border-gray-300 p-4 text-gray-700 hover:text-[21px]' key={i} >{subj}<Icon className='inline  ' icon="fluent:ios-arrow-24-regular" hFlip={true} /></div>
    </Link>   
       )
