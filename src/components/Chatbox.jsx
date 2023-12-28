@@ -1,10 +1,43 @@
-import React from "react";
+import { React, useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import db from "../data/subject_db.json";
-
+import socket from "../socket";
+import ClassContext from "../ClassContext/CreateClass";
 const Chatbox = () => {
+  const [currentMessage, setCurrentMessage] = useState("");
+  const [messageList, setMessageList] = useState([]);
+
+  const { detail, setDetail } = useContext(ClassContext);
+  console.log("value of socket:  ", socket);
+
+  const sendMessage = async () => {
+    if (currentMessage !== "") {
+      // console.log("this is author: ", detail.groupName);
+      const messageData = {
+        author: detail.groupName,
+        subject: detail.subjectName,
+
+        time:
+          new Date(Date.now()).getHours() +
+          ":" +
+          new Date(Date.now()).getMinutes(),
+        message: currentMessage,
+      };
+
+      await socket.emit("send_message", messageData);
+      setMessageList((prevlist) => [...prevlist, messageData]);
+    }
+  };
+  // useEffect(() => {
+  //   sendMessage();
+  // }, [sendMessage]);
+  useEffect(() => {
+    socket.on("recieve_message", (data) => {
+      setMessageList((prevlist) => [...prevlist, data]);
+    });
+  }, [socket]);
   const navigate = useNavigate();
   const handleBack = () => {
     navigate(-1);
@@ -59,9 +92,14 @@ const Chatbox = () => {
                     </span>
                   </div>
                   <div className=" max-w-md flex flex-col">
-                    <p className="bg-[#f9cdd6bb] rounded-tl-none rounded-bl-lg rounded-tr-lg rounded-br-l ml-4 px-3 py-1 text-2xl">
-                      hello
-                    </p>
+                    {messageList.map((messageContent) => {
+                      return (
+                        <p className="bg-[#f9cdd6bb] rounded-tl-none rounded-bl-lg rounded-tr-lg rounded-br-l ml-4 px-3 py-1 text-2xl">
+                          {messageContent.message}
+                        </p>
+                      );
+                    })}
+
                     <img />
                   </div>
                 </div>
@@ -90,8 +128,14 @@ const Chatbox = () => {
                   className="h-12 w-[90%] focus:outline-none placeholder:p-2 p-2 "
                   type="text"
                   placeholder="Write something here..."
+                  onChange={(e) => {
+                    setCurrentMessage(e.target.value);
+                  }}
                 />
-                <button className="w-[10%] text-white p-2  font-bold text-lg  bg-[#902bf5] h-12 hover:bg-[#6e0fcd] ">
+                <button
+                  className="w-[10%] text-white p-2  font-bold text-lg  bg-[#902bf5] h-12 hover:bg-[#6e0fcd] "
+                  onClick={sendMessage}
+                >
                   Send
                 </button>
               </div>

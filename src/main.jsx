@@ -24,6 +24,7 @@ import Details from "./components/Details.jsx";
 import Chatbox from "./components/Chatbox.jsx";
 
 import AssignmentProvider from "./AssignmentContext/AssignmentProvider.jsx";
+import ClassProvider from "./ClassContext/ClassProvider.jsx";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: "",
+        path: "/",
         element: <Nav />,
       },
 
@@ -106,7 +107,11 @@ const router = createBrowserRouter([
   },
   {
     path: "students/messagestds/chatbox/:i",
-    element: <Chatbox />,
+    element: (
+      <ClassProvider>
+        <Chatbox />
+      </ClassProvider>
+    ),
   },
   {
     path: "Hello",
@@ -122,11 +127,19 @@ const router = createBrowserRouter([
       },
       {
         path: "classes",
-        element: <Class />,
+        element: (
+          <ClassProvider>
+            <Class />,
+          </ClassProvider>
+        ),
       },
       {
         path: "messagestds",
-        element: <Message />,
+        element: (
+          <ClassProvider>
+            <Message />
+          </ClassProvider>
+        ),
       },
       {
         path: "assignments",
@@ -136,11 +149,15 @@ const router = createBrowserRouter([
           </AssignmentProvider>
         ),
       },
+      {
+        path: "/teacher/messagestds/chatbox/:i",
+        element: (
+          <ClassProvider>
+            <Chatbox />
+          </ClassProvider>
+        ),
+      },
     ],
-  },
-  {
-    path: "teacher/messagestds/chatbox/:i",
-    element: <Chatbox />,
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
