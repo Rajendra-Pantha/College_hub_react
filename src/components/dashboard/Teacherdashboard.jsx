@@ -14,7 +14,7 @@ const Teacherdashboard = () => {
   };
   
   return (
-    <div className=' mt-2 pl-2 w-screen relative'>
+    <div className=' mt-2 pl-2 w-screen  relative'>
        {isPopupVisible  && (
         <div
           className='fixed top-0 left-0 w-full h-full bg-black bg-opacity-90 -z-1'
@@ -58,7 +58,7 @@ const Teacherdashboard = () => {
          
         <div className='text-3xl font-semibold text-gray-600 ml-8 mb-2 mt-8'>Messages</div>
       <div className='bg-gray-400 h-px mb-6 mx-8'/>
-      <div className='flex flex-wrap gap-8 ml-8 mt-4 w-[100%]'>
+      <div className='flex flex-wrap gap-8 mx-8 mt-4 '>
     {
      
     db["Sem_1"].map((subj,i)=>

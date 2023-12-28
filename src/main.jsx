@@ -14,7 +14,7 @@ import Dashboard from "./components/dashboard/Dashboard.jsx";
 import Subjects from "./components/subjects/Subjects.jsx";
 import Message from "./components/message/Message.jsx";
 import Assignments from "./components/assignments/Assignments.jsx";
-import Hello from "./Hello.jsx";
+
 
 import Class from "./components/subjects/Class.jsx";
 import Teacherdashboard from "./components/dashboard/Teacherdashboard.jsx";
@@ -26,12 +26,9 @@ import Chatbox from "./components/Chatbox.jsx";
 import AssignmentProvider from "./AssignmentContext/AssignmentProvider.jsx";
 import ClassProvider from "./ClassContext/ClassProvider.jsx";
 
-<<<<<<< HEAD
-import AssignmentProvider from './AssignmentContext/AssignmentProvider.jsx';
+
 import Hello from './Hello.jsx';
 import Studentlist from './components/Studentlist.jsx';
-=======
->>>>>>> e352e33eb7da636cda63377ccbc8e5b06e436fe1
 const router = createBrowserRouter([
   {
     path: "/",
@@ -125,7 +122,7 @@ const router = createBrowserRouter([
   },
   {
     path: "teacher",
-<<<<<<< HEAD
+
     element:<Layout3 />,
     children: [{
       path: "dashboard",
@@ -156,12 +153,9 @@ const router = createBrowserRouter([
 ]
   },
  
-  {
-    path:"Hello",
-    element:<Hello/>
-  }
 
-=======
+
+{
     element: <Layout3 />,
     children: [
       {
@@ -202,14 +196,8 @@ const router = createBrowserRouter([
       },
     ],
   },
-<<<<<<< HEAD
-=======
-  {
-    path: "teacher/messagestds/chatbox/:i",
-    element: <Chatbox />,
-  },
->>>>>>> e352e33eb7da636cda63377ccbc8e5b06e436fe1
->>>>>>> b61791de63d6cd262a02d4655b24f0f584dc4c0c
+  
+
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

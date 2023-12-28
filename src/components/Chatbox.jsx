@@ -9,7 +9,7 @@ const Chatbox = () => {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
 
-  const { detail, setDetail } = useContext(ClassContext);
+  // const { detail, setDetail } = useContext(ClassContext);
   console.log("value of socket:  ", socket);
 
   const sendMessage = async () => {
@@ -56,8 +56,9 @@ const Chatbox = () => {
   return (
     <>
       <div>
-        <div className=" w-screen h-[calc(100vh)] bg-slate-100 flex justify-center items-center md:pt-0 md:pl-0">
+        <div className=" w-[calc(100vw-15rem)] h-[calc(100vh-4rem)] bg-slate-100 flex justify-center items-center md:pt-0 md:pl-0">
           <div className="w-[98%] h-[98%]  flex rounded-t-lg overflow-hidden">
+    
             {/* chatbox */}
             <div className="flex flex-col  w-[calc(100%)] ">
               {/* chatbox header */}
@@ -71,33 +72,10 @@ const Chatbox = () => {
                   {selectedSubject}
                 </div>
 
-<<<<<<< HEAD
-
-      <div className='w-screen  md:w-[calc(100vw-16rem)]  h-[calc(100vh)] bg-slate-100 flex justify-center items-center md:pt-0 md:pl-0'>
-      <div className='w-[98%] h-[98%]  flex rounded-t-lg overflow-hidden' >
+                </div>
+     
       
            
-          
-         
-        {/* chatbox */}
-        <div className='flex flex-col  w-[calc(100%)] '>
-          {/* chatbox header */}
-          <div className='h-14 pl-2 w-[calc(100%)] bg-purple-500 flex justify-between'>
-           
-           
-              <div className='text-white h-full text-lg  flex items-center font-semibold ml-4'>
-              <Icon onClick={()=>handleBack()} className='text-white   text-2xl h-full flex items-center mr-4' icon="ep:back" />
-              {selectedSubject}
-=======
-                <div>
-                  {/* icon="basil:other-1-solid"  */}
-                  <Icon
-                    className="text-white text-3xl font-bold p-2 m-2 mr-6 h-9 w-9  hover:bg-[#606f617a]   hover:rounded-full rounded-full bg-[#606f6155]"
-                    icon="material-symbols:info-i"
-                  />
-                </div>
->>>>>>> e352e33eb7da636cda63377ccbc8e5b06e436fe1
-              </div>
               {/* chatbox body  */}
               <div className="bg-white  h-[calc(100%-5rem)]  w-[calc(100%)]  p-4   ">
                 <div className="flex pb-6 ">
@@ -140,7 +118,8 @@ const Chatbox = () => {
                     <img />
                   </div>
                 </div>
-              </div>
+             
+      </div>
               {/* message input */}
               <div className="w-[100%] flex shadow-gray-600 shadow-2xl">
                 <input
@@ -158,9 +137,12 @@ const Chatbox = () => {
                   Send
                 </button>
               </div>
+          
             </div>
           </div>
-        </div>
+      
+      
+      </div>
       </div>
     </>
   );
