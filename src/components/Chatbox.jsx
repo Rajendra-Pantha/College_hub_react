@@ -71,6 +71,24 @@ const Chatbox = () => {
                   {selectedSubject}
                 </div>
 
+<<<<<<< HEAD
+
+      <div className='w-screen  md:w-[calc(100vw-16rem)]  h-[calc(100vh)] bg-slate-100 flex justify-center items-center md:pt-0 md:pl-0'>
+      <div className='w-[98%] h-[98%]  flex rounded-t-lg overflow-hidden' >
+      
+           
+          
+         
+        {/* chatbox */}
+        <div className='flex flex-col  w-[calc(100%)] '>
+          {/* chatbox header */}
+          <div className='h-14 pl-2 w-[calc(100%)] bg-purple-500 flex justify-between'>
+           
+           
+              <div className='text-white h-full text-lg  flex items-center font-semibold ml-4'>
+              <Icon onClick={()=>handleBack()} className='text-white   text-2xl h-full flex items-center mr-4' icon="ep:back" />
+              {selectedSubject}
+=======
                 <div>
                   {/* icon="basil:other-1-solid"  */}
                   <Icon
@@ -78,6 +96,7 @@ const Chatbox = () => {
                     icon="material-symbols:info-i"
                   />
                 </div>
+>>>>>>> e352e33eb7da636cda63377ccbc8e5b06e436fe1
               </div>
               {/* chatbox body  */}
               <div className="bg-white  h-[calc(100%-5rem)]  w-[calc(100%)]  p-4   ">

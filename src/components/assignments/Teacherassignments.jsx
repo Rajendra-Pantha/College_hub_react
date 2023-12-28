@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from "react";
 import { useContext, useRef } from "react";
 import AssignmentContext from "../../AssignmentContext/AssignmentContext";
@@ -5,6 +6,15 @@ import { Popover } from "@headlessui/react";
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 
+=======
+import React from 'react'
+import { useContext , useRef} from 'react'
+import AssignmentContext from '../../AssignmentContext/AssignmentContext'
+import { Popover } from '@headlessui/react'
+import { useState } from 'react'
+import { Icon } from '@iconify/react';
+import Popup from '../popup/Popup'
+>>>>>>> b61791de63d6cd262a02d4655b24f0f584dc4c0c
 const Teacherassignments = () => {
   const { data, addAssignment } = useContext(AssignmentContext);
   const [isPopupVisible, setPopupVisibility] = useState(false);
@@ -216,6 +226,7 @@ const Teacherassignments = () => {
         <Popup item={selectedItem} onClose={() => setPopupVisibility(false)} />
       )}
     </div>
+<<<<<<< HEAD
   );
 };
 const Popup = ({ item }) => {
@@ -263,3 +274,11 @@ const Popup = ({ item }) => {
   );
 };
 export default Teacherassignments;
+=======
+   
+  )
+
+}
+
+export default Teacherassignments
+>>>>>>> b61791de63d6cd262a02d4655b24f0f584dc4c0c
