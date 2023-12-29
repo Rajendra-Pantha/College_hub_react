@@ -84,12 +84,10 @@
 // }
 
 // export default Hello;
-import React from 'react'
+import React from "react";
 
 const Hello = () => {
-  return (
-    <div>Hello</div>
-  )
-}
+  return <div>Hello how are you</div>;
+};
 
-export default Hello
+export default Hello;
