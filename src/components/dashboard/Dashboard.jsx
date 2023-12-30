@@ -6,7 +6,7 @@ import Data from '../../data/Data';
 import db from "../../data/subject_db.json";
 const Dashboard = () => {
   return (
-    <div className='  pl-4 mt-12 '>
+    <div className='  pl-4 mt-8 '>
       
       <div className='text-3xl font-semibold text-gray-600 ml-8 mb-2 '> Recent Assignment</div>
       <div className='bg-gray-400 h-px mb-6 ml-8'/>

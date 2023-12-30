@@ -17,7 +17,7 @@ import AssignmentContext from "../../AssignmentContext/AssignmentContext";
 //   },
 // });
 const Class = () => {
-  // const { addDetail } = useContext(ClassContext);
+   const { addDetail } = useContext(ClassContext);
   const [tempdata, setTempdata] = useState({
     groupName: "",
     subjectName: "",

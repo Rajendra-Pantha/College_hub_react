@@ -9,7 +9,7 @@ const Chatbox = () => {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
 
-  // const { detail, setDetail } = useContext(ClassContext);
+  const { detail, setDetail } = useContext(ClassContext);
   console.log("value of socket:  ", socket);
 
   const sendMessage = async () => {
@@ -56,13 +56,13 @@ const Chatbox = () => {
   return (
     <>
       <div>
-        <div className=" w-[calc(100vw-15rem)] h-[calc(100vh-4rem)] bg-slate-100 flex justify-center items-center md:pt-0 md:pl-0">
+        <div className=" w-[calc(100vw-15rem)]  bg-slate-100 flex justify-center items-center md:pt-0 md:pl-0">
           <div className="w-[98%] h-[98%]  flex rounded-t-lg overflow-hidden">
     
             {/* chatbox */}
-            <div className="flex flex-col  w-[calc(100%)] ">
+            <div className="flex flex-col mt-2 w-[calc(100%)] h-[calc(100vh-5.5rem)]">
               {/* chatbox header */}
-              <div className="h-14 pl-2 w-[calc(100%)] bg-purple-500 flex justify-between">
+              <div className="h-14 pl-2 w-[calc(100%)] rounded-t-md bg-purple-500 flex justify-between">
                 <div className="text-white h-full text-lg  flex items-center font-semibold ml-4">
                   <Icon
                     onClick={() => handleBack()}
@@ -77,7 +77,7 @@ const Chatbox = () => {
       
            
               {/* chatbox body  */}
-              <div className="bg-white  h-[calc(100%-5rem)]  w-[calc(100%)]  p-4   ">
+              <div className="bg-white h-[calc(100vh-5rem)]  w-[calc(100%)]  p-4   ">
                 <div className="flex pb-6 ">
                   <div>
                     <img
