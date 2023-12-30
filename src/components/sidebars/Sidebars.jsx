@@ -14,13 +14,13 @@ const Sidebars = () => {
     }
     if (slide===true){
       // 004369
-        nonhide= 'h-[calc(100vh-4rem)] text-gray-200  w-56  hidden   md:block border-r border-r-2';
+        nonhide= 'h-[calc(100vh-5rem)] text-gray-200  w-56  hidden   md:block border-r border-r-2';
      hidebar='text-3xl absolute text-[#004369] px-4 -right-12 md:hidden ';
        }
        else{
    
 
-     nonhide= 'h-[calc(100vh-4rem)] text-gray-200  w-56 border-r border-r-2 border-gray-400 shadow-gray-700 shadow-sm';
+     nonhide= 'h-[calc(100vh-5rem)] text-gray-200  w-56 border-r border-r-2 border-gray-400 shadow-gray-700 shadow-sm';
 
      hidebar='text-3xl absolute text-[#004369]  h-[calc(100vh-4rem)]  mr-8  px-4 -right-12 md:hidden';
        }
@@ -71,7 +71,7 @@ const Sidebars = () => {
   return (
     <div className='relative flex '>
     <div className= {nonhide}>
-        <div className='flex  justify-center pt-[2.25rem] mt-8  w-56 h-[calc(100vh-5rem)] '>
+        <div className='flex  justify-center pt-[2.25rem] mt-8  w-56  '>
             <ul className=' font-bold  w-56 flex flex-col '>
             {DASHBOARD_SIDEBAR_LINKS.map((link) => (
 					<SidebarLink key={link.key} link={link} />

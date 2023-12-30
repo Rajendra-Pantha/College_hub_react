@@ -29,6 +29,7 @@ import ClassProvider from "./ClassContext/ClassProvider.jsx";
 
 import Hello from './Hello.jsx';
 import Studentlist from './components/Studentlist.jsx';
+import Popup from "./components/popup/Popup.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -130,23 +131,50 @@ const router = createBrowserRouter([
     },
     {
       path: "classes",
-      element:<Class/>,
+      element: (
+        <ClassProvider>
+          <Class />,
+        </ClassProvider>
+      ),
     },
+  
    { path:"classes/studentdetails",
      element:<Studentlist/>
     },
     {
       path: "messagestds",
-      element:<Message />,
+      element: (
+        <ClassProvider>
+          <Message />
+        </ClassProvider>
+      ),
     },
+
+  
     {
       path: "/teacher/messagestds/chatbox/:i",
-      element:<Chatbox/>,
+      element: (
+        <ClassProvider>
+          <Chatbox />
+        </ClassProvider>
+      ),
     },
     {
       path: "assignments",
-      element:<AssignmentProvider><Teacherassignments/></AssignmentProvider>,
+      element: (
+        <AssignmentProvider>
+          <Teacherassignments />
+        </AssignmentProvider>
+      ),
     },
+    {
+      path:"assignments/popup/:id",
+        element: (
+        <AssignmentProvider>
+          <Popup />
+        </AssignmentProvider>
+      ),
+    }
    
    
    
@@ -155,47 +183,7 @@ const router = createBrowserRouter([
  
 
 
-{
-    element: <Layout3 />,
-    children: [
-      {
-        path: "dashboard",
-        element: <Teacherdashboard />,
-      },
-      {
-        path: "classes",
-        element: (
-          <ClassProvider>
-            <Class />,
-          </ClassProvider>
-        ),
-      },
-      {
-        path: "messagestds",
-        element: (
-          <ClassProvider>
-            <Message />
-          </ClassProvider>
-        ),
-      },
-      {
-        path: "assignments",
-        element: (
-          <AssignmentProvider>
-            <Teacherassignments />
-          </AssignmentProvider>
-        ),
-      },
-      {
-        path: "/teacher/messagestds/chatbox/:i",
-        element: (
-          <ClassProvider>
-            <Chatbox />
-          </ClassProvider>
-        ),
-      },
-    ],
-  },
+
   
 
 ]);
