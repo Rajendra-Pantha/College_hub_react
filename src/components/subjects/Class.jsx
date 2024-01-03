@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext , useEffect , useRef} from "react";
 import { Icon } from "@iconify/react";
 import { Popover } from "@headlessui/react";
 import { useState } from "react";
-import io from "socket.io-client";
-import socket from "../../socket";
+
+import socket_io from "../../socket";
+// import initializeSocket from "../../socket";
 import ClassContext from "../../ClassContext/CreateClass";
 import AssignmentContext from "../../AssignmentContext/AssignmentContext";
 
@@ -17,23 +18,19 @@ import AssignmentContext from "../../AssignmentContext/AssignmentContext";
 //   },
 // });
 const Class = () => {
+  const socket = useRef(null)
    const { addDetail } = useContext(ClassContext);
   const [tempdata, setTempdata] = useState({
     groupName: "",
     subjectName: "",
   });
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   // if (detail.groupName !== "" && detail.subjectName !== "") {
-  //   //   socket.emit("join_room", detail.subjectName);
-  //   // }
-
-  // };
-
+  useEffect(() => {
+    socket.current = socket_io
+  })
   const joinroom = () => {
     if (tempdata.groupName !== "" && tempdata.subjectName !== "") {
-      socket.emit("join_room", tempdata.subjectName);
+      socket.current.emit("join_room", tempdata.subjectName);
     }
     addDetail(tempdata);
   };

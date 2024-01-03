@@ -1,18 +1,44 @@
-import { React, useState, useContext, useEffect } from "react";
+import { React, useState, useContext, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import db from "../data/subject_db.json";
-import socket from "../socket";
+import socket_io from "../socket";
 import ClassContext from "../ClassContext/CreateClass";
 const Chatbox = () => {
+  const socket = useRef(null);
+  const message_ref = useRef(null);
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
 
   const { detail, setDetail } = useContext(ClassContext);
-  console.log("value of socket:  ", socket);
 
-  const sendMessage = async () => {
+  useEffect(() => {
+    socket.current = socket_io;
+
+    const handle_receive_message = (data) => {
+      console.log("second called");
+      console.log("receive data", data);
+      append_received_message(data.message);
+    };
+    if (socket.current && typeof socket.current.on === "function") {
+      console.log("rrrr");
+      socket.current.on("recieve_message", handle_receive_message);
+    }
+
+    return () => {
+      // Clean up by removing the event listener from the socket instance
+      if (socket.current && typeof socket.current.off === "function") {
+        socket.current.off("receive_message", handle_receive_message);
+      }
+      // Additional cleanup if needed
+      // if (socketRef.current && typeof socketRef.current.disconnect === 'function') {
+      //   socketRef.current.disconnect();
+      // }
+    };
+  }, [socket]);
+
+  const sendMessage = () => {
     if (currentMessage !== "") {
       // console.log("this is author: ", detail.groupName);
       const messageData = {
@@ -26,18 +52,57 @@ const Chatbox = () => {
         message: currentMessage,
       };
 
-      await socket.emit("send_message", messageData);
-      setMessageList((prevlist) => [...prevlist, messageData]);
+      socket.current.emit("send_message", messageData);
+      // setMessageList((prevlist) => [...prevlist, messageData]);
+      if (message_ref.current) {
+        append_sent_message(messageData.message);
+        // append_received_message(messageData.message)
+      }
     }
   };
-  // useEffect(() => {
-  //   sendMessage();
-  // }, [sendMessage]);
-  useEffect(() => {
-    socket.on("recieve_message", (data) => {
-      setMessageList((prevlist) => [...prevlist, data]);
-    });
-  }, [socket]);
+  const append_sent_message = (message) => {
+    const message_outer_box = document.createElement("div");
+    message_outer_box.setAttribute(
+      "class",
+      "flex justify-end mt-2  h-auto self-end  w-2/4 "
+    );
+
+    const message_box = document.createElement("p");
+    message_box.setAttribute(
+      "class",
+      "rounded-tl-none rounded-bl-lg rounded-tr-lg rounded-br-lg  rounded-md bg-green-700 p-1 ml-1 rounded-md w-auto text-white"
+    );
+    message_box.textContent = message;
+
+    message_outer_box.appendChild(message_box);
+    message_ref.current.appendChild(message_outer_box);
+    message_ref.current.scrollTop = message_ref.current.scrollHeight;
+  };
+
+  const append_received_message = (message) => {
+    const message_outer_box = document.createElement("div");
+    message_outer_box.setAttribute("class", "flex items-center mt-2 w-2/4");
+    const image = document.createElement("img");
+    image.setAttribute(
+      "src",
+      "https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?s=1024x1024&w=is&k=20&c=iX0adGZVKv9wS5yrs0-hpFsJBnRAacZa1DcDZ0I9Bqk="
+    );
+    image.setAttribute("class", "h-8 w-8 rounded-full object-cover");
+    const message_box = document.createElement("p");
+    message_box.setAttribute(
+      "class",
+      "rounded-tl-none rounded-bl-lg rounded-tr-lg rounded-br-lg  rounded-md bg-green-700 p-1 ml-1 rounded-md w-auto text-white"
+    );
+    message_box.textContent = message;
+    message_outer_box.appendChild(image);
+    message_outer_box.appendChild(message_box);
+    if (message_ref.current) {
+      message_ref.current.appendChild(message_outer_box);
+    message_ref.current.scrollTop = message_ref.current.scrollHeight;
+
+    }
+  };
+
   const navigate = useNavigate();
   const handleBack = () => {
     navigate(-1);
@@ -52,13 +117,15 @@ const Chatbox = () => {
       </div>
     );
   }
-
+  const set_message = (e) => {
+    e.preventDefault();
+    setCurrentMessage(e.target.value);
+  };
   return (
     <>
       <div>
-        <div className=" w-[calc(100vw-15rem)]  bg-slate-100 flex justify-center items-center md:pt-0 md:pl-0">
+        <div className=" w-[calc(100vw-15rem)]   bg-slate-100 flex justify-center items-center md:pt-0 md:pl-0">
           <div className="w-[98%] h-[98%]  flex rounded-t-lg overflow-hidden">
-    
             {/* chatbox */}
             <div className="flex flex-col mt-2 w-[calc(100%)] h-[calc(100vh-5.5rem)]">
               {/* chatbox header */}
@@ -71,63 +138,22 @@ const Chatbox = () => {
                   />
                   {selectedSubject}
                 </div>
+              </div>
 
-                </div>
-     
-      
-           
               {/* chatbox body  */}
-              <div className="bg-white h-[calc(100vh-5rem)]  w-[calc(100%)]  p-4   ">
-                <div className="flex pb-6 ">
-                  <div>
-                    <img
-                      className="h-14 w-14 rounded-full object-cover"
-                      src="https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?s=1024x1024&w=is&k=20&c=iX0adGZVKv9wS5yrs0-hpFsJBnRAacZa1DcDZ0I9Bqk="
-                    />
-                    <span className=" text-sm text-gray-500 font-semibold">
-                      just now
-                    </span>
-                  </div>
-                  <div className=" max-w-md flex flex-col">
-                    {messageList.map((messageContent) => {
-                      return (
-                        <p className="bg-[#f9cdd6bb] rounded-tl-none rounded-bl-lg rounded-tr-lg rounded-br-l ml-4 px-3 py-1 text-2xl">
-                          {messageContent.message}
-                        </p>
-                      );
-                    })}
-
-                    <img />
-                  </div>
-                </div>
-
-                <div className="flex pb-6 flex-row-reverse">
-                  <div>
-                    <img
-                      className="h-14 w-14 rounded-full object-cover"
-                      src="https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?s=1024x1024&w=is&k=20&c=iX0adGZVKv9wS5yrs0-hpFsJBnRAacZa1DcDZ0I9Bqk="
-                    />
-                    <span className=" text-sm text-gray-500 font-semibold">
-                      just now
-                    </span>
-                  </div>
-                  <div className=" max-w-md flex flex-col">
-                    <p className="bg-indigo-100 rounded-tl-none rounded-bl-lg rounded-tr-lg rounded-br-l mr-4 px-3 py-1 text-2xl">
-                      hello
-                    </p>
-                    <img />
-                  </div>
-                </div>
-             
-      </div>
+              <div
+                ref={message_ref}
+                className="bg-teal-900 h-[calc(73vh)] flex flex-col  w-[calc(100%)] p-2  overflow-auto pb-5"
+              ></div>
+              
               {/* message input */}
               <div className="w-[100%] flex shadow-gray-600 shadow-2xl">
                 <input
-                  className="h-12 w-[90%] focus:outline-none placeholder:p-2 p-2 "
+                  className="h-12 w-[90%] focus:outline-none placeholder:p-2 p-2 border-black border-2"
                   type="text"
                   placeholder="Write something here..."
                   onChange={(e) => {
-                    setCurrentMessage(e.target.value);
+                    set_message(e);
                   }}
                 />
                 <button
@@ -137,12 +163,9 @@ const Chatbox = () => {
                   Send
                 </button>
               </div>
-          
             </div>
           </div>
-      
-      
-      </div>
+        </div>
       </div>
     </>
   );
