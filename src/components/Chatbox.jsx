@@ -110,13 +110,13 @@ const Chatbox = () => {
   const { i } = useParams();
   const selectedSubject = db["Sem_1"][parseInt(i, 10)];
 
-  if (!selectedSubject) {
-    return (
-      <div key={i}>
-        <h2>Details not found</h2>
-      </div>
-    );
-  }
+  // if (!selectedSubject) {
+  //   return (
+  //     <div key={i}>
+  //       <h2>Details not found</h2>
+  //     </div>
+  //   );
+  // }
   const set_message = (e) => {
     e.preventDefault();
     setCurrentMessage(e.target.value);
@@ -129,14 +129,14 @@ const Chatbox = () => {
             {/* chatbox */}
             <div className="flex flex-col mt-2 w-[calc(100%)] h-[calc(100vh-5.5rem)]">
               {/* chatbox header */}
-              <div className="h-14 pl-2 w-[calc(100%)] rounded-t-md bg-purple-500 flex justify-between">
+              <div className="h-14 pl-2 w-[calc(100%)] rounded-t-md bg-purple-500 flex justify-between ">
                 <div className="text-white h-full text-lg  flex items-center font-semibold ml-4">
                   <Icon
                     onClick={() => handleBack()}
                     className="text-white   text-2xl h-full flex items-center mr-4"
                     icon="ep:back"
                   />
-                  {selectedSubject}
+                  {i}
                 </div>
               </div>
 

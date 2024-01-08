@@ -35,10 +35,10 @@ const Class = () => {
 
   const joinroom = async () => {
     if (tempdata.groupName !== "" && tempdata.subjectName !== "") {
-      socket.emit("join_room", tempdata.subjectName);
+      socket_io.emit("join_room", tempdata.subjectName);
       addDetail(tempdata);
    await ClassGroup(tempdata);
-  };
+  }
     }
     
 
