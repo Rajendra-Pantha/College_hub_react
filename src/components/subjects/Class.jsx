@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext , useEffect , useRef} from "react";
 import { Icon } from "@iconify/react";
 import { Popover } from "@headlessui/react";
 import { useState } from "react";
-import io from "socket.io-client";
-import socket from "../../socket";
+
+import socket_io from "../../socket";
+// import initializeSocket from "../../socket";
 import ClassContext from "../../ClassContext/CreateClass";
 import AssignmentContext from "../../AssignmentContext/AssignmentContext";
 import ClassGroup from "./Classfetch";
