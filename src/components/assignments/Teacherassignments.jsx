@@ -5,17 +5,28 @@ import { Popover } from "@headlessui/react";
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import createAssignment from "./Create_assignment";
 
 const Teacherassignments = () => {
   const { data, addAssignment } = useContext(AssignmentContext);
+  const [newAssignment, setNewAssignment] = useState({
+    // id:"",
+    title: "",
+    // AssignmentType: "",
+    description: "",
+    deadline: "",
+    subject: "",
+  });
+  const popoverButtonRef = useRef(null);
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const navigate = useNavigate();
 
-  const navigate =useNavigate();
-  useEffect(()=>{
-  if(localStorage.getItem("Campus_Token")===null){
-    navigate("/");
-  }
-  },[])
+  useEffect(() => {
+    if (localStorage.getItem("Campus_Token") === null) {
+      navigate("/");
+    }
+  }, [])
   // const [isPopupVisible, setPopupVisibility] = useState(false);
   // const [selectedItem, setSelectedItem] = useState(null);
   // const handleCardClick = (item) => {
@@ -23,29 +34,24 @@ const Teacherassignments = () => {
   //   setPopupVisibility(!isPopupVisible);
   // };
 
-  const [newAssignment, setNewAssignment] = useState({
-    id:"",
-    title: "",
-    AssignmentType: "",
-    description: "",
-    deadline: "",
-    subject: "",
-  });
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+
+
   const handleBg = () => {
     setIsPopoverOpen(!isPopoverOpen);
   };
-  const popoverButtonRef = useRef(null);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     addAssignment(newAssignment);
 
+    createAssignment(newAssignment);
+
     setNewAssignment({
-      id:"",
+      //   id:"",
       title: "",
-      AssignmentType: "",
+      //  AssignmentType: "",
       description: "",
       deadline: "",
       subject: "",
@@ -61,10 +67,10 @@ const Teacherassignments = () => {
 
   return (
     <div className=" mt-2 pl-2 w-screen relative">
-      { isPopoverOpen && (
+      {isPopoverOpen && (
         <div
           className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-90 z-10"
-          onClick={() =>  setIsPopoverOpen(false)}
+          onClick={() => setIsPopoverOpen(false)}
         />
       )}
       <Popover className="relative">
@@ -104,7 +110,7 @@ const Teacherassignments = () => {
                     <option>c++</option>
                     <option>english</option>
                   </select>
-                  <div>
+                  {/* <div>
                     <label className=" ml-8  text-gray-700  font-semibold mb-2">Id :</label>
                   <input
                     className="  ml-4 text-lg shadow  border rounded w-[20%]  px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -116,10 +122,10 @@ const Teacherassignments = () => {
                         id:parseInt(e.target.value) ,
                       })
                     }
-                  /></div>
+                  /></div> */}
                 </div>
 
-              
+
 
                 <div className="mb-2 mt-3 ml-4">
                   <label className=" text-gray-700  font-semibold mb-2">
@@ -138,7 +144,7 @@ const Teacherassignments = () => {
                   />
                 </div>
 
-                <div className="mb-2 mt-3 ml-4">
+                {/* <div className="mb-2 mt-3 ml-4">
                   <label className=" text-gray-700  font-semibold mb-2">
                     Assignment-type:
                   </label>
@@ -153,7 +159,7 @@ const Teacherassignments = () => {
                       })
                     }
                   />
-                </div>
+                </div> */}
 
                 <div className="mb-2 mt-3 ml-4">
                   <label className=" text-gray-700  font-semibold mb-2">
@@ -191,7 +197,7 @@ const Teacherassignments = () => {
                   id="btn"
                   className="border-2 px-4 py-2 ml-[40%] mt-3 font-semibold border-none bg-[#000080] text-white rounded-2xl hover:-translate-y-0.5"
                   type="submit"
-                  // disabled={isAddButtonDisabled}
+                // disabled={isAddButtonDisabled}
                 >
                   Add Assignment
                 </button>
@@ -206,7 +212,7 @@ const Teacherassignments = () => {
           <Link to={`popup/${item.id}`}
             className="bg-[#FAFAFA]  -z-1 cursor-pointer hover:scale-105 w-[22%] rounded-lg  p-4 shadow-gray-400 shadow-md"
             key={item.id}
-          
+
           >
             <div className="relative text-[18px] text-[#435585] font-bold ">
               {item.subject}
@@ -231,16 +237,16 @@ const Teacherassignments = () => {
 
               <div className="flex gap-2 bg-[#008080] rounded-lg w-full ml-0.5 justify-center items-center">
                 <div className="text-white font-bold">Bhuwan Panthi</div>
-              
+
               </div>
-               
-       
-      
+
+
+
             </div>
           </Link>
         ))}
       </div>
-   
+
     </div>
   );
 };

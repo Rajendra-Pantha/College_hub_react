@@ -38,6 +38,10 @@ const Class = () => {
       socket_io.emit("join_room", tempdata.subjectName);
       addDetail(tempdata);
    await ClassGroup(tempdata);
+   setTempdata({
+    groupName: "",
+    subjectName: "",
+   })
   }
     }
     
@@ -56,32 +60,32 @@ const Class = () => {
         <Popover.Panel className="p-4 border-2 border-gray-300 rounded-lg mt-4">
           {/* <form onSubmit={handleSubmit}> */}
           {/* <form> */}
-          <input
+         <label className="font-semibold ">Group Name :</label>  <input
             value={tempdata.groupName}
             onChange={(e) =>
               setTempdata((pre) => ({ ...pre, groupName: e.target.value }))
             }
-            className="block mb-4 text-lg shadow appearance-none border rounded w-[90%] py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="block mb-4 mt-2 text-lg shadow appearance-none border rounded w-[90%] py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             placeholder="Enter group name"
           />
-          <input
+         <label className="font-semibold ">Subject Name :</label> <input
             value={tempdata.subjectName}
             onChange={(e) =>
               setTempdata((pre) => ({ ...pre, subjectName: e.target.value }))
             }
-            className="block mb-4 text-lg shadow appearance-none border rounded w-[90%] py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="block mb-4 mt-2 text-lg shadow appearance-none border rounded w-[90%] py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             placeholder="Enter subject name"
           />
 
-          <button
+          <Popover.Button
           type="button"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             onClick={joinroom}
           >
             Create
-          </button>
+          </Popover.Button>
           {/* </form> */}
         </Popover.Panel>
       </Popover>
