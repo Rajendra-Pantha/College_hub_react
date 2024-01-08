@@ -3,10 +3,10 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import db from "../data/subject_db.json";
-import socket_io from "../socket";
+// import socket_io from "../socket";
 import ClassContext from "../ClassContext/CreateClass";
 const Chatbox = () => {
-  const socket = useRef(null);
+  // const socket = useRef(null);
   const message_ref = useRef(null);
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);

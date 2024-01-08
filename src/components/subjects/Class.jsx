@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 import { Popover } from "@headlessui/react";
 import { useState } from "react";
 
-import socket_io from "../../socket";
+// import socket_io from "../../socket";
 // import initializeSocket from "../../socket";
 import ClassContext from "../../ClassContext/CreateClass";
 import AssignmentContext from "../../AssignmentContext/AssignmentContext";

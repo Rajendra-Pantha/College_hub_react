@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
+import App from "./App";
 import Nav from "./components/nav/Nav.jsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -33,11 +34,11 @@ import Popup from "./components/popup/Popup.jsx";
 import Otpprovider from "./otpcontext/Otpprovider.jsx";
 import Changepassword from "./components/sidebars/Changepassword.jsx";
 import Changeusername from "./components/sidebars/Changeusername.jsx";
-
+import AppProvider from "./AppContext/appProvider.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element:(<Layout />),
     children: [
       {
         path: "/",
@@ -47,11 +48,11 @@ const router = createBrowserRouter([
       {
         path: "student/signupstds",
         element: (
-          <Otpprovider><Signupstds
-           
+          <Otpprovider>
+          <Signupstds
           users="Student"
-          logins="/loginstudent"
-        /></Otpprovider>
+          logins="/loginstudent"/>
+        </Otpprovider>
         ),
       },
       {
@@ -95,7 +96,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "dashboard",
-        element: <Dashboard />,
+        element: (<AppProvider><Dashboard /></AppProvider>),
       },
 
       {
@@ -204,6 +205,10 @@ const router = createBrowserRouter([
 
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
-    <RouterProvider router={router} />
+  <>
+    <RouterProvider router={router} >
+
+    </RouterProvider>
+  </>
 
 );

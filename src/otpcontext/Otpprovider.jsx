@@ -8,7 +8,9 @@ const Otpprovider = ({children}) => {
    const[isredirecedfromlogin, setLogin]=useState(false)
    
   return (
-    <OtpContext.Provider value={{isLogin,setIslogin,isredirecedfromregistration, setRegistration}}>{children}</OtpContext.Provider>
+    <OtpContext.Provider value={{isLogin,setIslogin,isredirecedfromregistration, setRegistration}}>
+    {children}
+    </OtpContext.Provider>
   )
 }
 

@@ -1,12 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect , useContext} from 'react';
 
 import { Link, useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import Data from '../../data/Data';
 import db from "../../data/subject_db.json";
+import appContext from '../../AppContext/appContext';
 const Dashboard = () => {
+  const {test} = useContext(appContext)
   const navigate =useNavigate();
+  test()
   useEffect(()=>{
+    test()
   if(localStorage.getItem("Campus_Token")===null){
     navigate("/");
   }

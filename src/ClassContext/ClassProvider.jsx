@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import io from "socket.io-client";
-import socket from "../socket";
+// import socket from "../socket";
 import ClassContext from "./CreateClass";
 const ClassProvider = ({ children }) => {
   const [detail, setDetail] = useState({
