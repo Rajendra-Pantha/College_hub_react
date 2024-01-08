@@ -1,8 +1,18 @@
-import React from "react";
+import { useEffect } from "react";
+import React  from "react";
 import db from "../../data/subject_db.json";
 import { Icon } from "@iconify/react";
-import { Link } from "react-router-dom";
-const Message = ({ socket, groupName, subjectName }) => {
+import { Link , useNavigate} from "react-router-dom";
+import SubjectName from "./Messagefetch";
+const Message = ({ socket, groupName, subjectName , a }) => {
+  const navigate =useNavigate();
+  useEffect(()=>{
+  if(localStorage.getItem("Campus_Token")===null){
+    navigate("/");
+  }
+  
+  },[])
+
   return (
     <div className="  ml-3 mt-14 w-screen">
       <div className="font-bold text-5xl  justify-center flex mb-8 text-stone-800  ">
@@ -16,7 +26,7 @@ const Message = ({ socket, groupName, subjectName }) => {
           <div className="  h-fit  w-[100%]  border-l-2 border-r-2 border-gray-300   font-bold text-xl rounded-b-lg   cursor-pointer">
             {db["Sem_1"].map((subj, i) => {
               return (
-                <Link to={`/teacher/messagestds/chatbox/${i}`}>
+                <Link to={`/${a}/messagestds/chatbox/${i}`}>
                   <div
                     className=" border-b-2 rounded-lg   border-gray-300 p-4 text-gray-700 hover:text-[21px]"
                     key={i}

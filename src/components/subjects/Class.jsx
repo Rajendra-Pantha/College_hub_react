@@ -6,6 +6,7 @@ import io from "socket.io-client";
 import socket from "../../socket";
 import ClassContext from "../../ClassContext/CreateClass";
 import AssignmentContext from "../../AssignmentContext/AssignmentContext";
+import ClassGroup from "./Classfetch";
 
 // import Chatbox from "../Chatbox";
 // const socket = io.connect("http://localhost:8080", {
@@ -17,7 +18,7 @@ import AssignmentContext from "../../AssignmentContext/AssignmentContext";
 //   },
 // });
 const Class = () => {
-   const { addDetail } = useContext(ClassContext);
+   const { detail , addDetail } = useContext(ClassContext);
   const [tempdata, setTempdata] = useState({
     groupName: "",
     subjectName: "",
@@ -31,12 +32,14 @@ const Class = () => {
 
   // };
 
-  const joinroom = () => {
+  const joinroom = async () => {
     if (tempdata.groupName !== "" && tempdata.subjectName !== "") {
       socket.emit("join_room", tempdata.subjectName);
-    }
-    addDetail(tempdata);
+      addDetail(tempdata);
+   await ClassGroup(tempdata);
   };
+    }
+    
 
   return (
     <div className=" pt-8 pl-2">
@@ -72,7 +75,7 @@ const Class = () => {
           />
 
           <button
-            type="submit"
+          type="button"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             onClick={joinroom}
           >

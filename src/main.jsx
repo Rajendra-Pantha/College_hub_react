@@ -30,6 +30,10 @@ import ClassProvider from "./ClassContext/ClassProvider.jsx";
 import Hello from './Hello.jsx';
 import Studentlist from './components/Studentlist.jsx';
 import Popup from "./components/popup/Popup.jsx";
+import Otpprovider from "./otpcontext/Otpprovider.jsx";
+import Changepassword from "./components/sidebars/Changepassword.jsx";
+import Changeusername from "./components/sidebars/Changeusername.jsx";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -41,43 +45,47 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "signupstds",
+        path: "student/signupstds",
         element: (
-          <Signupstds
-            otp="/otpverificationstds"
-            users="Student"
-            logins="/loginstudent"
-          />
+          <Otpprovider><Signupstds
+           
+          users="Student"
+          logins="/loginstudent"
+        /></Otpprovider>
         ),
       },
       {
-        path: "signupteacher",
+        path: "teacher/signupteacher",
         element: (
+         <Otpprovider>
           <Signupstds
-            otp="/otpverificationteacher"
-            users="Teacher"
-            logins="/loginteacher"
-          />
+           
+           users="Teacher"
+           logins="/loginteacher"
+         />
+         </Otpprovider> 
         ),
       },
       {
         path: "loginstudent",
-        element: <Login otp="/otpverificationstds" signup="/signupstds" />,
+        element: <Otpprovider><Login users="Student" signup="/student/signupstds" /></Otpprovider>,
       },
       {
         path: "loginteacher",
         element: (
-          <Login otp="/otpverificationteacher" signup="/signupteacher" />
+         <Otpprovider> <Login  users="Teacher" signup="/teacher/signupteacher" /></Otpprovider>
         ),
       },
       {
-        path: "otpverificationstds",
-        element: <Otp dashboard="/students/dashboard" />,
+        path: "otpverificationstds/:a",
+        element: <Otpprovider><Otp users="Student"  /></Otpprovider>,
       },
+
       {
-        path: "otpverificationteacher",
-        element: <Otp dashboard="/teacher/dashboard" />,
+        path: "otpverificationteacher/:a",
+        element:<Otpprovider><Otp users="Teacher"  /></Otpprovider> ,
       },
+      
     ],
   },
 
@@ -96,7 +104,15 @@ const router = createBrowserRouter([
       },
       {
         path: "messagestds",
-        element: <Message />,
+        element: <Message a="students" />,
+      },
+      {
+        path: "/students/messagestds/chatbox/:i",
+        element: (
+          <ClassProvider>
+            <Chatbox />
+          </ClassProvider>
+        ),
       },
 
       {
@@ -109,14 +125,7 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: "students/messagestds/chatbox/:i",
-    element: (
-      <ClassProvider>
-        <Chatbox />
-      </ClassProvider>
-    ),
-  },
+  
   {
     path: "Hello",
     element: <Hello />,
@@ -145,7 +154,7 @@ const router = createBrowserRouter([
       path: "messagestds",
       element: (
         <ClassProvider>
-          <Message />
+          <Message a="teacher"/>
         </ClassProvider>
       ),
     },
@@ -181,7 +190,14 @@ const router = createBrowserRouter([
 ]
   },
  
-
+ {
+  path:'changepassword',
+  element:<Changepassword/>
+ },
+ {
+  path:'changeusername',
+  element:<Changeusername/>
+ }
 
 
   

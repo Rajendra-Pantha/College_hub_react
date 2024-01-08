@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import Data from '../../data/Data';
 import db from "../../data/subject_db.json";
 const Dashboard = () => {
+  const navigate =useNavigate();
+  useEffect(()=>{
+  if(localStorage.getItem("Campus_Token")===null){
+    navigate("/");
+  }
+  },[])
   return (
     <div className='  pl-4 mt-8 '>
       

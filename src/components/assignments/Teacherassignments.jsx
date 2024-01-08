@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useContext, useRef } from "react";
 import AssignmentContext from "../../AssignmentContext/AssignmentContext";
 import { Popover } from "@headlessui/react";
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 
 const Teacherassignments = () => {
   const { data, addAssignment } = useContext(AssignmentContext);
+
+  const navigate =useNavigate();
+  useEffect(()=>{
+  if(localStorage.getItem("Campus_Token")===null){
+    navigate("/");
+  }
+  },[])
   // const [isPopupVisible, setPopupVisibility] = useState(false);
   // const [selectedItem, setSelectedItem] = useState(null);
   // const handleCardClick = (item) => {

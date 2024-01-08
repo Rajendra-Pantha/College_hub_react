@@ -1,9 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState , useEffect} from 'react';
 import Popup from '../popup/Popup';
 import AssignmentContext from '../../AssignmentContext/AssignmentContext';
 import { Icon } from '@iconify/react';
 import db from "../../data/subject_db.json";
-import { Link } from 'react-router-dom';
+import { Link , useNavigate} from 'react-router-dom';
 const Teacherdashboard = () => {
   const [isPopupVisible, setPopupVisibility] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -12,7 +12,12 @@ const Teacherdashboard = () => {
   //   setSelectedItem(item);
   //   setPopupVisibility(!isPopupVisible);
   // };
-  
+  const navigate =useNavigate();
+  useEffect(()=>{
+  if(localStorage.getItem("Campus_Token")===null){
+    navigate("/");
+  }
+  },[])
   return (
     <div className=' mt-8 pl-2 w-screen relative'>
        {isPopupVisible  && (

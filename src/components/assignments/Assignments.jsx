@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link , useNavigate} from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import Data from '../../data/Data'
 const Assignments = () => {
+  const navigate =useNavigate();
+  useEffect(()=>{
+  if(localStorage.getItem("Campus_Token")===null){
+    navigate("/");
+  }
+  },[])
   return (
     <div className=' pt-8 ml-8 mt-20'>
       
