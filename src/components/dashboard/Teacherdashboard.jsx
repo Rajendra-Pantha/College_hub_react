@@ -1,23 +1,43 @@
-import React, { useContext, useState , useEffect} from 'react';
+import React, { useContext, useState , useEffect , useRef} from 'react';
 import Popup from '../popup/Popup';
 import AssignmentContext from '../../AssignmentContext/AssignmentContext';
 import { Icon } from '@iconify/react';
 import db from "../../data/subject_db.json";
 import { Link , useNavigate} from 'react-router-dom';
+// import useSocket from '../../AppContext/socketHook';
+import appContext from '../../AppContext/appContext';
+import {v4 as uuidv4} from "uuid"
+// import connect_to_backend_socket from "../../socket"
 const Teacherdashboard = () => {
   const [isPopupVisible, setPopupVisibility] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const {data}= useContext(AssignmentContext);
-  // const handleCardClick = (item) => {
-  //   setSelectedItem(item);
-  //   setPopupVisibility(!isPopupVisible);
-  // };
+  const {initilize_socket} = useContext(appContext)
   const navigate =useNavigate();
+ 
+  const socket = useRef(null)
+  const current_user_uuid_ref = useRef(null)
   useEffect(()=>{
+    // connect_to_backend_socket()
+    current_user_uuid_ref.current = uuidv4()
+    console.log("uid user " , current_user_uuid_ref.current)
+    localStorage.setItem("current_id" , current_user_uuid_ref.current)
+    const d = async () =>{
+      socket.current = await initilize_socket()
+      socket.current.on("connect" , () => {
+        console.log("connected from front end")
+      })
+    }
+    d()
+    
   if(localStorage.getItem("Campus_Token")===null){
     navigate("/");
   }
+  
   },[])
+
+  
+  
   return (
     <div className=' mt-8 pl-2 w-screen relative'>
        {isPopupVisible  && (
@@ -29,7 +49,7 @@ const Teacherdashboard = () => {
        <div className='text-3xl font-semibold text-gray-600 ml-8 mb-2 '> Recent Assignment</div>
       <div className='bg-gray-400 h-px mb-6 mx-8'/>
       <div className='flex flex-wrap gap-8   mb-12 ml-8 '>
-        {data.map((item) => (
+        {data.map((item , i) => (
           <Link to={`/teacher/assignments/popup/${item.id}`}
             className="bg-[#FAFAFA]  -z-1 cursor-pointer hover:scale-105 w-[22%] rounded-lg  p-4 shadow-gray-400 shadow-md"
             key={item.id}
@@ -79,8 +99,8 @@ const Teacherdashboard = () => {
     
       return(
         
-        <Link  to={`/teacher/messagestds/chatbox/${i}`}> 
-        <div key={i}>
+        <Link  to={`/teacher/messagestds/chatbox/${i}`} key={i}> 
+        <div>
           
           <div className=' border-2  px-4 py-2 text-gray-600 h-32 w-48 justify-center flex items-center font-bold text-xl rounded-lg shadow-gray-200 shadow-lg hover:border-2 hover:border-[#d2691e] hover:scale-105 hover:text-black cursor-pointer'>{subj}</div>
           </div>

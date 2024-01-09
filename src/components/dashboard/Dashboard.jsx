@@ -1,16 +1,26 @@
-import React, { useEffect , useContext} from 'react';
+import React, { useEffect , useContext , useRef} from 'react';
 
 import { Link, useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import Data from '../../data/Data';
 import db from "../../data/subject_db.json";
 import appContext from '../../AppContext/appContext';
+import {v4 as uuidv4} from "uuid"
+
 const Dashboard = () => {
-  const {test} = useContext(appContext)
+  const {initilize_socket} = useContext(appContext)
+  const socket = useRef(null)
   const navigate =useNavigate();
-  test()
+  const current_user_uuid_ref = useRef(null)
   useEffect(()=>{
-    test()
+    current_user_uuid_ref.current = uuidv4()
+    localStorage.setItem("current_id" , current_user_uuid_ref.current)
+    const d = async () =>{
+      socket.current = await initilize_socket()
+      socket.current.on("connect" , () => {
+      })
+    }
+    d()
   if(localStorage.getItem("Campus_Token")===null){
     navigate("/");
   }
@@ -21,7 +31,7 @@ const Dashboard = () => {
       <div className='text-3xl font-semibold text-gray-600 ml-8 mb-2 '> Recent Assignment</div>
       <div className='bg-gray-400 h-px mb-6 ml-8'/>
       <div className='flex flex-wrap gap-10 justify-evenly mb-12 ml-10 '>
-        {Data.map((item) => <div className='bg-[#FAFAFA] cursor-pointer hover:scale-105 w-[22%] rounded-lg  p-4 shadow-gray-400 shadow-md' key={item.id}>
+        {Data.map((item , i) => <div key={i} className='bg-[#FAFAFA] cursor-pointer hover:scale-105 w-[22%] rounded-lg  p-4 shadow-gray-400 shadow-md'>
           <Link to={`/students/assignmentsstds/details/${item.id}`}><button className='text-[18px] text-[#435585] font-bold '>{item.Subject}</button></Link>
           <div className='  p-4 rounded-lg'>
             <div className='flex gap-2'>
@@ -63,8 +73,8 @@ const Dashboard = () => {
     
       return(
         
-        <Link  to={`/students/messagestds/chatbox/${i}`}> 
-        <div key={i}>
+        <Link  to={`/students/messagestds/chatbox/${i}`} key={i}> 
+        <div >
           
           <div className=' border-2  px-4 py-2 text-gray-600 h-32 w-48 justify-center flex items-center font-bold text-xl rounded-lg shadow-gray-200 shadow-lg hover:border-2 hover:border-[#d2691e] hover:scale-105 hover:text-black cursor-pointer'>{subj}</div>
           </div>

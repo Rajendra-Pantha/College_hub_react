@@ -1,16 +1,38 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState , useRef , useContext} from "react";
 import React  from "react";
 import db from "../../data/subject_db.json";
 import { Icon } from "@iconify/react";
 import { Link , useNavigate} from "react-router-dom";
 // import SubjectName from "./Messagefetch";
 import fetch_teacher_group from "./get_groups";
-const Message = ({ socket, groupName, subjectName , a }) => {
+import appContext from "../../AppContext/appContext";
 
+const Message = ({ socket, groupName, subjectName , identity }) => {
+  const {initilize_socket} = useContext(appContext);
+  const group_socket = useRef(null)
   const[list , setList] = useState([])
   const navigate =useNavigate();
-  
+  // const group_name = useRef(null)
+
+  // const join_to_room = (e) =>{
+  //   const group_name = (e.target.innerText)
+  //   console.log(e.target.getAttribute("data-group_name"))
+  //   group_socket.current.emit("join_room" , group_name)
+  // }
+
   useEffect(()=>{
+    const d = async () =>{
+
+      group_socket.current = await initilize_socket()
+      group_socket.current.on("connect" , () => {
+        console.log("connected from message interfacce" ,  group_socket.current.id)
+        
+      })
+   
+      
+    }
+    d()
+
   if(localStorage.getItem("Campus_Token")===null){
     navigate("/");
   }
@@ -23,13 +45,15 @@ const Message = ({ socket, groupName, subjectName , a }) => {
         setList(prevData => [...prevData , group_list[i]])
       }
     }
-    console.log("list",list);
+
     
   }
   fetch_group_list()
   
   },[])
-
+  const go_to_chatbox = (subject) =>{
+    window.location.href=`/${identity}/messagestds/chatbox/${subject}`
+  }
   return (
     <div className="  ml-3 mt-14 w-screen">
       <div className="font-bold text-5xl  justify-center flex mb-8 text-stone-800  ">
@@ -43,8 +67,9 @@ const Message = ({ socket, groupName, subjectName , a }) => {
           <div className="  h-fit  w-[100%]  border-l-2 border-r-2 border-gray-300   font-bold text-xl rounded-b-lg   cursor-pointer">
             {list.length !== 0 ? list.map((subj, i) => {
               return (
-                <Link to={`/${a}/messagestds/chatbox/${subj.subject}`} key={i}>
+                <Link key={i} onClick={()=>{go_to_chatbox(subj.subject)}}>
                   <div
+                    data-group_name = {subj.subject}
                     className=" border-b-2 rounded-lg   border-gray-300 p-4 text-gray-700 hover:text-[21px]"
                     key={i}
                   >
@@ -57,7 +82,7 @@ const Message = ({ socket, groupName, subjectName , a }) => {
                   </div>
                 </Link>
               );
-            }) : <div className="p-10">You havent created group yet...</div>}
+            }) : (identity == "teacher" ? <div className="p-10">You havent created group yet...</div> : <div className="p-10">You havent joined any group yet...</div>)}
           </div>
         </div>
       </div>

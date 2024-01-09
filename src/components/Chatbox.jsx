@@ -3,59 +3,89 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import db from "../data/subject_db.json";
-// import socket_io from "../socket";
+import handle_send_message from "./Handle_send_message.js"
+import load_chat_messages from "./load_messages.js"
+import appContext from "../AppContext/appContext";
 import ClassContext from "../ClassContext/CreateClass";
 const Chatbox = () => {
-  // const socket = useRef(null);
+  const socket = useRef(null)
+  // let socket
+  const {initilize_socket} = useContext(appContext);
   const message_ref = useRef(null);
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
 
   const { detail, setDetail } = useContext(ClassContext);
+  const { i } = useParams();
+
+  
+ const user_uuid = localStorage.getItem("current_id")
+
+
 
   useEffect(() => {
-    socket.current = socket_io;
 
-    const handle_receive_message = (data) => {
-      console.log("second called");
-      console.log("receive data", data);
-      append_received_message(data.message);
-    };
-    if (socket.current && typeof socket.current.on === "function") {
-      console.log("rrrr");
-      socket.current.on("recieve_message", handle_receive_message);
+    const load_message_from_server = async () => {
+      const messages = await load_chat_messages(i)
+      // setMessageList([])
+
+    // for(let i = 0; i < messages.length; i++){ 
+    //   setMessageList(prevData => [...prevData , messages[i]]) 
+    // }
+    // console.log("the message list is" , messageList)
+    
+    messages.forEach(message => {
+     
+      append_received_message(message)
+    })
     }
-
-    return () => {
-      // Clean up by removing the event listener from the socket instance
-      if (socket.current && typeof socket.current.off === "function") {
-        socket.current.off("receive_message", handle_receive_message);
-      }
-      // Additional cleanup if needed
-      // if (socketRef.current && typeof socketRef.current.disconnect === 'function') {
-      //   socketRef.current.disconnect();
-      // }
+    load_message_from_server()
+    const d = async () =>{
+ 
+      // window.location.reload()
+      socket.current = await initilize_socket()
+      socket.current.on("connect" , () => {
+      
+        socket.current.emit("join_room" , i)
+        socket.current.on("receive_message", handle_receive_message);
+      })
+   
+      
+    }
+    d()
+    const handle_receive_message = (data) => {
+      append_received_message(data);
     };
-  }, [socket]);
+    
+  }, []);
+
+ 
+
+    
 
   const sendMessage = () => {
+    setCurrentMessage("aaaa")
     if (currentMessage !== "") {
       // console.log("this is author: ", detail.groupName);
+
       const messageData = {
         author: detail.groupName,
-        subject: detail.subjectName,
-
-        time:
-          new Date(Date.now()).getHours() +
-          ":" +
-          new Date(Date.now()).getMinutes(),
+        subjectName: i,
+        from : user_uuid,
+        time:new Date().getTime(),
         message: currentMessage,
       };
 
-      socket.current.emit("send_message", messageData);
+      
+      
       // setMessageList((prevlist) => [...prevlist, messageData]);
-      if (message_ref.current) {
+      if (socket.current) {
+        socket.current.emit("send_message", messageData);
+        
+        handle_send_message(messageData)
         append_sent_message(messageData.message);
+        
+
         // append_received_message(messageData.message)
       }
     }
@@ -80,26 +110,30 @@ const Chatbox = () => {
   };
 
   const append_received_message = (message) => {
-    const message_outer_box = document.createElement("div");
-    message_outer_box.setAttribute("class", "flex items-center mt-2 w-2/4");
-    const image = document.createElement("img");
-    image.setAttribute(
-      "src",
-      "https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?s=1024x1024&w=is&k=20&c=iX0adGZVKv9wS5yrs0-hpFsJBnRAacZa1DcDZ0I9Bqk="
-    );
-    image.setAttribute("class", "h-8 w-8 rounded-full object-cover");
-    const message_box = document.createElement("p");
-    message_box.setAttribute(
-      "class",
-      "rounded-tl-none rounded-bl-lg rounded-tr-lg rounded-br-lg  rounded-md bg-green-700 p-1 ml-1 rounded-md w-auto text-white"
-    );
-    message_box.textContent = message;
-    message_outer_box.appendChild(image);
-    message_outer_box.appendChild(message_box);
-    if (message_ref.current) {
-      message_ref.current.appendChild(message_outer_box);
-    message_ref.current.scrollTop = message_ref.current.scrollHeight;
-
+    if(message.from == user_uuid || message.self == true){
+      append_sent_message(message.message)
+    }else{
+      const message_outer_box = document.createElement("div");
+      message_outer_box.setAttribute("class", "flex items-center mt-2 w-2/4");
+      const image = document.createElement("img");
+      image.setAttribute(
+        "src",
+        "https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?s=1024x1024&w=is&k=20&c=iX0adGZVKv9wS5yrs0-hpFsJBnRAacZa1DcDZ0I9Bqk="
+      );
+      image.setAttribute("class", "h-8 w-8 rounded-full object-cover");
+      const message_box = document.createElement("p");
+      message_box.setAttribute(
+        "class",
+        "rounded-tl-none rounded-bl-lg rounded-tr-lg rounded-br-lg  rounded-md bg-green-700 p-1 ml-1 rounded-md w-auto text-white"
+      );
+      message_box.textContent = message.message;
+      message_outer_box.appendChild(image);
+      message_outer_box.appendChild(message_box);
+      if (message_ref.current) {
+        message_ref.current.appendChild(message_outer_box);
+      message_ref.current.scrollTop = message_ref.current.scrollHeight;
+  
+      }
     }
   };
 
@@ -107,8 +141,8 @@ const Chatbox = () => {
   const handleBack = () => {
     navigate(-1);
   };
-  const { i } = useParams();
-  const selectedSubject = db["Sem_1"][parseInt(i, 10)];
+
+
 
   // if (!selectedSubject) {
   //   return (
@@ -158,8 +192,7 @@ const Chatbox = () => {
                 />
                 <button
                   className="w-[10%] text-white p-2  font-bold text-lg  bg-[#902bf5] h-12 hover:bg-[#6e0fcd] "
-                  onClick={sendMessage}
-                >
+                  onClick={sendMessage }>
                   Send
                 </button>
               </div>

@@ -8,17 +8,24 @@ import { useState } from "react";
 import ClassContext from "../../ClassContext/CreateClass";
 import AssignmentContext from "../../AssignmentContext/AssignmentContext";
 import ClassGroup from "./Classfetch";
+import appContext from "../../AppContext/appContext";
 
-// import Chatbox from "../Chatbox";
-// const socket = io.connect("http://localhost:8080", {
-//   transports: ["websocket"],
-//   cors: {
-//     origin: "http://127.0.0.1:5173",
-//     methods: ["GET", "POST"],
-//     credentials: true,
-//   },
-// });
+
 const Class = () => {
+  const socket = useRef(null)
+  const {initilize_socket} = useContext(appContext)
+
+  useEffect(()=>{
+    const d = async () =>{
+      socket.current = await initilize_socket()
+      socket.current.on("connect" , () => {
+        console.log("connected from create group")
+      })
+    }
+    d()
+  } ,[])
+  
+
    const { detail , addDetail } = useContext(ClassContext);
   const [tempdata, setTempdata] = useState({
     groupName: "",
@@ -35,7 +42,7 @@ const Class = () => {
 
   const joinroom = async () => {
     if (tempdata.groupName !== "" && tempdata.subjectName !== "") {
-      socket_io.emit("join_room", tempdata.subjectName);
+      // socket.current.emit("join_room", tempdata.subjectName);
       addDetail(tempdata);
    await ClassGroup(tempdata);
    setTempdata({

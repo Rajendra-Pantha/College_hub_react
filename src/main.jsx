@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-import App from "./App";
+
 import Nav from "./components/nav/Nav.jsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -105,14 +105,16 @@ const router = createBrowserRouter([
       },
       {
         path: "messagestds",
-        element: <Message a="students" />,
+        element: (<AppProvider><Message identity="students" /></AppProvider>),
       },
       {
         path: "/students/messagestds/chatbox/:i",
         element: (
+          <AppProvider>
           <ClassProvider>
             <Chatbox />
           </ClassProvider>
+          </AppProvider>
         ),
       },
 
@@ -137,14 +139,16 @@ const router = createBrowserRouter([
     element:<Layout3 />,
     children: [{
       path: "dashboard",
-      element:<AssignmentProvider><Teacherdashboard/></AssignmentProvider>,
+      element:(<AppProvider><AssignmentProvider><Teacherdashboard/></AssignmentProvider></AppProvider>),
     },
     {
       path: "classes",
       element: (
+        <AppProvider>
         <ClassProvider>
           <Class />,
         </ClassProvider>
+        </AppProvider>
       ),
     },
   
@@ -154,9 +158,11 @@ const router = createBrowserRouter([
     {
       path: "messagestds",
       element: (
+        <AppProvider>
         <ClassProvider>
-          <Message a="teacher"/>
+          <Message identity="teacher"/>
         </ClassProvider>
+        </AppProvider>
       ),
     },
 
@@ -164,9 +170,11 @@ const router = createBrowserRouter([
     {
       path: "/teacher/messagestds/chatbox/:i",
       element: (
+        <AppProvider>
         <ClassProvider>
           <Chatbox />
         </ClassProvider>
+        </AppProvider>
       ),
     },
     {
