@@ -27,7 +27,7 @@ e.preventDefault()
     }
   return (
     <div className="min-h-screen flex items-center justify-center">
-    <div className="bg-white p-8 rounded shadow-md w-96">
+    <div className="bg-white p-8 rounded shadow-lg z-20 w-96 border-stone-200 border-2">
       <h1 className="text-2xl font-bold mb-4">Change Password</h1>
       <form className="space-y-4" onSubmit={handleSubmit}>
 
@@ -41,7 +41,7 @@ e.preventDefault()
             onChange={handleChange}
            
             name="oldpassword"
-            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+            className="mt-1 p-2 w-full border-2 rounded-md focus:outline-none focus:ring focus:border-blue-300"
           />
         </div>
         <div>
@@ -54,15 +54,15 @@ e.preventDefault()
             onChange={handleChange}
            
             name="newpassword"
-            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+            className="mt-1 p-2 w-full border-2 rounded-md focus:outline-none focus:ring focus:border-blue-300"
           />
         </div>
-        <button
+       <div className='flex w-[20rem] justify-center'><button
           type="submit"
           className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
         >
           Change Password
-        </button>
+        </button></div> 
       </form>
     </div>
   </div>

@@ -69,7 +69,7 @@ const Teacherassignments = () => {
     <div className=" mt-2 pl-2 w-screen relative">
       {isPopoverOpen && (
         <div
-          className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-90 z-10"
+          className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 z-10"
           onClick={() => setIsPopoverOpen(false)}
         />
       )}
@@ -77,8 +77,7 @@ const Teacherassignments = () => {
         <>
           <Popover.Button onClick={handleBg} ref={popoverButtonRef}>
             <div
-              className='flex gap-2 justify-center absolute -z-1  border-2 rounded-xl py-4 px-6 font-semibold shadow-lg shadow-slate-300  hover:-translate-y-0.5 bg-[#000080] text-white ml-9 right-8 mb-2 '
-            >
+              className='flex gap-2 justify-center absolute -z-1  border-2 rounded-xl py-4 px-6 font-semibold shadow-lg shadow-slate-300 hover:bg-[#0066cc] bg-[#000080] text-white ml-9 right-8 mb-2 '>
               <Icon icon="gala:add" width="22" /> <div>Create Assignment</div>
             </div>
           </Popover.Button>
@@ -96,7 +95,7 @@ const Teacherassignments = () => {
                     Subjects:
                   </label>
                   <select
-                    className=" ml-16 text-lg shadow  border rounded w-[30%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className=" ml-16 text-lg shadow  border rounded w-[50%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     value={newAssignment.subject}
                     onChange={(e) =>
                       setNewAssignment({
@@ -181,7 +180,7 @@ const Teacherassignments = () => {
                     Deadline :
                   </label>
                   <input
-                    className="ml-16 text-lg shadow appearance-none border rounded w-[30%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="ml-16 text-lg shadow appearance-none border rounded w-[50%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     type="date"
                     value={newAssignment.deadline}
                     onChange={(e) =>
@@ -195,7 +194,7 @@ const Teacherassignments = () => {
 
                 <button
                   id="btn"
-                  className="border-2 px-4 py-2 ml-[40%] mt-3 font-semibold border-none bg-[#000080] text-white rounded-2xl hover:-translate-y-0.5"
+                  className="border-2 px-4 py-2 ml-[40%] mt-3 font-semibold border-none hover:bg-[#0066cc] bg-[#000080] text-white rounded-2xl "
                   type="submit"
                 // disabled={isAddButtonDisabled}
                 >

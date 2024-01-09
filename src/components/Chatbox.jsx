@@ -3,88 +3,79 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import db from "../data/subject_db.json";
-import handle_send_message from "./Handle_send_message.js"
-import load_chat_messages from "./load_messages.js"
+import handle_send_message from "./Handle_send_message.js";
+import load_chat_messages from "./load_messages.js";
 import appContext from "../AppContext/appContext";
 import ClassContext from "../ClassContext/CreateClass";
+import { Popover } from "@headlessui/react";
 const Chatbox = () => {
-  const socket = useRef(null)
+  const socket = useRef(null);
   // let socket
-  const {initilize_socket} = useContext(appContext);
+  const { initilize_socket } = useContext(appContext);
   const message_ref = useRef(null);
   const [currentMessage, setCurrentMessage] = useState("");
-  const [messageList, setMessageList] = useState([]);
+  const [studentlist, setStudentlist] = useState([
+    "Ram",
+    "Ram Bahadur",
+    "Hari",
+    "Shyam",
+    "Sita",
+    "Gita",
+  ]);
 
   const { detail, setDetail } = useContext(ClassContext);
   const { i } = useParams();
 
-  
- const user_uuid = localStorage.getItem("current_id")
-
-
+  const user_uuid = localStorage.getItem("current_id");
 
   useEffect(() => {
-
     const load_message_from_server = async () => {
-      const messages = await load_chat_messages(i)
+      const messages = await load_chat_messages(i);
       // setMessageList([])
 
-    // for(let i = 0; i < messages.length; i++){ 
-    //   setMessageList(prevData => [...prevData , messages[i]]) 
-    // }
-    // console.log("the message list is" , messageList)
-    
-    messages.forEach(message => {
-     
-      append_received_message(message)
-    })
-    }
-    load_message_from_server()
-    const d = async () =>{
- 
+      // for(let i = 0; i < messages.length; i++){
+      //   setMessageList(prevData => [...prevData , messages[i]])
+      // }
+      // console.log("the message list is" , messageList)
+
+      messages.forEach((message) => {
+        append_received_message(message);
+      });
+    };
+    load_message_from_server();
+    const d = async () => {
       // window.location.reload()
-      socket.current = await initilize_socket()
-      socket.current.on("connect" , () => {
-      
-        socket.current.emit("join_room" , i)
+      socket.current = await initilize_socket();
+      socket.current.on("connect", () => {
+        socket.current.emit("join_room", i);
         socket.current.on("receive_message", handle_receive_message);
-      })
-   
-      
-    }
-    d()
+      });
+    };
+    d();
     const handle_receive_message = (data) => {
       append_received_message(data);
     };
-    
   }, []);
 
- 
-
-    
-
   const sendMessage = () => {
-    setCurrentMessage("aaaa")
+    setCurrentMessage("aaaa");
     if (currentMessage !== "") {
       // console.log("this is author: ", detail.groupName);
 
       const messageData = {
         author: detail.groupName,
         subjectName: i,
-        from : user_uuid,
-        time:new Date().getTime(),
+        from: user_uuid,
+        time: new Date().getTime(),
         message: currentMessage,
       };
 
-      
-      
       // setMessageList((prevlist) => [...prevlist, messageData]);
       if (socket.current) {
         socket.current.emit("send_message", messageData);
-        
-        handle_send_message(messageData)
+
+        handle_send_message(messageData);
         append_sent_message(messageData.message);
-        
 
         // append_received_message(messageData.message)
       }
@@ -110,9 +101,9 @@ const Chatbox = () => {
   };
 
   const append_received_message = (message) => {
-    if(message.from == user_uuid || message.self == true){
-      append_sent_message(message.message)
-    }else{
+    if (message.from == user_uuid || message.self == true) {
+      append_sent_message(message.message);
+    } else {
       const message_outer_box = document.createElement("div");
       message_outer_box.setAttribute("class", "flex items-center mt-2 w-2/4");
       const image = document.createElement("img");
@@ -131,8 +122,7 @@ const Chatbox = () => {
       message_outer_box.appendChild(message_box);
       if (message_ref.current) {
         message_ref.current.appendChild(message_outer_box);
-      message_ref.current.scrollTop = message_ref.current.scrollHeight;
-  
+        message_ref.current.scrollTop = message_ref.current.scrollHeight;
       }
     }
   };
@@ -141,8 +131,6 @@ const Chatbox = () => {
   const handleBack = () => {
     navigate(-1);
   };
-
-
 
   // if (!selectedSubject) {
   //   return (
@@ -172,6 +160,24 @@ const Chatbox = () => {
                   />
                   {i}
                 </div>
+                
+                <Popover className="relative">
+                <Popover.Button className="outline-none font-extrabold text-3xl text-white mr-4">...</Popover.Button>
+                <Popover.Panel className="bg-gray-200 absolute w-48 right-4 top-12 rounded-md shadow-lg">
+               <div className="p-4">
+              <p className="font-bold text-gray-700 border-b-2 border-black mb-4 text-lg">Group Members</p>
+             <ul>
+            {studentlist.map((student, i) => (
+             <li key={i} className="flex justify-between items-center mb-2">
+             <span className="font-semibold text-blue-600">{student}</span>
+              <span className="text-red-600 text-xs cursor-pointer hover:underline transition duration-300"> Remove </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </Popover.Panel>
+</Popover>
+
               </div>
 
               {/* chatbox body  */}
@@ -179,7 +185,7 @@ const Chatbox = () => {
                 ref={message_ref}
                 className="bg-teal-900 h-[calc(73vh)] flex flex-col  w-[calc(100%)] p-2  overflow-auto pb-5"
               ></div>
-              
+
               {/* message input */}
               <div className="w-[100%] flex shadow-gray-600 shadow-2xl">
                 <input
@@ -192,7 +198,8 @@ const Chatbox = () => {
                 />
                 <button
                   className="w-[10%] text-white p-2  font-bold text-lg  bg-[#902bf5] h-12 hover:bg-[#6e0fcd] "
-                  onClick={sendMessage }>
+                  onClick={sendMessage}
+                >
                   Send
                 </button>
               </div>

@@ -94,7 +94,7 @@ const Sidebars = () => {
        
        <Popover.Button className='focus:outline-none'>
        
-       <div className='flex items-center gap-4 py-4 w-56 px-4 text-[#004369] hover:bg-[#193443fb] hover:text-white'><Icon className='text-4xl' icon="uiw:setting-o" /><span >Settings</span></div>
+       <div className='flex items-center gap-4 py-4 w-56 px-4 text-[#004369] hover:bg-[#193443fb] hover:text-white cursor-pointer z-10'><Icon className='text-4xl' icon="uiw:setting-o" /><span >Settings</span></div>
        </Popover.Button>
        <Popover.Panel className="absolute left-44  z-10 w-52 shadow-sm rounded-lg shadow-black bg-blue-50 -mt-20">
 
@@ -102,7 +102,7 @@ const Sidebars = () => {
 <div >
       
         <div className='block border-b-2  mb-4 p-2 border-gray-300 text-center text-sm font-semibold '>
-          Change Username
+        <Link to="/changeusername" > Change Username</Link> 
         </div>
 
         <div className='block border-b-2   mb-4 p-2 border-gray-300 text-center text-sm font-semibold '>

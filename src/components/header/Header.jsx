@@ -14,7 +14,7 @@ const Header = () => {
      
         <>
           
-          <Popover.Button >
+          <Popover.Button className='focus:outline-none' >
           
             <Icon className=' text-white text-4xl' icon="basil:notification-solid"  />
           </Popover.Button>
@@ -30,7 +30,7 @@ const Header = () => {
      
         <>
           
-          <Popover.Button >
+          <Popover.Button className='focus:outline-none'>
           
            <div className='text-white border-2 border-white rounded-full p-1 text-xl'>RP</div>
           </Popover.Button >
