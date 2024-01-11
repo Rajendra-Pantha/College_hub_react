@@ -75,7 +75,7 @@ const Details = () => {
             <button className=' cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 flex gap-2 items-center justify-center px-4 rounded' for="file" onClick={() => { document.getElementById("input").click() }} type="button" >
               <Icon className=' text-2xl' icon="material-symbols:upload" color="white" /> Upload Assignment
             </button><span className='
-      ml-2 py-2  text-green-500'>{file == null ? "" : `File uploaded: ${file.name}`}</span><span className='text-red-500 '>{errormsg}</span>
+      ml-2 py-2 font-semibold text-green-500'>{file == null ? "" : `File uploaded: ${file.name}`}</span><span className='text-red-500 font-semibold'>{errormsg}</span>
           </div>
         </div>
       </div>
