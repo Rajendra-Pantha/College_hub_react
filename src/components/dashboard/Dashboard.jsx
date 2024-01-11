@@ -12,12 +12,14 @@ const Dashboard = () => {
   const socket = useRef(null)
   const navigate =useNavigate();
   const current_user_uuid_ref = useRef(null)
+  
   useEffect(()=>{
     current_user_uuid_ref.current = uuidv4()
     localStorage.setItem("current_id" , current_user_uuid_ref.current)
     const d = async () =>{
       socket.current = await initilize_socket()
       socket.current.on("connect" , () => {
+        console.log("connect from student dashboard")
       })
     }
     d()

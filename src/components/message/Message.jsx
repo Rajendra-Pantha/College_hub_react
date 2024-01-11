@@ -12,23 +12,23 @@ const Message = ({ socket, groupName, subjectName , identity }) => {
   const group_socket = useRef(null)
   const[list , setList] = useState([])
   const navigate =useNavigate();
-  // const group_name = useRef(null)
+  const new_message_count = useRef(null)
+  const [count , setCount] = useState([])
 
-  // const join_to_room = (e) =>{
-  //   const group_name = (e.target.innerText)
-  //   console.log(e.target.getAttribute("data-group_name"))
-  //   group_socket.current.emit("join_room" , group_name)
-  // }
+  const update_state = (list) => {
+    // setCount(prevState => ([{...prevState , ...list}])
+    setCount([...count , list])
+
+
+  }
 
   useEffect(()=>{
     const d = async () =>{
-
+      
       group_socket.current = await initilize_socket()
       group_socket.current.on("connect" , () => {
-        console.log("connected from message interfacce" ,  group_socket.current.id)
-        
-      })
-   
+        console.log("connected from message interfacce" ,  group_socket.current.id) 
+      })  
       
     }
     d()
@@ -39,21 +39,32 @@ const Message = ({ socket, groupName, subjectName , identity }) => {
   const fetch_group_list = async ()=>{
     const group_list = await fetch_teacher_group()
     setList([])
-
+    let obj = {}
+    
     for(let i = 0; i < group_list.length; i++){
       if(group_list[i].subject !== ""){
         setList(prevData => [...prevData , group_list[i]])
+        obj[group_list[i].subject]=0
       }
     }
+    // console.log(obj)
+    
 
+    
+    if(Object.keys(count).length === 0){
+      console.log("called")
+      update_state(obj)
+      
+    }
+    console.log("new count",count) 
+    
     
   }
   fetch_group_list()
   
-  },[])
-  const go_to_chatbox = (subject) =>{
-    window.location.href=`/${identity}/messagestds/chatbox/${subject}`
-  }
+  },[count])
+
+
   return (
     <div className="  ml-3 mt-14 w-screen">
       <div className="font-bold text-5xl  justify-center flex mb-8 text-stone-800  ">
@@ -66,8 +77,9 @@ const Message = ({ socket, groupName, subjectName , identity }) => {
         <div>
           <div className="  h-fit  w-[100%]  border-l-2 border-r-2 border-gray-300   font-bold text-xl rounded-b-lg   cursor-pointer">
             {list.length !== 0 ? list.map((subj, i) => {
+              
               return (
-                <Link key={i} onClick={()=>{go_to_chatbox(subj.subject)}}>
+                <Link key={i} to={`/${identity}/messagestds/chatbox/${subj.subject}`}>
                   <div
                     data-group_name = {subj.subject}
                     className=" border-b-2 rounded-lg   border-gray-300 p-4 text-gray-700 hover:text-[21px]"
@@ -79,6 +91,7 @@ const Message = ({ socket, groupName, subjectName , identity }) => {
                       icon="fluent:ios-arrow-24-regular"
                       hFlip={true}
                     />
+                    <div className="bg-green-400 w-8 h-8 flex items-center justify-center rounded-full text-red-500 text-sm">{count[0][`${subj.subject}`]}</div>
                   </div>
                 </Link>
               );

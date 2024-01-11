@@ -13,7 +13,7 @@ const fetch_teacher_group = async () => {
     }
      )
      const group_list = await group_response.json()
-     console.log("group list" , group_list) 
+
 
      return group_list.filter(item => item.subject !== "")
 }

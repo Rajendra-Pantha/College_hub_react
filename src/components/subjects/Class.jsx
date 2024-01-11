@@ -18,9 +18,6 @@ const Class = () => {
   useEffect(()=>{
     const d = async () =>{
       socket.current = await initilize_socket()
-      socket.current.on("connect" , () => {
-        console.log("connected from create group")
-      })
     }
     d()
   } ,[])
@@ -32,17 +29,8 @@ const Class = () => {
     subjectName: "",
   });
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   // if (detail.groupName !== "" && detail.subjectName !== "") {
-  //   //   socket.emit("join_room", detail.subjectName);
-  //   // }
-
-  // };
-
   const joinroom = async () => {
     if (tempdata.groupName !== "" && tempdata.subjectName !== "") {
-      // socket.current.emit("join_room", tempdata.subjectName);
       addDetail(tempdata);
    await ClassGroup(tempdata);
    setTempdata({

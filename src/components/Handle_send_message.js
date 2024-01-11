@@ -13,8 +13,8 @@ const handle_sent_message = async(message_body) => {
             body :JSON.stringify(message_body)
         }
         )
-        const res = await message_request.json()
-        console.log("sent message is " , res)
+        // const res = await message_request.json()
+        // console.log("sent message is " , res)
 
 }
 

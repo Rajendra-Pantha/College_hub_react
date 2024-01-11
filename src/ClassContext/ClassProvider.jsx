@@ -9,7 +9,7 @@ const ClassProvider = ({ children }) => {
   });
   // console.log("wetq:", detail);
   const addDetail = (newValue) => {
-    console.log(newValue);
+
     // setDetail({
     //   ...detail,
     //   groupName: newValue.groupName,
@@ -23,7 +23,6 @@ const ClassProvider = ({ children }) => {
   };
   useEffect(() => {
     // Log the updated detail state when it changes
-    console.log("fromprov: ", detail);
   }, [detail]);
   return (
     <ClassContext.Provider value={{ detail, addDetail }}>

@@ -27,13 +27,7 @@ const Chatbox = () => {
 
     const load_message_from_server = async () => {
       const messages = await load_chat_messages(i)
-      // setMessageList([])
 
-    // for(let i = 0; i < messages.length; i++){ 
-    //   setMessageList(prevData => [...prevData , messages[i]]) 
-    // }
-    // console.log("the message list is" , messageList)
-    
     messages.forEach(message => {
      
       append_received_message(message)
@@ -64,9 +58,8 @@ const Chatbox = () => {
     
 
   const sendMessage = () => {
-    setCurrentMessage("aaaa")
+    
     if (currentMessage !== "") {
-      // console.log("this is author: ", detail.groupName);
 
       const messageData = {
         author: detail.groupName,
@@ -78,16 +71,12 @@ const Chatbox = () => {
 
       
       
-      // setMessageList((prevlist) => [...prevlist, messageData]);
       if (socket.current) {
         socket.current.emit("send_message", messageData);
-        
+        setCurrentMessage("")
         handle_send_message(messageData)
         append_sent_message(messageData.message);
-        
-
-        // append_received_message(messageData.message)
-      }
+        }
     }
   };
   const append_sent_message = (message) => {
@@ -142,19 +131,19 @@ const Chatbox = () => {
     navigate(-1);
   };
 
-
-
-  // if (!selectedSubject) {
-  //   return (
-  //     <div key={i}>
-  //       <h2>Details not found</h2>
-  //     </div>
-  //   );
-  // }
   const set_message = (e) => {
     e.preventDefault();
     setCurrentMessage(e.target.value);
   };
+
+
+  window.onkeydown = (e) => {
+    if(e.code == "Enter"){
+      sendMessage()
+    }
+  }
+
+
   return (
     <>
       <div>
@@ -183,6 +172,7 @@ const Chatbox = () => {
               {/* message input */}
               <div className="w-[100%] flex shadow-gray-600 shadow-2xl">
                 <input
+                value={currentMessage}
                   className="h-12 w-[90%] focus:outline-none placeholder:p-2 p-2 border-black border-2"
                   type="text"
                   placeholder="Write something here..."

@@ -7,9 +7,6 @@ const AppProvider = ({children}) => {
   let socket 
       const initilize_socket = async () => {
         socket = socket_io()
-        socket.on("connect" , () => {
-          console.log("User connected with" , socket.id)
-        })
         return socket
       } 
       
