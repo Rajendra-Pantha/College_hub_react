@@ -30,7 +30,7 @@ const Chatbox = () => {
 
   useEffect(() => {
     const load_message_from_server = async () => {
-<<<<<<< HEAD
+
       const messages = await load_chat_messages(i)
 
     messages.forEach(message => {
@@ -39,24 +39,25 @@ const Chatbox = () => {
     })
     }
     load_message_from_server()
-    const d = async () =>{
+    // const d = async () =>{
  
-=======
-      const messages = await load_chat_messages(i);
-      // setMessageList([])
 
-      // for(let i = 0; i < messages.length; i++){
-      //   setMessageList(prevData => [...prevData , messages[i]])
-      // }
-      // console.log("the message list is" , messageList)
+    //   const messages = await load_chat_messages(i);
+    //   // setMessageList([])
 
-      messages.forEach((message) => {
-        append_received_message(message);
-      });
-    };
-    load_message_from_server();
+    //   // for(let i = 0; i < messages.length; i++){
+    //   //   setMessageList(prevData => [...prevData , messages[i]])
+    //   // }
+    //   // console.log("the message list is" , messageList)
+
+    //   messages.forEach((message) => {
+    //     append_received_message(message);
+    //   });
+    // };
+
+    // load_message_from_server();
     const d = async () => {
->>>>>>> 1f93d2f8d39a7030f86982aa3a768dc18f5f55cd
+
       // window.location.reload()
       socket.current = await initilize_socket();
       socket.current.on("connect", () => {
@@ -71,11 +72,11 @@ const Chatbox = () => {
   }, []);
 
   const sendMessage = () => {
-<<<<<<< HEAD
+
     
-=======
-    setCurrentMessage("aaaa");
->>>>>>> 1f93d2f8d39a7030f86982aa3a768dc18f5f55cd
+
+    setCurrentMessage("");
+
     if (currentMessage !== "") {
 
       const messageData = {
@@ -86,26 +87,24 @@ const Chatbox = () => {
         message: currentMessage,
       };
 
-<<<<<<< HEAD
-      
-      
+
       if (socket.current) {
         socket.current.emit("send_message", messageData);
         setCurrentMessage("")
         handle_send_message(messageData)
         append_sent_message(messageData.message);
         }
-=======
-      // setMessageList((prevlist) => [...prevlist, messageData]);
-      if (socket.current) {
-        socket.current.emit("send_message", messageData);
 
-        handle_send_message(messageData);
-        append_sent_message(messageData.message);
+      // // setMessageList((prevlist) => [...prevlist, messageData]);
+      // if (socket.current) {
+      //   socket.current.emit("send_message", messageData);
 
-        // append_received_message(messageData.message)
-      }
->>>>>>> 1f93d2f8d39a7030f86982aa3a768dc18f5f55cd
+      //   handle_send_message(messageData);
+      //   append_sent_message(messageData.message);
+
+      //   // append_received_message(messageData.message)
+      // }
+
     }
   };
   const append_sent_message = (message) => {
@@ -159,8 +158,7 @@ const Chatbox = () => {
     navigate(-1);
   };
 
-<<<<<<< HEAD
-=======
+
   // if (!selectedSubject) {
   //   return (
   //     <div key={i}>
@@ -168,7 +166,7 @@ const Chatbox = () => {
   //     </div>
   //   );
   // }
->>>>>>> 1f93d2f8d39a7030f86982aa3a768dc18f5f55cd
+
   const set_message = (e) => {
     e.preventDefault();
     setCurrentMessage(e.target.value);
@@ -246,7 +244,7 @@ const Chatbox = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div>it 
     </>
   );
 };

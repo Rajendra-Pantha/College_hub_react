@@ -95,15 +95,17 @@ const Teacherassignments = () => {
       <Popover className="relative">
         <>
           <Popover.Button onClick={handleBg} ref={popoverButtonRef}>
-<<<<<<< HEAD
-            <div className="flex gap-2 justify-center absolute -z-1  border-2 rounded-xl py-4 px-6 font-semibold shadow-lg shadow-slate-300  hover:-translate-y-0.5 bg-[#000080] text-white ml-9 right-8 mb-2 ">
-=======
+
+            
+
             <div
               className='flex gap-2 justify-center absolute -z-1  border-2 rounded-xl py-4 px-6 font-semibold shadow-lg shadow-slate-300 hover:bg-[#0066cc] bg-[#000080] text-white ml-9 right-8 mb-2 '>
->>>>>>> 1f93d2f8d39a7030f86982aa3a768dc18f5f55cd
+
               <Icon icon="gala:add" width="22" /> <div>Create Assignment</div>
             </div>
+           
           </Popover.Button>
+        
           <Popover.Panel
             className="absolute  mt-[4%] ml-[15%] z-10  p-4  w-[40vw] shadow-sm rounded-md shadow-black bg-[#dcdcdc] "
             style={{
@@ -119,21 +121,11 @@ const Teacherassignments = () => {
                   </label>
                   <select
                     className=" ml-16 text-lg shadow  border rounded w-[50%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-<<<<<<< HEAD
+
                     name="subject"
                     onChange={(e) => {
                       handle_input_change(e);
-                    }}
-=======
-                    value={newAssignment.subject}
-                    onChange={(e) =>
-                      setNewAssignment({
-                        ...newAssignment,
-                        subject: e.target.value,
-                      })
-                    }
->>>>>>> 1f93d2f8d39a7030f86982aa3a768dc18f5f55cd
-                  >
+                    }}                  >
                     <option value="invalid">Select one subject</option>
                     {teacher_subjects.current &&
                       teacher_subjects.current.map((sub) => {
