@@ -248,10 +248,10 @@ const Teacherassignments = () => {
         {assignment_list && assignment_list.reverse().map((item , i) => (
           <Link
             to={`popup/${item._id}`}
-            className="bg-[#FAFAFA]  -z-1 cursor-pointer hover:scale-105 w-[22%] rounded-lg  p-4 shadow-gray-400 shadow-md"
+            className="bg-[#FAFAFA] flex flex-col justify-evenly -z-1 cursor-pointer hover:scale-105 w-[22%] rounded-lg  p-4 shadow-gray-400 shadow-md"
             key={i}
           >
-            <div className="relative text-[18px] text-[#435585] font-bold ">
+            <div className=" text-[18px] text-[#435585] font-bold ">
               {item.subject}
             </div>
 

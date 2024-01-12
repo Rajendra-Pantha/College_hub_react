@@ -35,6 +35,7 @@ import Otpprovider from "./otpcontext/Otpprovider.jsx";
 import Changepassword from "./components/sidebars/Changepassword.jsx";
 import Changeusername from "./components/sidebars/Changeusername.jsx";
 import AppProvider from "./AppContext/appProvider.jsx";
+import AssignmentContext from "./AssignmentContext/AssignmentContext.js";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -120,7 +121,7 @@ const router = createBrowserRouter([
 
       {
         path: "assignmentsstds",
-        element: <Assignments />,
+        element:(<AssignmentProvider> <Assignments /></AssignmentProvider>),
       },
       {
         path: "assignmentsstds/details/:id",

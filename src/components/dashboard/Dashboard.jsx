@@ -1,32 +1,45 @@
-import React, { useEffect , useContext , useRef} from 'react';
-
+import React, { useEffect , useContext , useRef , useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import Data from '../../data/Data';
-import db from "../../data/subject_db.json";
 import appContext from '../../AppContext/appContext';
 import {v4 as uuidv4} from "uuid"
+import fetch_teacher_group from '../message/get_groups'
 
 const Dashboard = () => {
   const {initilize_socket} = useContext(appContext)
   const socket = useRef(null)
   const navigate =useNavigate();
   const current_user_uuid_ref = useRef(null)
-  
+  const [group_list, setGroup_list]=useState([]);
+
+   const update_Group_List=(lists)=>{
+    setGroup_list([])
+for(let i=0;i<lists.length;i++){
+  setGroup_list((prevData) => [...prevData, lists[i]])
+}
+  }
   useEffect(()=>{
+    
     current_user_uuid_ref.current = uuidv4()
     localStorage.setItem("current_id" , current_user_uuid_ref.current)
+   
     const d = async () =>{
+      const studentMessageGroup=await fetch_teacher_group();
+      update_Group_List(studentMessageGroup)
       socket.current = await initilize_socket()
       socket.current.on("connect" , () => {
         console.log("connect from student dashboard")
       })
     }
-    d()
-  if(localStorage.getItem("Campus_Token")===null){
+
+    d();
+  
+    if(localStorage.getItem("Campus_Token")===null){
     navigate("/");
   }
   },[])
+  
   return (
     <div className='  pl-4 mt-8 '>
       
@@ -70,15 +83,15 @@ const Dashboard = () => {
       <div className='flex flex-wrap gap-8 ml-8 mt-4 w-[100%]'>
     {
      
-    db["Sem_1"].map((subj,i)=>
+     group_list[0]&& group_list.map((subj,i)=>
      {
     
       return(
         
-        <Link  to={`/students/messagestds/chatbox/${i}`} key={i}> 
+        <Link  to={`/students/messagestds/chatbox/${subj.subject}`} key={i}> 
         <div >
           
-          <div className=' border-2  px-4 py-2 text-gray-600 h-32 w-48 justify-center flex items-center font-bold text-xl rounded-lg shadow-gray-200 shadow-lg hover:border-2 hover:border-[#d2691e] hover:scale-105 hover:text-black cursor-pointer'>{subj}</div>
+          <div className=' border-2  px-4 py-2 text-gray-600 h-32 w-48 justify-center flex items-center font-bold text-xl rounded-lg shadow-gray-200 shadow-lg hover:border-2 hover:border-[#d2691e] hover:scale-105 hover:text-black cursor-pointer'>{subj.subject}</div>
           </div>
           </Link>
       )

@@ -2,14 +2,18 @@ import { React, useState, useContext, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
-import db from "../data/subject_db.json";
 import handle_send_message from "./Handle_send_message.js";
 import load_chat_messages from "./load_messages.js";
 import appContext from "../AppContext/appContext";
 import ClassContext from "../ClassContext/CreateClass";
 import { Popover } from "@headlessui/react";
-const Chatbox = () => {
+
+ const Chatbox = () => {
   const socket = useRef(null);
+  const { detail, setDetail } = useContext(ClassContext);
+  const { i } = useParams();
+
+  const user_uuid = localStorage.getItem("current_id");
   // let socket
   const { initilize_socket } = useContext(appContext);
   const message_ref = useRef(null);
@@ -23,10 +27,7 @@ const Chatbox = () => {
     "Gita",
   ]);
 
-  const { detail, setDetail } = useContext(ClassContext);
-  const { i } = useParams();
 
-  const user_uuid = localStorage.getItem("current_id");
 
   useEffect(() => {
     const load_message_from_server = async () => {
@@ -117,7 +118,7 @@ const Chatbox = () => {
     const message_box = document.createElement("p");
     message_box.setAttribute(
       "class",
-      "rounded-tl-none rounded-bl-lg rounded-tr-lg rounded-br-lg  rounded-md bg-green-700 p-1 ml-1 rounded-md w-auto text-white"
+      "rounded-tl-none rounded-bl-lg rounded-tr-lg rounded-br-lg  rounded-md bg-green-700 p-1 ml-1 rounded-md  text-white"
     );
     message_box.textContent = message;
 

@@ -23,6 +23,7 @@ const AssignmentProvider = ({children}) => {
             
             // setData(assignmentdata);
         }, []);
+       
     
   return (
     <AssignmentContext.Provider value={{initilize_teacher_default_detail}}>
