@@ -60,7 +60,7 @@ const Sidebarsteacher = () => {
       const navigate = useNavigate();
       const handleLogOut=()=>{
         localStorage.removeItem("Campus_Token");
-        navigate("/loginteacher");}
+        navigate("/");}
        //.................
     
   return (

@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
+import ViewPdf from "./components/popup/ViewPdf.jsx"
 
 import Nav from "./components/nav/Nav.jsx";
 import "./index.css";
@@ -28,7 +29,7 @@ import AssignmentProvider from "./AssignmentContext/AssignmentProvider.jsx";
 import ClassProvider from "./ClassContext/ClassProvider.jsx";
 
 
-import Hello from './Hello.jsx';
+// import Hello from './Hello.jsx';
 import Studentlist from './components/Studentlist.jsx';
 import Popup from "./components/popup/Popup.jsx";
 import Otpprovider from "./otpcontext/Otpprovider.jsx";
@@ -36,6 +37,8 @@ import Changepassword from "./components/sidebars/Changepassword.jsx";
 import Changeusername from "./components/sidebars/Changeusername.jsx";
 import AppProvider from "./AppContext/appProvider.jsx";
 import AssignmentContext from "./AssignmentContext/AssignmentContext.js";
+import View_assignment from "./components/popup/View_assignment.jsx";
+import UserContextProvider from "./UserContext/UserContextProvider.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -93,11 +96,16 @@ const router = createBrowserRouter([
 
   {
     path: "students",
-    element: <Layout2 />,
+    element:(<AssignmentProvider> <Layout2 /> </AssignmentProvider>),
     children: [
       {
         path: "dashboard",
-        element: (<AppProvider><Dashboard /></AppProvider>),
+        element: (
+        <AssignmentProvider>
+        <AppProvider>
+        <Dashboard />
+        </AppProvider>
+        </AssignmentProvider>),
       },
 
       {
@@ -129,18 +137,13 @@ const router = createBrowserRouter([
       },
     ],
   },
-  
-  {
-    path: "Hello",
-    element: <Hello />,
-  },
   {
     path: "teacher",
 
-    element:<Layout3 />,
+    element: (<AssignmentProvider><Layout3 /></AssignmentProvider>),
     children: [{
       path: "dashboard",
-      element:(<AppProvider><AssignmentProvider><Teacherdashboard/></AssignmentProvider></AppProvider>),
+      element:(<UserContextProvider><AppProvider><AssignmentProvider><Teacherdashboard/></AssignmentProvider></AppProvider></UserContextProvider>),
     },
     {
       path: "classes",
@@ -193,6 +196,14 @@ const router = createBrowserRouter([
           <Popup />
         </AssignmentProvider>
       ),
+    },
+    {
+      path:"assignments/student_assignment/:assignId_studentId",
+        element: (
+        
+          <View_assignment/>
+        
+      ),
     }
    
    
@@ -207,6 +218,10 @@ const router = createBrowserRouter([
  {
   path:'changeusername',
   element:<Changeusername/>
+ },
+ {
+  path: "/test",
+  element : <View_assignment/>
  }
 
 

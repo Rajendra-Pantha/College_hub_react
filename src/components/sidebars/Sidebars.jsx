@@ -69,7 +69,8 @@ const Sidebars = () => {
        
        const handleLogOut=()=>{
        localStorage.removeItem("Campus_Token");
-         navigate("/loginstudent");}
+         navigate("/")
+        }
     
   return (
     <div className='relative flex '>

@@ -26,24 +26,26 @@ const Teacherassignments = () => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const navigate = useNavigate();
 
+  const fetch_teacher_subjects = async () => {
+    const { data, teacher } = await initilize_teacher_default_detail(false);
+    console.log("got subject teaceheer ", teacher);
+    teachers.current = teacher.t_name
+
+    setAssignmentList([]);
+    for (let i = 0; i < data.length; i++) {
+      setAssignmentList((prevData) => [...prevData, data[i]]);
+    }
+    
+    teacher_subjects.current = teacher.subjects;
+    console.log("chalyoo ", teacher_subjects.current);
+
+  };
+
   useEffect(() => {
     if (localStorage.getItem("Campus_Token") === null) {
       navigate("/");
     }
-    const fetch_teacher_subjects = async () => {
-      const { data, teacher } = await initilize_teacher_default_detail(false);
-      console.log("got subject teaceheer ", teacher);
-      teachers.current = teacher.t_name
 
-      setAssignmentList([]);
-      for (let i = 0; i < data.length; i++) {
-        setAssignmentList((prevData) => [...prevData, data[i]]);
-      }
-      
-      teacher_subjects.current = teacher.subject;
-      console.log("chalyoo ", teacher_subjects.current);
-
-    };
     fetch_teacher_subjects();
   }, []);
 
@@ -60,8 +62,12 @@ const Teacherassignments = () => {
     } else {
       // addAssignment(assignment_ref.current);
 
-      createAssignment(assignment_ref.current);
+      const data = createAssignment(assignment_ref.current);
+      if(data){
+        fetch_teacher_subjects()
+      }
 
+      // fetch_teacher_subjects()
       // setNewAssignment({
       //   //   id:"",
       //   title: "",
@@ -248,7 +254,7 @@ const Teacherassignments = () => {
         {assignment_list && assignment_list.reverse().map((item , i) => (
           <Link
             to={`popup/${item._id}`}
-            className="bg-[#FAFAFA] flex flex-col justify-evenly -z-1 cursor-pointer hover:scale-105 w-[22%] rounded-lg  p-4 shadow-gray-400 shadow-md"
+            className="bg-[#FAFAFA] flex flex-col justify-between -z-1 cursor-pointer hover:scale-105 w-[22%] rounded-lg  p-4 shadow-gray-400 shadow-md"
             key={i}
           >
             <div className=" text-[18px] text-[#435585] font-bold ">

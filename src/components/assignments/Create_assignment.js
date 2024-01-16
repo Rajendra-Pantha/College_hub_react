@@ -9,7 +9,7 @@ const createAssignment =async (assignmentdetails) =>{
       body:JSON.stringify(assignmentdetails)
     });
     console.log("The response is ", Response)
-    const data=await Response.json();
-    console.log("The data is",data);
+    const data = await Response.json();
+    return data
 }
 export default createAssignment;

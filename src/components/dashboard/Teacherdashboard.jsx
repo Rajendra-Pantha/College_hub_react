@@ -9,10 +9,12 @@ import appContext from "../../AppContext/appContext";
 import { v4 as uuidv4 } from "uuid";
 import fetch_teacher_group from "../message/get_groups.js";
 
+
 const Teacherdashboard = () => {
   const [isPopupVisible, setPopupVisibility] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const { initilize_teacher_default_detail } = useContext(AssignmentContext);
+ 
   const { initilize_socket } = useContext(appContext);
   const navigate = useNavigate();
   const [assignment_list, setAssignmentList] = useState([]);
@@ -50,8 +52,9 @@ const Teacherdashboard = () => {
       const { data, teacher } = await initilize_teacher_default_detail(true);
 
       teachers.current = teacher.t_name;
+      console.log("teacher name is " , teacher.t_name)
+     
 
-      // setAssignmentList([])
       for (let i = 0; i < data.length; i++) {
         setAssignmentList((prevData) => [...prevData, data[i]]);
       }
@@ -87,7 +90,7 @@ const Teacherdashboard = () => {
             <Link
               to={`/teacher/assignments/popup/${item._id}`}
               key={i}
-              className="bg-[#FAFAFA]  -z-1 cursor-pointer hover:scale-105 w-[22%] rounded-lg  p-4 shadow-gray-400 shadow-md"
+              className="bg-[#FAFAFA]  -z-1 cursor-pointer hover:scale-105 w-[22%] rounded-lg  p-4 shadow-gray-400 shadow-md flex flex-col justify-between"
             >
               <div className="relative text-[18px] text-[#435585] font-bold ">
                 {item.subject}

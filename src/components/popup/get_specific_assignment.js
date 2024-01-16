@@ -12,10 +12,12 @@ const get_specific_assignment = async (s_id) => {
             }
         }
     )
-
+    // view_student_submitted_assignment/:assignId_studentId
     const detail = await assignment_detail.json()
+    
     return detail
 }
 
 
-export default get_specific_assignment
+
+export default get_specific_assignment 

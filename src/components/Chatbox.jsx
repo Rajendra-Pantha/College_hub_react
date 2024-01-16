@@ -7,8 +7,9 @@ import load_chat_messages from "./load_messages.js";
 import appContext from "../AppContext/appContext";
 import ClassContext from "../ClassContext/CreateClass";
 import { Popover } from "@headlessui/react";
-
+import  {encrypt , decrypt} from "./Cryptography.js"
  const Chatbox = () => {
+
   const socket = useRef(null);
   const { detail, setDetail } = useContext(ClassContext);
   const { i } = useParams();
@@ -17,6 +18,7 @@ import { Popover } from "@headlessui/react";
   // let socket
   const { initilize_socket } = useContext(appContext);
   const message_ref = useRef(null);
+  const input_ref = useRef(null)
   const [currentMessage, setCurrentMessage] = useState("");
   const [studentlist, setStudentlist] = useState([
     "Ram",
@@ -27,49 +29,41 @@ import { Popover } from "@headlessui/react";
     "Gita",
   ]);
 
+    
+  const load_message_from_server = async () => {
 
+    const messages = await load_chat_messages(i)
 
+  messages.forEach(message => {
+   
+    append_received_message(message)
+  })
+  }
+
+  const handle_receive_message = (data) => {
+    append_received_message(data);
+  };
+
+  const d = async () => {
+
+    // window.location.reload()
+    socket.current = await initilize_socket();
+    socket.current.on("connect", () => {
+      socket.current.emit("join_room", i);
+      socket.current.on("receive_message", handle_receive_message);
+    });
+  };
   useEffect(() => {
-    const load_message_from_server = async () => {
-
-      const messages = await load_chat_messages(i)
-
-    messages.forEach(message => {
-     
-      append_received_message(message)
-    })
-    }
-    load_message_from_server()
-    // const d = async () =>{
- 
-
-    //   const messages = await load_chat_messages(i);
-    //   // setMessageList([])
-
-    //   // for(let i = 0; i < messages.length; i++){
-    //   //   setMessageList(prevData => [...prevData , messages[i]])
-    //   // }
-    //   // console.log("the message list is" , messageList)
-
-    //   messages.forEach((message) => {
-    //     append_received_message(message);
-    //   });
-    // };
-
-    // load_message_from_server();
-    const d = async () => {
-
-      // window.location.reload()
-      socket.current = await initilize_socket();
-      socket.current.on("connect", () => {
-        socket.current.emit("join_room", i);
-        socket.current.on("receive_message", handle_receive_message);
-      });
-    };
+    setCurrentMessage("")
+    input_ref.current.focus()
     d();
-    const handle_receive_message = (data) => {
-      append_received_message(data);
-    };
+    load_message_from_server()
+
+
+    return () =>{
+      socket.current.disconnect()
+    }
+
   }, []);
 
   const sendMessage = () => {
@@ -80,33 +74,28 @@ import { Popover } from "@headlessui/react";
 
     if (currentMessage !== "") {
 
+      const encrypted_message = encrypt(currentMessage , 3)
+
       const messageData = {
         author: detail.groupName,
         subjectName: i,
         from: user_uuid,
         time: new Date().getTime(),
-        message: currentMessage,
+        message: encrypted_message,
       };
 
 
       if (socket.current) {
         socket.current.emit("send_message", messageData);
         setCurrentMessage("")
+        // console.log("this is ecrypted sent mesage " , messageData)
         handle_send_message(messageData)
         append_sent_message(messageData.message);
+
         }
 
-      // // setMessageList((prevlist) => [...prevlist, messageData]);
-      // if (socket.current) {
-      //   socket.current.emit("send_message", messageData);
-
-      //   handle_send_message(messageData);
-      //   append_sent_message(messageData.message);
-
-      //   // append_received_message(messageData.message)
-      // }
-
     }
+    // message_ref.current = null
   };
   const append_sent_message = (message) => {
     const message_outer_box = document.createElement("div");
@@ -120,7 +109,10 @@ import { Popover } from "@headlessui/react";
       "class",
       "rounded-tl-none rounded-bl-lg rounded-tr-lg rounded-br-lg  rounded-md bg-green-700 p-1 ml-1 rounded-md  text-white"
     );
-    message_box.textContent = message;
+
+     const  decrypted_messsage = decrypt(message , 3)
+    
+    message_box.textContent = decrypted_messsage;
 
     message_outer_box.appendChild(message_box);
     message_ref.current.appendChild(message_outer_box);
@@ -128,8 +120,9 @@ import { Popover } from "@headlessui/react";
   };
 
   const append_received_message = (message) => {
+    // console.log("this is received encrypted  mesage " , message)
     if (message.from == user_uuid || message.self == true) {
-      append_sent_message(message.message);
+      append_sent_message(message.message , "R");
     } else {
       const message_outer_box = document.createElement("div");
       message_outer_box.setAttribute("class", "flex items-center mt-2 w-2/4");
@@ -144,7 +137,9 @@ import { Popover } from "@headlessui/react";
         "class",
         "rounded-tl-none rounded-bl-lg rounded-tr-lg rounded-br-lg  rounded-md bg-green-700 p-1 ml-1 rounded-md w-auto text-white"
       );
-      message_box.textContent = message.message;
+      const decrypted_messsage = decrypt(message.message , 3)
+      // console.log("this is decrypted received message " , decrypted_messsage)
+      message_box.textContent = decrypted_messsage;
       message_outer_box.appendChild(image);
       message_outer_box.appendChild(message_box);
       if (message_ref.current) {
@@ -160,13 +155,7 @@ import { Popover } from "@headlessui/react";
   };
 
 
-  // if (!selectedSubject) {
-  //   return (
-  //     <div key={i}>
-  //       <h2>Details not found</h2>
-  //     </div>
-  //   );
-  // }
+
 
   const set_message = (e) => {
     e.preventDefault();
@@ -227,6 +216,7 @@ import { Popover } from "@headlessui/react";
               {/* message input */}
               <div className="w-[100%] flex shadow-gray-600 shadow-2xl">
                 <input
+                ref={input_ref}
                 value={currentMessage}
                   className="h-12 w-[90%] focus:outline-none placeholder:p-2 p-2 border-black border-2"
                   type="text"
@@ -245,7 +235,7 @@ import { Popover } from "@headlessui/react";
             </div>
           </div>
         </div>
-      </div>it 
+      </div>
     </>
   );
 };
