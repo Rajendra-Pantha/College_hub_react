@@ -8,11 +8,22 @@ import appContext from "../AppContext/appContext";
 import ClassContext from "../ClassContext/CreateClass";
 import { Popover } from "@headlessui/react";
 import  {encrypt , decrypt} from "./Cryptography.js"
+import get_group_members from "./get_group_members.js"
+import Typing from "../Typing.jsx";
+import sound from "./ting.mp3"
  const Chatbox = () => {
+  const playSound = () => {
 
+    const audio = new Audio(sound);
+    audio.autoplay = true
+    audio.loop = false
+    audio.play();
+  };
+  
   const socket = useRef(null);
   const { detail, setDetail } = useContext(ClassContext);
   const { i } = useParams();
+  // console.log("the chat name is " , i)
 
   const user_uuid = localStorage.getItem("current_id");
   // let socket
@@ -20,16 +31,10 @@ import  {encrypt , decrypt} from "./Cryptography.js"
   const message_ref = useRef(null);
   const input_ref = useRef(null)
   const [currentMessage, setCurrentMessage] = useState("");
-  const [studentlist, setStudentlist] = useState([
-    "Ram",
-    "Ram Bahadur",
-    "Hari",
-    "Shyam",
-    "Sita",
-    "Gita",
-  ]);
-
-    
+  const [is_admin , setAdmin] = useState(false)
+  const [studentlist, setStudentlist] = useState([]);
+  const [typing , setTyping] = useState(false)
+  
   const load_message_from_server = async () => {
 
     const messages = await load_chat_messages(i)
@@ -41,8 +46,24 @@ import  {encrypt , decrypt} from "./Cryptography.js"
   }
 
   const handle_receive_message = (data) => {
-    append_received_message(data);
+   
+    playSound()
+      setTimeout(() => {
+       
+        append_received_message(data);
+      }, 300);
+    
+
+    
   };
+
+
+  const manage_group_memebers = (members) => {
+    // console.log(members[0].collaborators)
+    members.forEach((member) => {
+      setStudentlist(prevData => ([...prevData , member]))
+    })
+  }
 
   const d = async () => {
 
@@ -51,7 +72,16 @@ import  {encrypt , decrypt} from "./Cryptography.js"
     socket.current.on("connect", () => {
       socket.current.emit("join_room", i);
       socket.current.on("receive_message", handle_receive_message);
+      socket.current.on("user_typing" , (data) => {
+        // console.log("someone is typing n scroll down div")
+        // message_ref.current.scrollTop = message_ref.current.scrollHeight;
+        handle_typing_message(data)
+      })
+      socket.current.on("user_sent_message" , handle_typing_message)
     });
+   const {admin , members} = await  get_group_members(i)
+   setAdmin(admin)
+   manage_group_memebers(members)
   };
   useEffect(() => {
     setCurrentMessage("")
@@ -67,8 +97,7 @@ import  {encrypt , decrypt} from "./Cryptography.js"
   }, []);
 
   const sendMessage = () => {
-
-    
+    socket.current.emit("message_sent" , {subject : i , typing : false})
 
     setCurrentMessage("");
 
@@ -158,7 +187,7 @@ import  {encrypt , decrypt} from "./Cryptography.js"
 
 
   const set_message = (e) => {
-    e.preventDefault();
+    e.preventDefault()    
     setCurrentMessage(e.target.value);
   };
 
@@ -166,17 +195,38 @@ import  {encrypt , decrypt} from "./Cryptography.js"
   window.onkeydown = (e) => {
     if(e.code == "Enter"){
       sendMessage()
+      setTyping(false)
     }
   }
+const emit_typing_message = (e) => {
+ 
+
+  if(e.target.value.length > 0 ){
+    // message_ref.current.scrollTop = message_ref.current.scrollHeight;
+    socket.current.emit("typing" , {subject : i , typing : true})
+  }else{
+    socket.current.emit("message_sent" , {subject : i , typing : false})
+  }
+  
+  
+  
+}
 
 
+const handle_typing_message = (is_user_typing) => {
+  // console.log(is_user_typing)
+  
+  message_ref.current.scrollTop = message_ref.current.scrollHeight;
+ 
+  setTyping(is_user_typing.typing)
+}
   return (
     <>
-      <div>
+      <div className="">
         <div className=" w-[calc(100vw-15rem)]   bg-slate-100 flex justify-center items-center md:pt-0 md:pl-0">
           <div className="w-[98%] h-[98%]  flex rounded-t-lg overflow-hidden">
             {/* chatbox */}
-            <div className="flex flex-col mt-2 w-[calc(100%)] h-[calc(100vh-5.5rem)]">
+            <div className="flex flex-col mt-2 w-[100%] h-[calc(87vh)]">
               {/* chatbox header */}
               <div className="h-14 pl-2 w-[calc(100%)] rounded-t-md bg-purple-500 flex justify-between ">
                 <div className="text-white h-full text-lg  flex items-center font-semibold ml-4">
@@ -190,16 +240,31 @@ import  {encrypt , decrypt} from "./Cryptography.js"
                 
                 <Popover className="relative">
                 <Popover.Button className="outline-none font-extrabold text-3xl text-white mr-4">...</Popover.Button>
-                <Popover.Panel className="bg-gray-200 absolute w-48 right-4 top-12 rounded-md shadow-lg">
+                <Popover.Panel className="bg-gray-200 absolute w-[250px] right-4 top-12 rounded-md shadow-lg">
                <div className="p-4">
               <p className="font-bold text-gray-700 border-b-2 border-black mb-4 text-lg">Group Members</p>
              <ul>
-            {studentlist.map((student, i) => (
-             <li key={i} className="flex justify-between items-center mb-2">
-             <span className="font-semibold text-blue-600">{student}</span>
-              <span className="text-red-600 text-xs cursor-pointer hover:underline transition duration-300"> Remove </span>
+
+             {/* <li className="flex justify-between text-red-600 text-md font-bold cursor-pointer w-[100%]">
+             {<div>studentlist[0] &&  <span> { studentlist[0].teacher.t_name} </span> <span className="text-sm text-orange-500"> Admin </span> </div>}
+              </li> */}
+              {studentlist[0] && <li className="flex justify-between text-red-600 text-md font-bold cursor-pointer w-[100%]"><span> { studentlist[0].teacher.t_name} </span> <span className="text-sm text-orange-500"> Admin </span>  </li>}
+            {/* {studentlist && studentlist[0].collaborators.length == 0 ? <div>No Students</div> :
+              studentlist[0].collaborators.map((student, i) => (
+             <li key={i} className="flex justify-between items-center mb-2 cursor-pointer">
+             <span className="font-semibold text-blue-600">{student.s_name}</span>
+             {is_admin && <span className="text-red-600 text-xs cursor-pointer hover:underline transition duration-300"> Remove </span>}
           </li>
-        ))}
+        ))} */}
+
+        {studentlist[0] && (studentlist[0].collaborators.length == 0 ? <div>No Students</div>
+         : studentlist[0].collaborators.map((student, i) => (
+             <li key={i} className="flex justify-between items-center mb-2 cursor-pointer">
+             <span className="font-semibold text-blue-600">{student.s_name}</span>
+             {is_admin && <span className="text-red-600 text-xs cursor-pointer hover:underline transition duration-300"> Remove </span>}
+          </li>
+         
+          )))}
       </ul>
     </div>
   </Popover.Panel>
@@ -210,27 +275,33 @@ import  {encrypt , decrypt} from "./Cryptography.js"
               {/* chatbox body  */}
               <div
                 ref={message_ref}
-                className="bg-teal-900 h-[calc(73vh)] flex flex-col  w-[calc(100%)] p-2  overflow-auto pb-5"
-              ></div>
-
+                className="bg-teal-900 h-[calc(73vh)] flex  flex-col  w-[calc(100%)] p-2  overflow-auto pb-5"
+              >
+                {typing && <Typing />}
+              </div>
+              
+              
               {/* message input */}
-              <div className="w-[100%] flex shadow-gray-600 shadow-2xl">
+              
+              <div className="bg-teal-900 w-[98.7%]  p-2">
+              
+              {/* <Typing /> */}
+                <div className=" flex items-center justify-between   ">
                 <input
                 ref={input_ref}
                 value={currentMessage}
-                  className="h-12 w-[90%] focus:outline-none placeholder:p-2 p-2 border-black border-2"
+                  className="h-12 w-[96%] placeholder:p-2 pl-4 focus:outline-none
+                    border-white-500 border-2 bg-green-800 text-white rounded-2xl outline-4"
                   type="text"
                   placeholder="Write something here..."
-                  onChange={(e) => {
+                  onChange={(e) => { 
                     set_message(e);
                   }}
+                  onKeyUp={emit_typing_message}
                 />
-                <button
-                  className="w-[10%] text-white p-2  font-bold text-lg  bg-[#902bf5] h-12 hover:bg-[#6e0fcd] "
-                  onClick={sendMessage}
-                >
-                  Send
-                </button>
+                <Icon icon="iconoir:send-solid" className="text-4xl mb-1 text-white cursor-pointer" onClick={sendMessage}/>
+                </div>
+              
               </div>
             </div>
           </div>
