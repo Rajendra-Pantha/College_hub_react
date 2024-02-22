@@ -40,6 +40,7 @@ const Details = () => {
   };
   const submitFile = async () =>{
    const res = await Upload_assignment(file , id)
+   console.log("The response is " , res)
   if(res.err){
     alert(res.err)
   }else{

@@ -7,7 +7,7 @@ const Upload_assignment = async ( file ,  assignmen_id)=>{
     const list = await fetch(
         `http://localhost:8080/assignment/submitAssignment/${assignmen_id}`,
         {
-          method: "Post",
+          method: "POST",
           headers:{
             "Authorization" : `Bearer ${token}`
         },
