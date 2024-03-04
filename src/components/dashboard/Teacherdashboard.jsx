@@ -85,7 +85,7 @@ const Teacherdashboard = () => {
       </div>
       <div className="bg-gray-400 h-px mb-6 mx-8" />
       <div className="flex flex-wrap gap-8   mb-12 ml-8 ">
-        {assignment_list &&
+        {assignment_list && assignment_list.length > 0 ? 
           assignment_list.map((item, i) => (
             <Link
               to={`/teacher/assignments/popup/${item._id}`}
@@ -121,10 +121,10 @@ const Teacherdashboard = () => {
                 </div>
               </div>
             </Link>
-          ))}
+          )) : <div>No any assignment yet</div>}
       </div>
 
-      {/* {isPopupVisible && selectedItem && <Popup item={selectedItem} onClose={() => setPopupVisibility(false)} />} */}
+
 
       <div className="text-3xl font-semibold text-gray-600 ml-8 mb-2 mt-8">
         Messages

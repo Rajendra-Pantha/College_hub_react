@@ -34,7 +34,3 @@ const encrypt = (str, key) => {
 
   export {encrypt , decrypt}
 
-// const a =encrypt("thIs is some message" , 3)
-// console.log("Encryted " , a)
-// const b = decrypt(a , 3)
-// console.log("decrypted" , b)

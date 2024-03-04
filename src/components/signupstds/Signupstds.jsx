@@ -6,11 +6,7 @@ import { Link,useNavigate } from 'react-router-dom'
 import { Icon } from '@iconify/react';
 import OtpContext from '../../otpcontext/OtpContext';
 const Signupstds = ({users,logins}) => {
-  // const[id,setId]=useState("");
-  // const[username,setUsername]=useState("");
-  // const[password,setpassword]=useState("");
-  // const[conpass,setconpass]=useState("");
-  // console.log("redieacted from",users)
+
 const navigate = useNavigate();
 const[entries,setEntries]=useState({
   id:"",
@@ -20,11 +16,7 @@ const[entries,setEntries]=useState({
 });
 
 const{isLogin,setIslogin,setRegistration}=useContext(OtpContext)
-// useEffect(()=>{
-  
-//   console.log(isLogin)
-//   console.log(identity)
-// },[])
+
 
  const handleSubmit= async(e)=>{
 e.preventDefault();
@@ -89,17 +81,7 @@ let Sid,Tid
   }
 
 
-// if(users==="Student")
-// {
-  
-//   navigate(`/otpverificationstds/${1}`)
 
-// }
-// else{
-//   navigate(`/otpverificationteacher/${1}`)
-  
-  
-// }
 
 
 
