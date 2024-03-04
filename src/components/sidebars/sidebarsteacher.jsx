@@ -71,11 +71,7 @@ const Sidebarsteacher = () => {
             {DASHBOARD_SIDEBAR_LINKS.map((link) => (
 					<SidebarLink key={link.key} link={link} />
 				))}
-        {/* <Link to="/dashboardstds">   <li className='py-4' >Dashboard</li> </Link> 
-         <Link to="subjectsstds"> <li  className='py-4'>Subjects</li> </Link> 
-         <Link to="messagestds"> <li  className='py-4'>Message</li> </Link> 
-         <Link to="assignmentsstds">  <li  className='py-4'>Assignments</li>  </Link> 
-          <Link to="settingstds"> <li  className='py-4'>Settings</li> </Link>  */}
+        
             
             <Popover className="relative">
      

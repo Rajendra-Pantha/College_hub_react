@@ -101,9 +101,7 @@ const Popup = () => {
                 </li>
                 )
               )}
-                {/* <li className="mb-5 p-5  bg-green-400 text-black-500 font-bold rounded-md w-[100%]">
-                  Student 1
-                </li> */}
+
               </ul>
             </div>
           </div>

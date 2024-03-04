@@ -33,7 +33,7 @@ const navigate = useNavigate();
     navigate(`/otpverificationstds/${2}`)
    }
    else{
-    alert("Failed to login")
+    alert("Username or Password error")
     return;
    }
   }
@@ -43,17 +43,12 @@ const navigate = useNavigate();
     navigate(`/otpverificationteacher/${2}`)
    }
    else{
-    alert("Failed to login")
+    alert("Username or Password error")
     return;
    }
   }
 
-// if(users==="Student"){
-// navigate(`/otpverificationstds/${2}`)
-// }
-// else{
-//   navigate(`/otpverificationteacher/${2}`)
-// }
+
  };
 
     return (

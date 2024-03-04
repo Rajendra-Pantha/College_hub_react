@@ -245,17 +245,11 @@ const handle_typing_message = (is_user_typing) => {
               <p className="font-bold text-gray-700 border-b-2 border-black mb-4 text-lg">Group Members</p>
              <ul>
 
-             {/* <li className="flex justify-between text-red-600 text-md font-bold cursor-pointer w-[100%]">
-             {<div>studentlist[0] &&  <span> { studentlist[0].teacher.t_name} </span> <span className="text-sm text-orange-500"> Admin </span> </div>}
-              </li> */}
+             
+
               {studentlist[0] && <li className="flex justify-between text-red-600 text-md font-bold cursor-pointer w-[100%]"><span> { studentlist[0].teacher.t_name} </span> <span className="text-sm text-orange-500"> Admin </span>  </li>}
-            {/* {studentlist && studentlist[0].collaborators.length == 0 ? <div>No Students</div> :
-              studentlist[0].collaborators.map((student, i) => (
-             <li key={i} className="flex justify-between items-center mb-2 cursor-pointer">
-             <span className="font-semibold text-blue-600">{student.s_name}</span>
-             {is_admin && <span className="text-red-600 text-xs cursor-pointer hover:underline transition duration-300"> Remove </span>}
-          </li>
-        ))} */}
+
+        
 
         {studentlist[0] && (studentlist[0].collaborators.length == 0 ? <div>No Students</div>
          : studentlist[0].collaborators.map((student, i) => (
@@ -283,7 +277,7 @@ const handle_typing_message = (is_user_typing) => {
               
               {/* message input */}
               
-              <div className="bg-teal-900 w-[98.7%]  p-2">
+              <div className="bg-teal-900 w-[100%]  p-2">
               
               {/* <Typing /> */}
                 <div className=" flex items-center justify-between   ">

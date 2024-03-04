@@ -91,7 +91,6 @@ const Message = ({ socket, groupName, subjectName , identity }) => {
                       icon="fluent:ios-arrow-24-regular"
                       hFlip={true}
                     />
-                    <div className="bg-green-400 w-8 h-8 flex items-center justify-center rounded-full text-red-500 text-sm">{count[0][`${subj.subject}`]}</div>
                   </div>
                 </Link>
               );

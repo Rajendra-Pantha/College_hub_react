@@ -84,16 +84,8 @@ const Class = () => {
           {/* </form> */}
         </Popover.Panel>
       </Popover>
-      {/* <Chatbox
-        socket={socket}
-        groupName={detail.groupName}
-        subjectName={detail.subjectName}
-      /> */}
-      {/* <Message
-        socket={socket}
-        groupName={detail.groupName}
-        subjectName={detail.subjectName}
-      /> */}
+
+
     </div>
   );
 };

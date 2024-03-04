@@ -34,7 +34,7 @@ const Assignments = () => {
     <div className=' pt-8 ml-8 mt-20'>
       
       <div className='flex flex-wrap gap-10 '>
-        {assignment_list && assignment_list.reverse().map((item) => <div className='bg-[#FAFAFA] cursor-pointer hover:scale-105 w-[250px] rounded-lg  p-4 shadow-gray-400 shadow-md flex flex-col justify-between' key={item._id} onClick={()=>{navigate_to(`details/${item._id}`)}}>
+        {assignment_list && assignment_list.length > 0 ? assignment_list.reverse().map((item) => <div className='bg-[#FAFAFA] cursor-pointer hover:scale-105 w-[250px] rounded-lg  p-4 shadow-gray-400 shadow-md flex flex-col justify-between' key={item._id} onClick={()=>{navigate_to(`details/${item._id}`)}}>
          
           <Link to={`details/${item._id}`}><button className='text-[18px] text-[#435585] font-bold '>{item.subject}</button></Link>
           <div className='  p-4 rounded-lg'>
@@ -62,7 +62,7 @@ const Assignments = () => {
             </div>
           </div>
 
-        </div>)
+        </div>) : <div>No any assignments yet...</div>
         }
       </div>
     </div>

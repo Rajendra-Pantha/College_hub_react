@@ -81,13 +81,9 @@ const Sidebars = () => {
 					<SidebarLink key={link.key} link={link} />
           
 				))}
-        {/* <Link to="/dashboardstds">   <li className='py-4' >Dashboard</li> </Link> 
-         <Link to="subjectsstds"> <li  className='py-4'>Subjects</li> </Link> 
-         <Link to="messagestds"> <li  className='py-4'>Message</li> </Link> 
-         <Link to="assignmentsstds">  <li  className='py-4'>Assignments</li>  </Link> 
-          <Link to="settingstds"> <li  className='py-4'>Settings</li> </Link>  */}
+       
           
-              {/* <div className='flex items-center gap-1 py-4 w-56 px-4  hover:bg-blue-100 hover:text-green-800'><Icon className='text-4xl' icon="uiw:setting-o" /><span >Settings</span></div> */}
+
 
               <Popover className="relative">
      
@@ -110,10 +106,8 @@ const Sidebars = () => {
         <Link to='/changepassword' >  Change Password</Link>
         </div>
 
-        <div className='block border-b-2  mb-4 p-2  border-gray-300 text-center text-sm font-semibold '>
-        Terms and Conditions   </div>
 
-        <div onClick={handleLogOut} className='block   border-gray-300 text-center p-2 text-sm font-semibold '>
+        <div onClick={handleLogOut} className='block   border-gray-300 text-center p-2 text-sm font-semibold cursor-pointer'>
           Log Out
         </div>
       </div>

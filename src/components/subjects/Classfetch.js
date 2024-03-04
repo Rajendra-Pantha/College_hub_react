@@ -13,12 +13,7 @@ const response = await fetch('http://localhost:8080/message/creategroup',{
     },
     body:JSON.stringify(detail),
 });
-// if (response.ok) {
-//     const data = await response.json();
-//     console.log(data);
-// } else {
-//     console.error('Error:', response.status, response.statusText);
-// }
+
 const data = await response.json();
 if(data._id){
     alert( `Group created as ${data.subject}`)

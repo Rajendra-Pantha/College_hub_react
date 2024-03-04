@@ -7,7 +7,7 @@ const Details = () => {
   const { id } = useParams();
   const [allowed , setAllowed] = useState("not-allowed")
   const [assignment, setAssignment] = useState([]);
-  const [file, setFile] = useState();
+  const [file, setFile] = useState(null);
   const [errormsg, setErrormsg] = useState("");
   const [button_disabled , setDisabled] = useState(true)
   const update_assignment_ref = (data) => {
@@ -29,6 +29,7 @@ const Details = () => {
     console.log("selected file" , file)
     if (file && file.type !== "application/pdf") {
       setErrormsg("Please provide  Pdf file ");
+      setFile(null);
       e.target.value = null;
     } else {
       setFile(file);
@@ -121,7 +122,7 @@ const Details = () => {
                 />
                 Select File
               </button>
-              <button className={`cursor-pointer  bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 flex gap-2 items-center justify-center px-20 rounded`}
+              {file != null ? <button className={`cursor-pointer  bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 flex gap-2 items-center justify-center px-20 rounded`}
                onClick={submitFile}>
                 Upload <Icon
                   className=" text-2xl"
@@ -129,7 +130,8 @@ const Details = () => {
                   color="white"
                 />
 
-              </button>
+              </button> : ""}
+              
             </div>
           </div>
         </div>

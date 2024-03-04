@@ -1,44 +1,41 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 
-function Hello() {
-  const [selectedFile, setSelectedFile] = useState(null);
+// function Hello() {
+//   const [selectedFile, setSelectedFile] = useState(null);
 
-  // const handleFileChange = (event) => {
-  //  setSelectedFile(event.target.files[0]);
-  //  console.log(selectedFile);
 
-  //  };
-  async function uploads() {
-    const obj = new FormData();
-    obj.append("f1", selectedFile);
-    console.log(obj);
-    const list = await fetch(
-      "http://localhost:8080/assignment/submitAssignment",
-      {
-        method: "Post",
-        body: obj,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
 
-    const item = await list.json();
-  }
+//   async function uploads() {
+//     const obj = new FormData();
+//     obj.append("f1", selectedFile);
+//     console.log(obj);
+//     const list = await fetch(
+//       "http://localhost:8080/assignment/submitAssignment",
+//       {
+//         method: "Post",
+//         body: obj,
+//         headers: {
+//           "Content-Type": "multipart/form-data",
+//         },
+//       }
+//     );
 
-  return (
-    <>
-      <input
-        type="file"
-        onChange={(event) => {
-          setSelectedFile(event.target.files);
-        }}
-      />
-      <button onClick={uploads}>Click</button>
-    </>
-  );
-}
-export default Hello;
+//     const item = await list.json();
+//   }
+
+//   return (
+//     <>
+//       <input
+//         type="file"
+//         onChange={(event) => {
+//           setSelectedFile(event.target.files);
+//         }}
+//       />
+//       <button onClick={uploads}>Click</button>
+//     </>
+//   );
+// }
+// export default Hello;
 
 import React, { useState, useEffect } from "react";
 

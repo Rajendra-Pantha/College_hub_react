@@ -76,15 +76,7 @@ const Otp = ({users}) => {
       
      }
    }
-  //  if(a==1){
-  //   Otpfun(otps,"register");
-  //  }
-  //  else{
-  //   Otpfun(otps,"login");
-  //  }
-   
-    // const concatenatedValue = `${otps.input1} ${otps.input2} ${otps.input3} ${otps.input4} ${otps.input5}`;
-    // console.log( concatenatedValue);
+
    
   };
   if(isredirecedfromregistration===true){return (

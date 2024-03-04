@@ -61,7 +61,7 @@ const Dashboard = () => {
       <div className="bg-gray-400 h-px  mb-6 ml-8" />
       <div className="flex flex-wrap gap-8   mb-12 ml-8 ">
       {/* bg-[#FAFAFA] */}
-        {dashboard_assignment_content &&
+        {dashboard_assignment_content && dashboard_assignment_content.length > 0 ?
           dashboard_assignment_content.map((item, i) => (
             <Link
               to={`/students/assignmentsstds/details/${item._id}`}
@@ -70,7 +70,6 @@ const Dashboard = () => {
             >
               <div className="relative flex justify-center text-[18px] text-[#435585] font-bold w-[100%]">
                 <span>{item.subject}</span>
-                <span className="h-4 w-4 rounded-full bg-green-500"></span>
               </div>
 
               <div className="  p-4 rounded-lg">
@@ -98,7 +97,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </Link>
-          ))}
+          )) : <div>You dont have any assignments yet...</div>}
       </div>
 
       <div className="text-3xl font-semibold text-gray-600 ml-8 mb-2 mt-8">

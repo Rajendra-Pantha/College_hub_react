@@ -67,15 +67,7 @@ const Teacherassignments = () => {
         fetch_teacher_subjects()
       }
 
-      // fetch_teacher_subjects()
-      // setNewAssignment({
-      //   //   id:"",
-      //   title: "",
-      //   //  AssignmentType: "",
-      //   description: "",
-      //   deadline: "",
-      //   subject: "",
-      // });
+
     }
 
     popoverButtonRef.current.click();
@@ -86,9 +78,7 @@ const Teacherassignments = () => {
       ...assignment_ref.current,
       [e.target.name]: e.target.value,
     };
-    // console.log(e.target.value)
-    //   setNewAssignment({...newAssignment,subject: e.target.value})
-    //   console.log("the chagned data is" , newAssignment)
+
   };
   return (
     <div className=" mt-2 pl-2 w-screen relative">
@@ -141,24 +131,9 @@ const Teacherassignments = () => {
                           </option>
                         );
                       })}
-                    {/* <option></option>
-                    <option>Math</option>
-                    <option>c++</option>
-                    <option>english</option> */}
+
                   </select>
-                  {/* <div>
-                    <label className=" ml-8  text-gray-700  font-semibold mb-2">Id :</label>
-                  <input
-                    className="  ml-4 text-lg shadow  border rounded w-[20%]  px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type="text"
-                    value={newAssignment.id}
-                    onChange={(e) =>
-                      setNewAssignment({
-                        ...newAssignment,
-                        id:parseInt(e.target.value) ,
-                      })
-                    }
-                  /></div> */}
+
                 </div>
 
                 <div className="mb-2 mt-3 ml-4">
@@ -173,30 +148,10 @@ const Teacherassignments = () => {
                       handle_input_change(e);
                     }}
                   />
-                  {/* onChange={(e) =>
-                      setNewAssignment({
-                        ...newAssignment,
-                        title: e.target.value,
-                      })
-                    } */}
+
                 </div>
 
-                {/* <div className="mb-2 mt-3 ml-4">
-                  <label className=" text-gray-700  font-semibold mb-2">
-                    Assignment-type:
-                  </label>
-                  <input
-                    className="ml-4 text-lg shadow appearance-none border rounded w-[50%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type="text"
-                    value={newAssignment.AssignmentType}
-                    onChange={(e) =>
-                      setNewAssignment({
-                        ...newAssignment,
-                        AssignmentType: e.target.value,
-                      })
-                    }
-                  />
-                </div> */}
+
 
                 <div className="mb-2 mt-3 ml-4">
                   <label className=" text-gray-700  font-semibold mb-2">
@@ -209,12 +164,7 @@ const Teacherassignments = () => {
                       handle_input_change(e);
                     }}
                   />
-                  {/* onChange={(e) =>
-                      setNewAssignment({
-                        ...newAssignment,
-                        description: e.target.value,
-                      })
-                    } */}
+
                 </div>
                 <div className="mb-2 mt-3 ml-4">
                   <label className=" text-gray-700  font-semibold mb-2">
@@ -228,12 +178,7 @@ const Teacherassignments = () => {
                       handle_input_change(e);
                     }}
                   />
-                  {/* onChange={(e) =>
-                      setNewAssignment({
-                        ...newAssignment,
-                        deadline: e.target.value,
-                      })
-                    } */}
+
                 </div>
 
                 <button
@@ -251,7 +196,7 @@ const Teacherassignments = () => {
       </Popover>
 
       <div className="flex flex-wrap gap-8 mt-20 ml-8  ">
-        {assignment_list && assignment_list.reverse().map((item , i) => (
+        {assignment_list && assignment_list.length > 0 ? assignment_list.reverse().map((item , i) => (
           <Link
             to={`popup/${item._id}`}
             className="bg-[#FAFAFA] flex flex-col justify-between -z-1 cursor-pointer hover:scale-105 w-[22%] rounded-lg  p-4 shadow-gray-400 shadow-md"
@@ -283,7 +228,7 @@ const Teacherassignments = () => {
               </div>
             </div>
           </Link>
-        ))}
+        )) : <div>You haven't created any assignment yet...</div>}
       </div>
     </div>
     
