@@ -3,37 +3,43 @@ import { Icon } from "@iconify/react";
 import { Popover } from "@headlessui/react";
 import { useState } from "react";
 
-import socket_io from "../../socket";
+// import socket_io from "../../socket";
 // import initializeSocket from "../../socket";
 import ClassContext from "../../ClassContext/CreateClass";
 import AssignmentContext from "../../AssignmentContext/AssignmentContext";
+import ClassGroup from "./Classfetch";
+import appContext from "../../AppContext/appContext";
 
-// import Chatbox from "../Chatbox";
-// const socket = io.connect("http://localhost:8080", {
-//   transports: ["websocket"],
-//   cors: {
-//     origin: "http://127.0.0.1:5173",
-//     methods: ["GET", "POST"],
-//     credentials: true,
-//   },
-// });
+
 const Class = () => {
   const socket = useRef(null)
-   const { addDetail } = useContext(ClassContext);
+  const {initilize_socket} = useContext(appContext)
+
+  useEffect(()=>{
+    const d = async () =>{
+      socket.current = await initilize_socket()
+    }
+    d()
+  } ,[])
+  
+
+   const { detail , addDetail } = useContext(ClassContext);
   const [tempdata, setTempdata] = useState({
     groupName: "",
     subjectName: "",
   });
 
-  useEffect(() => {
-    socket.current = socket_io
-  })
-  const joinroom = () => {
+  const joinroom = async () => {
     if (tempdata.groupName !== "" && tempdata.subjectName !== "") {
-      socket.current.emit("join_room", tempdata.subjectName);
+      addDetail(tempdata);
+   await ClassGroup(tempdata);
+   setTempdata({
+    groupName: "",
+    subjectName: "",
+   })
+  }
     }
-    addDetail(tempdata);
-  };
+    
 
   return (
     <div className=" pt-8 pl-2">
@@ -49,32 +55,32 @@ const Class = () => {
         <Popover.Panel className="p-4 border-2 border-gray-300 rounded-lg mt-4">
           {/* <form onSubmit={handleSubmit}> */}
           {/* <form> */}
-          <input
+         <label className="font-semibold ">Group Name :</label>  <input
             value={tempdata.groupName}
             onChange={(e) =>
               setTempdata((pre) => ({ ...pre, groupName: e.target.value }))
             }
-            className="block mb-4 text-lg shadow appearance-none border rounded w-[90%] py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="block mb-4 mt-2 text-lg shadow appearance-none border rounded w-[90%] py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             placeholder="Enter group name"
           />
-          <input
+         <label className="font-semibold ">Subject Name :</label> <input
             value={tempdata.subjectName}
             onChange={(e) =>
               setTempdata((pre) => ({ ...pre, subjectName: e.target.value }))
             }
-            className="block mb-4 text-lg shadow appearance-none border rounded w-[90%] py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="block mb-4 mt-2 text-lg shadow appearance-none border rounded w-[90%] py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             placeholder="Enter subject name"
           />
 
-          <button
-            type="submit"
+          <Popover.Button
+          type="button"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             onClick={joinroom}
           >
             Create
-          </button>
+          </Popover.Button>
           {/* </form> */}
         </Popover.Panel>
       </Popover>

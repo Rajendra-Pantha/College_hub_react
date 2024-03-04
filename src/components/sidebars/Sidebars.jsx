@@ -1,9 +1,10 @@
 import React from 'react'
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
-import { NavLink,useNavigate } from 'react-router-dom';
+import {Link , NavLink,useNavigate } from 'react-router-dom';
 import { Popover } from '@headlessui/react'
 const Sidebars = () => {
+  const navigate = useNavigate();
 
     let nonhide;
     let hidebar;
@@ -64,9 +65,12 @@ const Sidebars = () => {
       ]
       
        //.................
-       const navigate = useNavigate();
+       
+       
        const handleLogOut=()=>{
-         navigate("/loginstudent");}
+       localStorage.removeItem("Campus_Token");
+         navigate("/")
+        }
     
   return (
     <div className='relative flex '>
@@ -91,7 +95,7 @@ const Sidebars = () => {
        
        <Popover.Button className='focus:outline-none'>
        
-       <div className='flex items-center gap-4 py-4 w-56 px-4 text-[#004369] hover:bg-[#193443fb] hover:text-white'><Icon className='text-4xl' icon="uiw:setting-o" /><span >Settings</span></div>
+       <div className='flex items-center gap-4 py-4 w-56 px-4 text-[#004369] hover:bg-[#193443fb] hover:text-white cursor-pointer z-10'><Icon className='text-4xl' icon="uiw:setting-o" /><span >Settings</span></div>
        </Popover.Button>
        <Popover.Panel className="absolute left-44  z-10 w-52 shadow-sm rounded-lg shadow-black bg-blue-50 -mt-20">
 
@@ -99,11 +103,11 @@ const Sidebars = () => {
 <div >
       
         <div className='block border-b-2  mb-4 p-2 border-gray-300 text-center text-sm font-semibold '>
-          Change Username
+        <Link to="/changeusername" > Change Username</Link> 
         </div>
 
         <div className='block border-b-2   mb-4 p-2 border-gray-300 text-center text-sm font-semibold '>
-          Change Password
+        <Link to='/changepassword' >  Change Password</Link>
         </div>
 
         <div className='block border-b-2  mb-4 p-2  border-gray-300 text-center text-sm font-semibold '>

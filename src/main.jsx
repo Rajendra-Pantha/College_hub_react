@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
+import ViewPdf from "./components/popup/ViewPdf.jsx";
+
 import Nav from "./components/nav/Nav.jsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -15,7 +17,6 @@ import Subjects from "./components/subjects/Subjects.jsx";
 import Message from "./components/message/Message.jsx";
 import Assignments from "./components/assignments/Assignments.jsx";
 
-
 import Class from "./components/subjects/Class.jsx";
 import Teacherdashboard from "./components/dashboard/Teacherdashboard.jsx";
 import Teacherassignments from "./components/assignments/Teacherassignments.jsx";
@@ -26,10 +27,16 @@ import Chatbox from "./components/Chatbox.jsx";
 import AssignmentProvider from "./AssignmentContext/AssignmentProvider.jsx";
 import ClassProvider from "./ClassContext/ClassProvider.jsx";
 
-
-import Hello from './Hello.jsx';
-import Studentlist from './components/Studentlist.jsx';
+// import Hello from './Hello.jsx';
+import Studentlist from "./components/Studentlist.jsx";
 import Popup from "./components/popup/Popup.jsx";
+import Otpprovider from "./otpcontext/Otpprovider.jsx";
+import Changepassword from "./components/sidebars/Changepassword.jsx";
+import Changeusername from "./components/sidebars/Changeusername.jsx";
+import AppProvider from "./AppContext/appProvider.jsx";
+import AssignmentContext from "./AssignmentContext/AssignmentContext.js";
+import View_assignment from "./components/popup/View_assignment.jsx";
+import UserContextProvider from "./UserContext/UserContextProvider.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -41,53 +48,76 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "signupstds",
+        path: "student/signupstds",
         element: (
-          <Signupstds
-            otp="/otpverificationstds"
-            users="Student"
-            logins="/loginstudent"
-          />
+          <Otpprovider>
+            <Signupstds users="Student" logins="/loginstudent" />
+          </Otpprovider>
         ),
       },
       {
-        path: "signupteacher",
+        path: "teacher/signupteacher",
         element: (
-          <Signupstds
-            otp="/otpverificationteacher"
-            users="Teacher"
-            logins="/loginteacher"
-          />
+          <Otpprovider>
+            <Signupstds users="Teacher" logins="/loginteacher" />
+          </Otpprovider>
         ),
       },
       {
         path: "loginstudent",
-        element: <Login otp="/otpverificationstds" signup="/signupstds" />,
+        element: (
+          <Otpprovider>
+            <Login users="Student" signup="/student/signupstds" />
+          </Otpprovider>
+        ),
       },
       {
         path: "loginteacher",
         element: (
-          <Login otp="/otpverificationteacher" signup="/signupteacher" />
+          <Otpprovider>
+            {" "}
+            <Login users="Teacher" signup="/teacher/signupteacher" />
+          </Otpprovider>
         ),
       },
       {
-        path: "otpverificationstds",
-        element: <Otp dashboard="/students/dashboard" />,
+        path: "otpverificationstds/:a",
+        element: (
+          <Otpprovider>
+            <Otp users="Student" />
+          </Otpprovider>
+        ),
       },
+
       {
-        path: "otpverificationteacher",
-        element: <Otp dashboard="/teacher/dashboard" />,
+        path: "otpverificationteacher/:a",
+        element: (
+          <Otpprovider>
+            <Otp users="Teacher" />
+          </Otpprovider>
+        ),
       },
     ],
   },
 
   {
     path: "students",
-    element: <Layout2 />,
+    element: (
+      <AssignmentProvider>
+        {" "}
+        <Layout2 />{" "}
+      </AssignmentProvider>
+    ),
     children: [
       {
         path: "dashboard",
-        element: <Dashboard />,
+        element: (
+          <AssignmentProvider>
+            <AppProvider>
+              <Dashboard />
+            </AppProvider>
+          </AssignmentProvider>
+        ),
       },
 
       {
@@ -96,12 +126,31 @@ const router = createBrowserRouter([
       },
       {
         path: "messagestds",
-        element: <Message />,
+        element: (
+          <AppProvider>
+            <Message identity="students" />
+          </AppProvider>
+        ),
+      },
+      {
+        path: "/students/messagestds/chatbox/:i",
+        element: (
+          <AppProvider>
+            <ClassProvider>
+              <Chatbox />
+            </ClassProvider>
+          </AppProvider>
+        ),
       },
 
       {
         path: "assignmentsstds",
-        element: <Assignments />,
+        element: (
+          <AssignmentProvider>
+            {" "}
+            <Assignments />
+          </AssignmentProvider>
+        ),
       },
       {
         path: "assignmentsstds/details/:id",
@@ -110,85 +159,97 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "students/messagestds/chatbox/:i",
-    element: (
-      <ClassProvider>
-        <Chatbox />
-      </ClassProvider>
-    ),
-  },
-  {
-    path: "Hello",
-    element: <Hello />,
-  },
-  {
     path: "teacher",
 
-    element:<Layout3 />,
-    children: [{
-      path: "dashboard",
-      element:<AssignmentProvider><Teacherdashboard/></AssignmentProvider>,
-    },
-    {
-      path: "classes",
-      element: (
-        <ClassProvider>
-          <Class />,
-        </ClassProvider>
-      ),
-    },
-  
-   { path:"classes/studentdetails",
-     element:<Studentlist/>
-    },
-    {
-      path: "messagestds",
-      element: (
-        <ClassProvider>
-          <Message />
-        </ClassProvider>
-      ),
-    },
-
-  
-    {
-      path: "/teacher/messagestds/chatbox/:i",
-      element: (
-        <ClassProvider>
-          <Chatbox />
-        </ClassProvider>
-      ),
-    },
-    {
-      path: "assignments",
-      element: (
-        <AssignmentProvider>
-          <Teacherassignments />
-        </AssignmentProvider>
-      ),
-    },
-    {
-      path:"assignments/popup/:id",
+    element: (
+      <AssignmentProvider>
+        <Layout3 />
+      </AssignmentProvider>
+    ),
+    children: [
+      {
+        path: "dashboard",
         element: (
-        <AssignmentProvider>
-          <Popup />
-        </AssignmentProvider>
-      ),
-    }
-   
-   
-   
-]
+          <UserContextProvider>
+            <AppProvider>
+              <AssignmentProvider>
+                <Teacherdashboard />
+              </AssignmentProvider>
+            </AppProvider>
+          </UserContextProvider>
+        ),
+      },
+      {
+        path: "classes",
+        element: (
+          <AppProvider>
+            <ClassProvider>
+              <Class />,
+            </ClassProvider>
+          </AppProvider>
+        ),
+      },
+
+      { path: "classes/studentdetails", element: <Studentlist /> },
+      {
+        path: "messagestds",
+        element: (
+          <AppProvider>
+            <ClassProvider>
+              <Message identity="teacher" />
+            </ClassProvider>
+          </AppProvider>
+        ),
+      },
+
+      {
+        path: "/teacher/messagestds/chatbox/:i",
+        element: (
+          <AppProvider>
+            <ClassProvider>
+              <Chatbox />
+            </ClassProvider>
+          </AppProvider>
+        ),
+      },
+      {
+        path: "assignments",
+        element: (
+          <AssignmentProvider>
+            <Teacherassignments />
+          </AssignmentProvider>
+        ),
+      },
+      {
+        path: "assignments/popup/:id",
+        element: (
+          <AssignmentProvider>
+            <Popup />
+          </AssignmentProvider>
+        ),
+      },
+      {
+        path: "assignments/student_assignment/:assignId_studentId",
+        element: <View_assignment />,
+      },
+    ],
   },
- 
 
-
-
-  
-
+  {
+    path: "changepassword",
+    element: <Changepassword />,
+  },
+  {
+    path: "changeusername",
+    element: <Changeusername />,
+  },
+  {
+    path: "/test",
+    element: <View_assignment />,
+  },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
-  
-    <RouterProvider router={router} />
-
+  <>
+    <RouterProvider router={router}></RouterProvider>
+  </>
 );

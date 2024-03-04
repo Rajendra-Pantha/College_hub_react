@@ -1,0 +1,50 @@
+  /* Styles for the typing indicator container */
+  .typing-indicator {
+    display: flex;
+    align-items: center;
+    /* margin-bottom: 10px; */
+    margin-left: 5px;
+    /* margin-top: 100px; */
+  }
+  
+  /* Styles for the dots */
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color:gray;
+    margin-right: 5px;
+    animation: moveUpDown 0.5s infinite ease-in-out alternate;
+  }
+
+  /* Keyframe animation for moving dots up and down */
+  @keyframes moveUpDown {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-10px);
+    }
+  }
+
+  /* Adjust the position of dots */
+  .dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  
+  .dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+.animation{
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+  .user{
+    height: 30px;
+    width: 30px;
+    border-radius: 100%;
+    background-color: black;
+    object-fit: cover;
+  }

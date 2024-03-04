@@ -1,74 +1,117 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useContext, useRef } from "react";
 import AssignmentContext from "../../AssignmentContext/AssignmentContext";
 import { Popover } from "@headlessui/react";
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import createAssignment from "./Create_assignment";
 
 const Teacherassignments = () => {
-  const { data, addAssignment } = useContext(AssignmentContext);
-  // const [isPopupVisible, setPopupVisibility] = useState(false);
-  // const [selectedItem, setSelectedItem] = useState(null);
-  // const handleCardClick = (item) => {
-  //   setSelectedItem(item);
-  //   setPopupVisibility(!isPopupVisible);
-  // };
+  const { initilize_teacher_default_detail } = useContext(AssignmentContext);
+  const [assignment_list, setAssignmentList] = useState([]);
 
-  const [newAssignment, setNewAssignment] = useState({
-    id:"",
+  const assignment_ref = useRef(null);
+  const teachers = useRef(null)
+  assignment_ref.current = {
     title: "",
-    AssignmentType: "",
     description: "",
     deadline: "",
-    subject: "",
-  });
+    subject: "invalid",
+  };
+  // const [teacher_subjects , setTeacherSubjects] = useState([])
+  const teacher_subjects = useRef(null);
+  const popoverButtonRef = useRef(null);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const fetch_teacher_subjects = async () => {
+    const { data, teacher } = await initilize_teacher_default_detail(false);
+    console.log("got subject teaceheer ", teacher);
+    teachers.current = teacher.t_name
+
+    setAssignmentList([]);
+    for (let i = 0; i < data.length; i++) {
+      setAssignmentList((prevData) => [...prevData, data[i]]);
+    }
+    
+    teacher_subjects.current = teacher.subjects;
+    console.log("chalyoo ", teacher_subjects.current);
+
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem("Campus_Token") === null) {
+      navigate("/");
+    }
+
+    fetch_teacher_subjects();
+  }, []);
+
   const handleBg = () => {
     setIsPopoverOpen(!isPopoverOpen);
   };
-  const popoverButtonRef = useRef(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    addAssignment(newAssignment);
+    if (assignment_ref.current.subject === "invalid") {
+      alert("Please select valid subject");
+      return;
+    } else {
+      // addAssignment(assignment_ref.current);
 
-    setNewAssignment({
-      id:"",
-      title: "",
-      AssignmentType: "",
-      description: "",
-      deadline: "",
-      subject: "",
-    });
+      const data = createAssignment(assignment_ref.current);
+      if(data){
+        fetch_teacher_subjects()
+      }
+
+      // fetch_teacher_subjects()
+      // setNewAssignment({
+      //   //   id:"",
+      //   title: "",
+      //   //  AssignmentType: "",
+      //   description: "",
+      //   deadline: "",
+      //   subject: "",
+      // });
+    }
 
     popoverButtonRef.current.click();
   };
 
-  // const isEmpty = Object.values(newAssignment).some((value) => value === "");
-  // const isAddButtonDisabled =
-  //   !isEmpty ||
-  //   Object.values(newAssignment).every((value) => "");
-
+  const handle_input_change = (e) => {
+    assignment_ref.current = {
+      ...assignment_ref.current,
+      [e.target.name]: e.target.value,
+    };
+    // console.log(e.target.value)
+    //   setNewAssignment({...newAssignment,subject: e.target.value})
+    //   console.log("the chagned data is" , newAssignment)
+  };
   return (
     <div className=" mt-2 pl-2 w-screen relative">
-      { isPopoverOpen && (
+      {isPopoverOpen && (
         <div
-          className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-90 z-10"
-          onClick={() =>  setIsPopoverOpen(false)}
+          className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 z-10"
+          onClick={() => setIsPopoverOpen(false)}
         />
       )}
       <Popover className="relative">
         <>
           <Popover.Button onClick={handleBg} ref={popoverButtonRef}>
+
+            
+
             <div
-              className='flex gap-2 justify-center absolute -z-1  border-2 rounded-xl py-4 px-6 font-semibold shadow-lg shadow-slate-300  hover:-translate-y-0.5 bg-[#000080] text-white ml-9 right-8 mb-2 '
-            >
+              className='flex gap-2 justify-center absolute -z-1  border-2 rounded-xl py-4 px-6 font-semibold shadow-lg shadow-slate-300 hover:bg-[#0066cc] bg-[#000080] text-white ml-9 right-8 mb-2 '>
+
               <Icon icon="gala:add" width="22" /> <div>Create Assignment</div>
             </div>
+           
           </Popover.Button>
+        
           <Popover.Panel
             className="absolute  mt-[4%] ml-[15%] z-10  p-4  w-[40vw] shadow-sm rounded-md shadow-black bg-[#dcdcdc] "
             style={{
@@ -83,21 +126,27 @@ const Teacherassignments = () => {
                     Subjects:
                   </label>
                   <select
-                    className=" ml-16 text-lg shadow  border rounded w-[30%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    value={newAssignment.subject}
-                    onChange={(e) =>
-                      setNewAssignment({
-                        ...newAssignment,
-                        subject: e.target.value,
-                      })
-                    }
-                  >
-                    <option></option>
+                    className=" ml-16 text-lg shadow  border rounded w-[50%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
+                    name="subject"
+                    onChange={(e) => {
+                      handle_input_change(e);
+                    }}                  >
+                    <option value="invalid">Select one subject</option>
+                    {teacher_subjects.current &&
+                      teacher_subjects.current.map((sub) => {
+                        return (
+                          <option key={sub} value={sub}>
+                            {sub}
+                          </option>
+                        );
+                      })}
+                    {/* <option></option>
                     <option>Math</option>
                     <option>c++</option>
-                    <option>english</option>
+                    <option>english</option> */}
                   </select>
-                  <div>
+                  {/* <div>
                     <label className=" ml-8  text-gray-700  font-semibold mb-2">Id :</label>
                   <input
                     className="  ml-4 text-lg shadow  border rounded w-[20%]  px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -109,10 +158,8 @@ const Teacherassignments = () => {
                         id:parseInt(e.target.value) ,
                       })
                     }
-                  /></div>
+                  /></div> */}
                 </div>
-
-              
 
                 <div className="mb-2 mt-3 ml-4">
                   <label className=" text-gray-700  font-semibold mb-2">
@@ -121,17 +168,20 @@ const Teacherassignments = () => {
                   <input
                     className="ml-24 text-lg shadow appearance-none border rounded w-[50%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     type="text"
-                    value={newAssignment.title}
-                    onChange={(e) =>
+                    name="title"
+                    onChange={(e) => {
+                      handle_input_change(e);
+                    }}
+                  />
+                  {/* onChange={(e) =>
                       setNewAssignment({
                         ...newAssignment,
                         title: e.target.value,
                       })
-                    }
-                  />
+                    } */}
                 </div>
 
-                <div className="mb-2 mt-3 ml-4">
+                {/* <div className="mb-2 mt-3 ml-4">
                   <label className=" text-gray-700  font-semibold mb-2">
                     Assignment-type:
                   </label>
@@ -146,7 +196,7 @@ const Teacherassignments = () => {
                       })
                     }
                   />
-                </div>
+                </div> */}
 
                 <div className="mb-2 mt-3 ml-4">
                   <label className=" text-gray-700  font-semibold mb-2">
@@ -154,35 +204,41 @@ const Teacherassignments = () => {
                   </label>
                   <textarea
                     className="ml-12 text-lg shadow appearance-none border rounded w-[50%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    value={newAssignment.description}
-                    onChange={(e) =>
+                    name="description"
+                    onChange={(e) => {
+                      handle_input_change(e);
+                    }}
+                  />
+                  {/* onChange={(e) =>
                       setNewAssignment({
                         ...newAssignment,
                         description: e.target.value,
                       })
-                    }
-                  />
+                    } */}
                 </div>
                 <div className="mb-2 mt-3 ml-4">
                   <label className=" text-gray-700  font-semibold mb-2">
                     Deadline :
                   </label>
                   <input
-                    className="ml-16 text-lg shadow appearance-none border rounded w-[30%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="ml-16 text-lg shadow appearance-none border rounded w-[50%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     type="date"
-                    value={newAssignment.deadline}
-                    onChange={(e) =>
+                    name="deadline"
+                    onChange={(e) => {
+                      handle_input_change(e);
+                    }}
+                  />
+                  {/* onChange={(e) =>
                       setNewAssignment({
                         ...newAssignment,
                         deadline: e.target.value,
                       })
-                    }
-                  />
+                    } */}
                 </div>
 
                 <button
                   id="btn"
-                  className="border-2 px-4 py-2 ml-[40%] mt-3 font-semibold border-none bg-[#000080] text-white rounded-2xl hover:-translate-y-0.5"
+                  className="border-2 px-4 py-2 ml-[40%] mt-3 font-semibold border-none hover:bg-[#0066cc] bg-[#000080] text-white rounded-2xl "
                   type="submit"
                   // disabled={isAddButtonDisabled}
                 >
@@ -195,13 +251,13 @@ const Teacherassignments = () => {
       </Popover>
 
       <div className="flex flex-wrap gap-8 mt-20 ml-8  ">
-        {data.map((item) => (
-          <Link to={`popup/${item.id}`}
-            className="bg-[#FAFAFA]  -z-1 cursor-pointer hover:scale-105 w-[22%] rounded-lg  p-4 shadow-gray-400 shadow-md"
-            key={item.id}
-          
+        {assignment_list && assignment_list.reverse().map((item , i) => (
+          <Link
+            to={`popup/${item._id}`}
+            className="bg-[#FAFAFA] flex flex-col justify-between -z-1 cursor-pointer hover:scale-105 w-[22%] rounded-lg  p-4 shadow-gray-400 shadow-md"
+            key={i}
           >
-            <div className="relative text-[18px] text-[#435585] font-bold ">
+            <div className=" text-[18px] text-[#435585] font-bold ">
               {item.subject}
             </div>
 
@@ -223,62 +279,15 @@ const Teacherassignments = () => {
               </div>
 
               <div className="flex gap-2 bg-[#008080] rounded-lg w-full ml-0.5 justify-center items-center">
-                <div className="text-white font-bold">Bhuwan Panthi</div>
-              
+                <div className="text-white font-bold">{teachers.current}</div>
               </div>
-               
-       
-      
             </div>
           </Link>
         ))}
       </div>
-   
     </div>
+    
   );
 };
-// const Popup = ({ item }) => {
-//   const [submittedStudents, setSubmittedStudents] = useState([
-//     "Student 1",
-//     "Student 2",
-//     "Student 3",
-//   ]);
-//   return (
-//     <div className="popup-container fixed top-[70%] left-[100%] z-10">
-//       <div>
-//         <div
-//           className="overflow-auto absolute flex justify-between right-20 z-10 -mt-96 w-[calc(100vw-12rem)]  rounded-md  bg-[#f7f3f3] h-[calc(100vh-14rem)] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200"
-//           style={{
-//             boxShadow:
-//               "rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset",
-//           }}
-//         >
-//           <div>
-//             <div className=" p-4   mt-4 flex flex-col gap-4">
-//               <h2 className="text-[#3490dc] border-b-2 mb-3 pb-3 border-[#3490dc] font-semibold text-xl">
-//                 {" "}
-//                 {item.title}
-//               </h2>
-//               <p>Assignment Type: {item.AssignmentType}</p>
-//               <p>Deadline: {item.deadline}</p>
-//               <p>Description: {item.description}</p>
-//             </div>
-//             <div className="m-4 overflow-auto">
-//               <h3 className="text-[#3490dc] border-b-2 mb-3 pb-3 border-[#3490dc] font-semibold text-xl  ">
-//                 Submitted Students:
-//               </h3>
-//               <ul className="list-none p-0  ">
-//                 {submittedStudents.map((student, index) => (
-//                   <li key={index} className="mb-5 p-5 bg-gray-200 rounded-md">
-//                     {student}
-//                   </li>
-//                 ))}
-//               </ul>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
+
 export default Teacherassignments;

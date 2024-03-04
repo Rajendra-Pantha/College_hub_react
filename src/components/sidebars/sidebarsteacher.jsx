@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
-import { NavLink,useNavigate } from 'react-router-dom';
+import { Link ,NavLink,useNavigate } from 'react-router-dom';
 import { Popover } from '@headlessui/react'
 const Sidebarsteacher = () => {
     let nonhide;
@@ -59,7 +59,8 @@ const Sidebarsteacher = () => {
       ]
       const navigate = useNavigate();
       const handleLogOut=()=>{
-        navigate("/loginteacher");}
+        localStorage.removeItem("Campus_Token");
+        navigate("/");}
        //.................
     
   return (
@@ -90,11 +91,11 @@ const Sidebarsteacher = () => {
 <div >
       
         <div className='block border-b-2  mb-4 p-2 border-gray-300 text-center text-sm font-semibold '>
-          Change Username
+       <Link to="/changeusername" >  Change Username</Link>
         </div>
 
         <div className='block border-b-2   mb-4 p-2 border-gray-300 text-center text-sm font-semibold '>
-          Change Password
+        <Link to="/changepassword">Change Password</Link>  
         </div>
 
         <div className='block border-b-2  mb-4 p-2  border-gray-300 text-center text-sm font-semibold '>
